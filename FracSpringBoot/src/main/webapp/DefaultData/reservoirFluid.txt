@@ -28,7 +28,7 @@ Tensile Stress(psi)=null
 Biot Constant=null
 Pay Height(feet)=30.48
 Fracture Gross Height(feet)=91.46
-Leak off Coefficient(ft/min^0.5)=null0000984
+Leak off Coefficient(ft/min^0.5)=0.000984
 Spurt Loss Coefficient=null
 /Optimum Fracture Design Input
 Max Proppant Conc(IB/FT2)=null

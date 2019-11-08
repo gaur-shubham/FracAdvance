@@ -1,9 +1,7 @@
 package com.frac.FracAdvanced.domain.security;
 
-import org.aspectj.weaver.ast.And;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -16,11 +14,12 @@ public class TotalSafe extends WebSecurityConfigurerAdapter {
 	UserDetailsService userDetailsService;
 	
 	
+	/*
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception { 		
  		
 		auth.userDetailsService(userDetailsService);
-		/*auth.inMemoryAuthentication().withUser("vishal")
+		auth.inMemoryAuthentication().withUser("vishal")
  		.password("vishal")
  		.roles("USER")
  		.and().withUser("subham")
@@ -29,12 +28,12 @@ public class TotalSafe extends WebSecurityConfigurerAdapter {
  		 .and()
  		.withUser("surya")
  		.password("surya")
- 		.roles("user");*/ 		
- 		//auth.userDetailsService(userDetailsService)
-	}
+ 		.roles("user");		
+ 		auth.userDetailsService(userDetailsService)
+	}*/ 
 	
-	protected void configure(HttpSecurity http) throws Exception
-	{
+	@Override
+	protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests()
 		.antMatchers("/").hasAnyRole("USER","ADMIN")	
 		.antMatchers("/graphs").hasAnyRole("ADMIN")
@@ -46,7 +45,8 @@ public class TotalSafe extends WebSecurityConfigurerAdapter {
 		.passwordParameter("password")
 		.defaultSuccessUrl("/")
 		.failureUrl("/loginFail")
-		.and().logout()
+		.and()
+		.logout()
 		.logoutUrl("/ap-logout")
 		.logoutSuccessUrl("/login")
 		.and()
@@ -57,9 +57,7 @@ public class TotalSafe extends WebSecurityConfigurerAdapter {
 	
 	@Bean
 	public PasswordEncoder getPasswordEncoder() {
-		
 		return NoOpPasswordEncoder.getInstance();
-	
 	}
 
 }

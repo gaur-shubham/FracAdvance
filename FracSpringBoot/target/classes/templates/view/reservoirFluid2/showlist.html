@@ -108,6 +108,7 @@
 <section class="content">
 	<div class="tab-pane active danger" id="fill">
 		<li class="list-group-item ">
+			<div style="max-height:400px;overflow-y:auto;overflow-x:hidden">
 			<div class="row">
 				<div class="col-md-1"></div>
 				<div class="col-md-6">
@@ -126,13 +127,13 @@
 				<div class="col-md-7" id="radiodiv">
 					<Label>Select Well Type:</Label>
 					<div class="btn-group-horizontal">
-						<button type="button" class="btn-primary">
-							<label for="0">Oil Well</label><input id="0" type="radio"
-								name="aq" checked="checked" value="Oil Well">
+						<button type="button" class="btn btn-primary" style="width:auto">
+							<label for="0">Oil Well&nbsp;&nbsp;</label><input id="0" type="radio"
+								name="aq" checked="checked" value="Oil Well" />
 						</button>
-						<button type="button" class="btn-primary">
-							<label for="1">Gas Well</label><input type="radio" name="aq"
-								id="1" checked="checked" value="Gas Well">
+						<button type="button" class="btn btn-primary" style="width:auto">
+							<label for="1">Gas Well&nbsp;&nbsp;</label><input type="radio" name="aq"
+								id="1" checked="checked" value="Gas Well" />
 						</button>
 					</div>
 				</div>
@@ -157,11 +158,13 @@
 								</tr>
 							</tbody>
 						</table>
-						<input type="submit" value="Update" style="margin-left: 50%;"
-							id="updateValue" />
 					</form>
 				</div>
-			</div>
+			</div></div>
+			<br>
+				<center>
+						<input type="submit" class="btn btn-primary" value="Update" style="width:auto;"
+							id="updateValue" /></center>
 		</li>
 	</div>
 </section>

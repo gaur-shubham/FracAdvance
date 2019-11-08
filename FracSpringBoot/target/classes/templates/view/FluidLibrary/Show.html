@@ -207,7 +207,8 @@
                    <tr>                                
                              </tbody>
                         </table>
-	<input class="123btn btn-primary" type="submit" value="Update" style="margin-left:50%;" id="fltable" />                       
+                        <center>
+	<input class="123btn btn btn-primary" type="submit" value="Update" style="width:auto" id="fltable" /></center>                       
 </div>
 </div> 
 
@@ -327,7 +328,8 @@
                                                    
                              </tbody>
                         </table>
-	<input class="123btn btn-primary" type="submit" value="Add In Library" style="margin-left:50%;" id="ufltable" />                       
+                        <center>
+	<input class="123btn btn btn-primary" type="submit" value="Add In Library" style="width:auto;" id="ufltable" /></center>                       
 
 </div> 
 
@@ -404,10 +406,9 @@
                      
  </form>                   
               
-          	   
+          	   <br>
           <div class="col-md-6">
-     <input class="123btn btn-primary" type="submit" value="Select DropDown to Remove From Library"  />                       
-                
+                <label for="removeFluid">Select DropDown to Remove From Library:</label>
           <select name="ftype" id="removeFluid" class="form-control">
           <option value="" disabled selected hidden>Select Type Of Fluid</option>  		
   		<option th:each="fluidTypeList : ${fluidTypeList}"  th:value="${fluidTypeList}">[[${fluidTypeList}]]</option>
