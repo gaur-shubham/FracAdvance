@@ -1,0 +1,139 @@
+    <script type="text/javascript">
+    $( "#button" ).click(function() {
+        $( "#fill" ).slideToggle( "slow" );
+        $( "#form" ).slideToggle( "slow" );
+        var val = $(this).val();
+        if(val=="Enter Manually"){
+        document.getElementById('button').value = "Import Well Log";
+        }
+        else{
+        document.getElementById('button').value = "Enter Manually";
+        }
+        });
+    
+    $("#rl_impstages").on('change',function(){
+    	url="reservoirLithology/rows";
+    	$.ajax({
+    		url:url,
+    		data:{no:$(this).val(),pid:$("#rl_imppid").val()},
+    	success:function(res){
+    		$("#loadtable").html(res);
+			$("#exampleModal").show();
+			$("#rl_impsavebt").show();
+			$("#fill").show();
+          	$("#form").hide();
+    	}
+    	});
+    });
+    
+    $("#rl_impsavebt").click(function(){
+    	url="reservoirLithology/savelithology";
+    	$.ajax({
+    		url:url,
+    		data:$("#rl_mainform").serialize(),
+    		success:function(res){
+    			$("#loadtable").html(res);
+    			$("#exampleModal").show();
+    		}
+    	});
+    });
+    </script>
+    
+     
+        <div class="row" id="form">
+            <div class="col-lg-4 col-xs-6">
+                <form enctype="multipart/form-data" id="demoform" method="POST" name="demoform">
+                    <div class="form-group ">
+                        Select Well Log File (las/txt) / Excel(xlsx) to import
+                        <input name="welllog" id="file2" type="file">
+                    </div>
+                    <div class="form-group ">
+                        <input type="submit"  value="Import" class="btn btn-primary"  id="importData" style="width:auto;"/>
+                    </div>
+                    <input id="rl_imppid" type="hidden" name="rl_imppid" th:value="${pid}"/>
+                </form>
+            </div> 
+            <div class="col-lg-8 col-xs-6">
+                <h3>Note:</h3>
+                <ul>
+                    User can input reservoir lithology (Perm/Poro over depth (MD), TVD, formation pressure ) in anyone of three ways :
+                    <li>  Import well log ( Porosity log in .las/txt) file</li>
+                    <li>  Import excel file (Perm/Poro over depth, excel format provided)</li>
+                    <li>  Enter manually (Perm/Poro, TVD and formation pressure)</li>
+
+                </ul>
+            </div>
+
+        </div>
+        <input type="button" class="btn btn-primary" value="Enter Manually" id="button" style="width:auto;">
+        <div class="tab-pane active" id="fill" style="display: none;">
+            <li class="list-group-item">
+                <div class="row">
+                <div class="col-md-1"></div>
+                <div class="col-md-7">
+    <div class="form-group">
+    <div class="col-md-7">
+    <label>Input Number Of Fracturing Stages</label>
+    </div>
+    <div class="col-md-5">
+    <input  class="form-control" min="0" type="number" id="rl_impstages" th:value="${number}"/>
+    </div>
+    </div>
+    </div>
+                </div><br>
+                <form id="rl_mainform">
+                <div class="row" th:if=${list!=null} style="max-height: 300px; overflow: auto;">
+                    
+                    <div class="col-md-12" style="overflow-x: auto; overflow-y: hidden;">
+			<input id="rl_imppid" type="hidden" name="rl_imppid" th:value="${pid}"/>
+                        <table id="example2" class="table table-hover table-bordered" >
+                            <thead><tr>
+								<th style="text-align:center;">Stage<br>&nbsp;&nbsp;&nbsp;</th>
+									<th style="text-align: center;">&nbsp;&nbsp;&nbsp;TVD&nbsp;&nbsp;&nbsp;<br>(ft)</th>
+								<th nowrap style="text-align: center;">&nbsp;&nbsp;&nbsp;MD&nbsp;&nbsp;&nbsp;<br>(ft)</th>
+								<th nowrap style="text-align: center;">Layer
+									Thickness<br>(ft)</th>
+								<th nowrap style="text-align: center;">Rock
+									Type<br>&nbsp;</th>
+								<th nowrap style="text-align: center;">Permiability<br>(md)</th>
+								<th nowrap style="text-align: center;">Porosity<br>&nbsp;</th>
+								<th nowrap style="text-align: center;">Leakoff
+									Coefficient<br>(ft/min^5)</th>
+								<th nowrap style="	text-align: center;">Youngs
+									Modulus<br>&nbsp;</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="list:${list}">
+								<th>
+								<input class="form-control" th:value="${list}" name="rl_input" style="border:none;text-align: center;" readonly>
+								</th>
+								<td><input type="number" min="0" max=""
+									class="form-control" id="tvd" name="rl_input" style="border:none;"></td>
+								<td><input type="number" min="0" max=""
+									class="form-control" id="md" name="rl_input" style="border:none;"></td>
+								<td><input type="number" min="0" max=""
+									class="form-control" id="layer" name="rl_input" style="border:none;"></td>
+								<td><input type="number" min="0" max=""
+									class="form-control" id="rock" name="rl_input" style="border:none;"></td>
+								<td><input type="number" min="0" max=""
+									class="form-control" id="perm" name="rl_input" style="border:none;"></td>
+								<td><input type="number" min="0" max=""
+									class="form-control" id="poro" name="rl_input" style="border:none;"></td>
+								<td><input type="number" min="0" max=""
+									class="form-control" id="leak" name="rl_input" style="border:none;"></td>
+								<td><input type="number" min="0" max=""
+									class="form-control" id="youngs" name="rl_input" style="border:none;"></td>
+							</tr>
+							</tbody>
+                        </table>
+                    </div>
+                </div>
+                </form>
+                <br>
+             </li> 
+               <br>
+                    <center>
+                    <input type="button" value="Save" class="btn btn-primary" id="rl_impsavebt" style="display:none;">
+                    </center>  
+        </div>

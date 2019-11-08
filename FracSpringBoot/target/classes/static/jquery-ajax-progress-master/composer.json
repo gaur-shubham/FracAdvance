@@ -1,0 +1,35 @@
+{
+  "name": "ilopx/jquery-ajax-progress",
+  "description": "Simple patch that adds a 'progress' callback to jquery Ajax calls",
+  "minimum-stability": "stable",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "englercj",
+      "email": "chad@pantherdev.com"
+    },
+    {
+      "name": "snoj",
+      "email": "josh@snoj.us"
+    },
+    {
+      "name": "RaphaelDDL",
+      "email": "ddl@raphaelddl.com"
+    },
+    {
+      "name": "ilopX",
+      "email": "ilopX@ukr.com"
+    }
+  ],
+  "require":{
+    "bower-asset/jquery": "2.1.*"
+  },
+  "require-dev":{
+    "bower-asset/bootstrap": "3.*"
+  },
+  "extra": {
+    "asset-installer-paths": {
+      "bower-asset-library": "vendor/bower"
+    }
+  }
+}

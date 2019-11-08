@@ -1,0 +1,298 @@
+<style>
+.output {
+	background-color: white;
+	border-top-left-radius: 30px;
+	border-top-right-radius: 30px;
+	border-bottom-left-radius: 30px;
+	border-bottom-right-radius: 30px;
+}
+
+.outputhead {
+	letter-spacing: 0.01em;
+	position: relative;
+	text-align: center;
+	background: none;
+	color: white;
+	opacity: 0.95;
+	background: #3c8dbc;
+	padding: 2px;
+	border-top-left-radius: 20px;
+	border-top-right-radius: 20px;
+	border-bottom-left-radius: 20px;
+	border-bottom-right-radius: 20px;
+	border: none;
+	transition: all 0.35s linear;
+	outline: none;
+}
+
+.outputhead:hover {
+	letter-spacing: 0.02em;
+	color: black;
+}
+
+.outputhead::after {
+	position: absolute;
+	content: '';
+	top: 0;
+	left: 0;
+	width: 0;
+	height: 100%;
+	background-image: linear-gradient(to right, #3c8dbc, #4cafe8);
+	border-radius: 50px;
+	transform-origin: left;
+	transition: width 0.35s ease;
+	z-index: -1;
+}
+
+.outputhead:hover::after {
+	width: 100%;
+	border-radius: 50px;
+}
+
+.outputhead h4 {
+	font-size: 16px;
+}
+
+.navinbutton {
+	margin-top: 20px;
+	background: #3c8dbc;
+	color: white;
+	padding: 10px;
+	border-radius: 20px;
+	border: none;
+	outline: none;
+	transition: all 1s linear;
+}
+
+.navinbutton:hover {
+	background-color: #193f54;
+}
+</style>
+
+
+
+<script>
+	$("#1005").click(function() {
+		$("#1006").slideToggle();
+		$('#ar3').toggleClass('fa-caret-down fa-caret-right');
+	});
+	$("#10051").click(function() {
+		$("#10061").slideToggle();
+		$('#ar31').toggleClass('fa-caret-down fa-caret-right');
+	});
+
+	$("#pp_impselect").on('change', function() {
+		var val = $(this).val();
+		var pid = $("#pp_imppid").val();
+		url = "proppant/setproppant";
+		$.ajax({
+			url : url,
+			data : {
+				val : val,
+				pid : pid
+			},
+			success : function(res) {
+				$("#loadtable").html(res);
+				$("#exampleModal").show();
+			}
+		});
+	});
+
+	$("#pp_impeditbt").click(function() {
+		url = "proppant/editproppantdata";
+		$.ajax({
+			url : url,
+			data : {
+				pid : $("#pp_imppid").val()
+			},
+			success : function(res) {
+				$("#loadtable").html(res);
+				$("#exampleModal").show();
+			},
+		});
+	});
+
+	$('input[type=radio][name=eff]').on(
+			'change',
+			function() {
+				if ($(this).val() == 'yes') {
+					url = "proppant/darcytable";
+					$.ajax({
+						url : url,
+						data : {
+							pid : $("#pp_imppid").val()
+						},
+						success : function(res) {
+							$("#loadtable").html(res);
+							$("#exampleModal").show();
+							$('#10061').show();
+							$("#darcytable").show();
+							$('#10061').find(':radio[name=eff][value="yes"]')
+									.prop('checked', true);
+							
+						}
+					});
+				} else {
+					$("#darcytable").hide();
+				}
+			});
+
+	$("#darcyEqSelect")
+			.change(
+					function() {
+						var equation = $(this).val(), pid = $("#pp_imppid")
+								.val(), url = "proppant/darcycalc";
+						$.ajax({
+							url : url,
+							data : {
+								equation : equation,
+								pid : pid
+							},
+							success : function(res) {
+								$("#loadtable").html(res);
+								$("#exampleModal").show();
+								$('#10061').show();
+								$("#darcytable").show();
+								$('#10061').find(
+										':radio[name=eff][value="yes"]').prop(
+										'checked', true);
+							}
+						});
+					});
+</script>
+
+<section class="content">
+
+	<div class="tab-pane active" id="tab_1">
+		<li class="list-group-item">
+
+			<form>
+				<div class="row">
+					<div class="col-md-1"></div>
+					<div class="col-md-10" style="margin-bottom: 20px;">
+						<div class="output">
+							<div class="outputhead" id="1005" style="cursor: pointer;">
+								<h4>
+									<i id="ar3" style="position: absolute; left: 20px;"
+										class="fa fa-caret-down"></i>Proppant Type and Properties <i
+										style="position: absolute; right: 20px;" aria-hidden="true"></i>
+								</h4>
+							</div>
+							<br>
+							<div class="outputbody" id="1006" style="display: none;">
+								<li class="list-group-item">
+									<div>
+
+										<input type="hidden" name="pp_imppid" id="pp_imppid"
+											th:value="${pid}">
+										<table class="table table-hover table-bordered">
+
+
+											<tbody>
+												<tr>
+													<th style="width: 50%">Proppant Name</th>
+
+
+													<td><select id="pp_impselect" class="form-control"
+														style="width: 250px;" name="stage">
+
+															<option th:value="${ptype}" selected hidden
+																th:if="${ptype}!=null">[[${ptype}]]</option>
+															<option value="WL Hsp 12/18">WL Hsp 12/18</option>
+															<option value="WL Hsp 16/30">WL Hsp 16/30</option>
+															<option value="WL Hsp 20/40">WL Hsp 20/40</option>
+															<option value="WL Hsp 30/50">WL Hsp 30/50</option>
+															<option value="WL Isp 12/18">WL Isp 12/18</option>
+															<option value="WL Isp 16/30">WL Isp 16/30</option>
+															<option value="WL Isp 20/40">WL Isp 20/40</option>
+															<option value="WL Isp 30/50">WL Isp 30/50</option>
+															<option value="WL Isp 40/70">WL Isp 40/70</option>
+															<option value="WL Lite 12/18">WL Lite 12/18</option>
+															<option value="WL Lite 16/30">WL Lite 16/30</option>
+															<option value="WL Lite 20/40">WL Lite 20/40</option>
+															<option value="WL Lite 30/50">WL Lite 30/50</option>
+															<option value="WL Lite 40/70">WL Lite 40/70</option>
+															<option value="WL Rcs 16/30">WL Rcs 16/30</option>
+															<option value="WL Rcs 20/40">WL Rcs 20/40</option>
+															<option value="WL Rcs 30/50">WL Rcs 30/50</option>
+															<option value="WL Rcs 40/70">WL Rcs 40/70</option>
+													</select></td>
+
+												</tr>
+												<tr th:each="list:${list}">
+													<th th:text="${list.param}" th:if="${listStat.index}!=0"></th>
+
+													<td th:text="${list.value}" th:if="${listStat.index}!=0"></td>
+												</tr>
+
+											</tbody>
+										</table>
+
+									</div>
+								</li>
+								<center>
+									<input type="button" name="" id="pp_impeditbt" value=" Edit"
+										class="btn btn-md btn-primary">
+								</center>
+							</div>
+
+						</div>
+					</div>
+				</div>
+			</form> <!-- table to show welltype changes -->
+			<form id="welltype">
+				<div class="row">
+					<div class="col-md-1"></div>
+					<div class="col-md-10" style="margin-bottom: 20px;">
+
+						<div th:if="${wellType=='Gas Well'}" class="output"
+							id="welltypeDiv">
+							<div class="outputhead" id="10051" style="cursor: pointer;">
+								<h4>
+									<i id="ar31" style="position: absolute; left: 20px;"
+										class="fa fa-caret-down"></i>WellType<i
+										style="position: absolute; right: 20px;" aria-hidden="true"></i>
+								</h4>
+							</div>
+							<br>
+							<div class="outputbody" id="10061" style="display: none;">
+								<li class="list-group-item">
+									<div>
+										<input type="hidden" name="pp_editpid" id="pp_editpid1"
+											th:value="${pid}"> <label>Non-Darcy Effects</label><br>
+										<span> <input type="radio" name="eff" id="yeff"
+											value="yes" /> <label for="yeff">Yes</label>
+										</span> &nbsp;&nbsp;&nbsp;&nbsp; <span> <input type="radio"
+											name="eff" id="neff" value="no" /> <label for="neff">No</label>
+										</span>
+
+										<table class="table table-hover table-bordered"
+											id="darcytable" hidden>
+											<tr>
+												<th style="width: 50%;">Select Equation</th>
+												<td><select class="form-control" id="darcyEqSelect">
+														<option selected disabled hidden th:if="${!eqtype.empty}">
+															Select Equation</option>
+														<option selected hidden th:if="${eqtype}!=null" th:value="${eqtype}">[[${eqtype}]]</option>
+														<option th:each="list1:${darcyEqList}" th:value="${list1}">[[${list1}]]</option>
+												</select></td>
+											</tr>
+											<tr th:each="list:${darcyList}">
+												<th th:text=${list.param}></th>
+												<td th:text=${list.value}></td>
+											</tr>
+										</table>
+										<center>
+											<input type="button" name="" id="pp_editsavebt1"
+												value=" Save" class="btn btn-md btn-primary">
+										</center>
+									</div>
+								</li>
+							</div>
+						</div>
+					</div>
+				</div>
+			</form>
+		</li>
+	</div>
+</section>

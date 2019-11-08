@@ -1,0 +1,81 @@
+<script>
+$("#rp_upnextbt").click(function(event){
+	event.preventDefault();
+	url="rockProperties/shownext1";
+	$.ajax({
+		url:url,
+		data:$("#rp_upform").serialize(),
+		success:function(res){
+			console.log(res);
+			$("#loadtable").html(res);
+          	$("#exampleModal").show();
+		}
+	});
+});
+$("#rp_upprevbt").click(function(event){
+	event.preventDefault();
+	url="rockProperties/showprev1";
+		$.ajax({
+			url:url,
+			data:$("#rp_upform").serialize(),
+			success:function(res){
+				$("#loadtable").html(res);
+	          	$("#exampleModal").show();
+			}
+		});
+});
+
+$("#rp_upbt").click(function(){
+	url="rockProperties/saveupdate";
+	$.ajax({
+		url:url,
+		data:$("#rp_upform").serialize(),
+		success:function(res){
+			$("#loadtable").html(res);
+          	$("#exampleModal").show();
+		}
+	});
+});
+
+</script>
+
+
+<div class="tab-content">
+            <div class="tab-pane active" id="tab_1">
+            <li class="list-group-item">
+<form id="rp_upform">
+		<div class="row">
+			<div class="col-md-2"></div>
+			<div class="col-md-8">
+				<label>Stage:
+				<input class="form-control" th:name="rp_upstage" type="text" th:if="${list!=null}" th:value="${list[0].stage}" readonly/></label>
+			</div>  
+			<div class="col-md-2"></div>
+		</div>
+		<br> <input type="hidden" id="rp_uppid" name="rp_uppid" th:value="${pid}">                
+
+<div class="row">
+<div class="col-md-2"></div>
+                    <div class="col-md-8">
+                        <table id="rp_upexample2" class="table table-hover table-bordered" >
+                        
+                        <tr th:each="list:${list}" th:if="${list.param}!='Stage'">
+                        <th  th:text="${list.param}"></th>
+                        <td><input type="text" name="rp_upinput"
+						class="pe_upinput form-control" th:value="${list.value}" style="border:none"/>
+						<input type="hidden" name="rp_upinputid"
+						class="pe_upinput form-control" th:value="${list.id}"/>
+						</td>
+                        </tr>
+                        </table>
+                        <center><input id="rp_upprevbt" class="btn-sm btn-primary" type="submit" value="Previous Stage" style="width:"/>
+                        <input id="rp_upnextbt" class="btn-sm btn-primary" type="submit" value="Next Stage"/></center>
+                    
+                    </div>
+                    <div class="col-md-2"></div>
+                </div>
+       </form></li><br>
+       <center><input id="rp_upbt" class="btn btn-primary" type="submit" value="Update"/>
+                        </center>         
+</div>
+</div>

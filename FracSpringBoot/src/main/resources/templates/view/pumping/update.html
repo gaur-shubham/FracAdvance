@@ -1,0 +1,90 @@
+<script>
+/* $(".button-checkbox").click(function(){
+	var widget = $(this),
+	button=widget.find('button'),
+	pid=$("#pe_uppid").val(),
+	checkbox = widget.find('input:checkbox');
+	url="pumping/settype2";
+	if(!checkbox.is(":checked")){
+		$("input.pumptype").prop("checked",false);
+		$("button.pumptypebt").removeClass("btn-primary").addClass("btn-success");
+		checkbox.prop("checked",true);
+		button.removeClass("btn-success").addClass("btn-primary");
+		$.ajax({
+			url:url,
+			data:{pid:pid,type:checkbox.val()},
+			success:function(res){
+			$("#loadtable").html(res);
+          	$("#exampleModal").show();
+          	$("#pe_impsavebt").prop('type','submit');
+			}
+		});
+	}
+	else{
+		checkbox.prop("checked",false);
+		button.removeClass("btn-primary").addClass("btn-success");
+	}
+}); */
+
+$("#pe_upsavebt").click(function(e){
+	e.preventDefault();
+	var url;
+	if($("#pe_uptype").val()=="ct"){
+		url="pumping/savepump11";
+	}else if($("#pe_uptype").val()=="bullhead"){
+		url="pumping/savepump22";
+	}
+	$.ajax({
+		url:url,
+		data:$("#pe_upform").serialize(),
+		success:function(res){
+			console.log(res);
+			$("#loadtable").html(res);
+          	$("#exampleModal").show();
+		}
+		
+	});
+});
+</script>
+
+<div class="tab-content">
+	<div class="tab-pane active" id="tab_1">
+		<form id="pe_upform" class="form-horizontal" role="form">
+			<input type="hidden" id="pe_uppid" name="pe_uppid" th:value="${pid}" />
+			<input type="hidden" id="pe_uptype" name="pe_uptype" th:value="${type}" />
+			<div class="row">
+				<div class="col-md-12">
+
+					<label for="injectType">Injection Type:</label><br> <span
+						class="button-checkbox" th:if="${type}=='ct'">
+						
+						<button type="button" class="pumptypebt btn  btn-success">CT</button>
+						<input type="checkbox" class="pumptype" name="resfluid" id=""
+						value="ct" hidden />
+
+					</span> <span class="button-checkbox" th:if="${type}=='bullhead'">
+						<button type="button" class="pumptypebt btn btn-success">Bullhead</button>
+						<input type="checkbox" class="pumptype" name="resfluid" id=""
+						value="bullhead" hidden />
+
+					</span>
+
+				</div>
+			</div>
+			<br>
+			<table id="" class=" table table-hover">
+
+				<tr th:each="map:${map1}">
+					<th th:text="${map.key}"></th>
+					<td><input type="text" th:name="'pe_up'+${map.key}"
+						class="pe_showinput form-control" th:value="${map.value}" /></td>
+				</tr>
+				<tr></tr>
+			</table>
+			<center>
+				<input type="submit" id="pe_upsavebt" class="btn btn-primary"
+					value="SAVE" />
+			</center>
+		</form>
+	</div>
+</div>

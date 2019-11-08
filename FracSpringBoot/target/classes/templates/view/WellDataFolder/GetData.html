@@ -1,0 +1,148 @@
+    <script>
+	 $("#welldataTable2").click(function (e) {
+		 e.preventDefault();
+    var formData = $("#fileUploadForm111").serialize();
+	var pid = $("#pid").val();	
+	var wellType = $('input:radio[name="zx"]:checked').val();
+	var completionType = $('input:radio[name="aq"]:checked').val();	
+			
+		        $.ajax({
+		            url: '/updateWellData2',		            
+		            data: formData+"&pid="+pid+"&wellType="+wellType+"&completionType="+completionType,		            
+		                success:function(res){
+		            	
+		    			$("#loadtable").html(res);
+		    		    $("#exampleModal").show();
+		    		} 	        
+		        });
+		    });
+	 
+	 
+
+</script>   
+
+ <div class="tab-content">
+            <div class="tab-pane active" id="tab_1">
+                <strong><h4 class="text-center"style="font-weight: bold;">WELL COMPLETION DATA</h4></strong><br>
+                <div class="row">                   
+<form class="form-horizontal" role="form" id="fileUploadForm111">
+ <!-- th:if="${teacher.gender == 'F'}"> -->
+<div class="row">
+<div class="col-md-6">
+<table id="" class="table table-hover" >
+                          <tr id="t1">
+                          <th>Well Type</th>
+                          <td><input  readOnly name="name1" type="text" th:value=${list[0].WellType} class="form-control"/></td>
+                          </tr>            
+                          <tr id="t2">
+                          <th>Well Bore Radius(inch)</th>
+                          <td><input readOnly name="name1" type="text" th:value=${list[0].value} class="form-control"/></td>
+                          </tr>
+                           <tr id="t3">
+                          <th>Drainage Radius(ft)</th>
+                          <td><input  readOnly name="name1" type="text" th:value="${list[1].value}" class="form-control"/></td>
+                          </tr>
+                            <tr id="t4"  > 
+                          <th>Well Inclination</th>
+                          <td> <input readOnly  name="name1" type="text" th:value=${list[2].value} class="form-control" /> </td>
+                          </tr>
+                          <tr id="t5"  th:if="${list[1].WellType=='Horizontal'}"   > 
+                          <th>Length Of Horizontal Reach Of Well</th>
+                          <td> <input readOnly name="name1" type="text" class="form-control" th:value=${list[3].value} /> </td>
+                          </tr>
+                          <tr id="t6"  th:if="${list[1].WellType=='Horizontal'}" > 
+                          <th>Distance Of Bottom Horizontal Well</th>
+                          <td> <input readOnly name="name1" type="text" class="form-control" th:value=${list[4].value}/> </td>
+                          </tr>
+                          <tr id="t7"  th:if="${list[1].WellType=='Slanted'}"> 
+                          <th>KH/KV Ratio</th>
+                          <td> <input readOnly name="name1" type="text" class="form-control" th:value=${list[5].value}/> </td>
+                          </tr> 
+                        </table>
+</div>
+<div class="col-md-6">
+<table id="" class="table table-hover" >                          
+                          <tr id="s0"> 
+                          <th>Completion Type</th>
+                          <td><input readOnly name="name1" type="text" class="form-control" th:value=${list[6].CompletionType}/></td>
+                          </tr>
+                          <tr id="s1"> 
+                          <th>Production Tubing Length(ft)</th>
+                          <td><input readOnly name="name1" type="text" class="form-control" th:value=${list[7].value}/></td>
+                          </tr>
+                          <tr id="s2"> 
+                          <th>Production Tubing Inner Diameter(ft)</th>
+                          <td><input readOnly name="name1" type="text" class="form-control" th:value=${list[8].value}/></td>
+                          </tr>
+                          <tr id="s3" th:if="${list[1].CompletionType!='Open Hole'}"> 
+                          <th>Perforation length (ft)</th>
+                          <td><input readOnly name="name1" type="text" class="form-control" th:value=${list[9].value}/></td>
+                          </tr>
+                           <tr id="s4" th:if="${list[1].CompletionType!='Open Hole'}">  
+                          <th>Perforation Diameter (inch)</th>
+                          <td><input readOnly name="name1" type="text" class="form-control" th:value=${list[10].value}/></td>
+                          </tr>
+                          <tr id="s5" th:if="${list[1].CompletionType!='Open Hole'}"> 
+                          <th>Shoots Per Foot</th>
+                          <td> <input readOnly  name="name1" type="text" class="form-control" th:value=${list[11].value}/> </td>
+                          </tr>
+                          <tr id="s6" th:if="${list[1].CompletionType!='Open Hole'}"> 
+                          <th>Casing Inner Diameter</th>
+                          <td><input readOnly  name="name1" type="text" class="form-control" th:value=${list[12].value}/></td>
+                          </tr>
+                          <tr id="s7" th:if="${list[1].CompletionType=='Slotted Liner'}" > 
+                          <th>Slot Type</th>
+                          <td><input readOnly name="name1" type="text" class="form-control" th:value=${list[13].value} /></td>
+                          </tr>
+                          <tr id="s8" th:if="${list[1].CompletionType=='Slotted Liner'}" >  
+                          <th>Width of single slot</th>
+                          <td><input readOnly name="name1" type="text" class="form-control" th:value=${list[13].value} /></td>
+                          </tr>
+                           <tr id="s9" th:if="${list[1].CompletionType=='Slotted Liner'}" > 
+                          <th>liner Inner Diameter</th>
+                          <td><input readOnly name="name1" type="text" class="form-control" th:value=${list[14].value} /></td>
+                          </tr>
+                          <tr id="s10" th:if="${list[1].CompletionType=='Slotted Liner'}"  >  
+                          <th>length of single slot</th>
+                          <td><input readOnly name="name1" type="text" class="form-control" th:value=${list[16].value} /></td>
+                          </tr>                      
+                          <tr id="s11" th:if="${list[1].CompletionType=='Slotted Liner'}" > 
+                          <th>Number of slot per slot</th>
+                          <td><input name="name1" type="text" class="form-control" th:value=${list[17].value}/></td>
+                          </tr>
+                          <tr id="s12" th:if="${list[1].CompletionType=='Slotted Liner'}" >  
+                          <th>Number of slot around</th>
+                          <td><input name="name1" type="text" class="form-control" th:value=${list[18].value} /></td>
+                          </tr>
+                          
+                          <tr id="s13" th:if="${list[1].CompletionType=='Slotted Liner'}" >  
+                          <th>Terbulance Facter</th>
+                          <td><input name="name1" type="text" class="form-control" th:value=${list[19].value} /></td>
+                          </tr>
+                          
+                          <tr id="s14" th:if="${list[1].CompletionType=='Slotted Liner'}" > 
+                          <th>Open area of single slot</th>
+                          <td><input name="name1" type="text" class="form-control" th:value=${list[20].value}/></td>
+                          </tr>
+                        
+                         <tr id="s15" th:if="${list[1].CompletionType=='Limited Entry'}"  > 
+                          <th>Limited Entry</th>
+                          <td><input name="name1" type="text" class="form-control" th:value=${list[21].value}/></td>
+                          </tr>
+                           <tr id="s16" th:if="${list[1].CompletionType=='Sliding sleeve'}" > 
+                          <th>Sliding Sllev type</th>
+                          <td><input name="name1" type="text"  class="form-control" th:value=${list[10].value}/></td>
+                          </tr>
+</table>
+	<input class="123btn btn-primary" type="submit" value="Update" style="margin-left:50%;" id="welldataTable2" />                       
+</div>
+</div>
+</form>
+<input type="hidden" th:value="${pid}" name="pid" id="pid">
+
+                </div>
+
+            </div>
+
+        </div>
+    

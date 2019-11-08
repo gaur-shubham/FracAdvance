@@ -1,0 +1,36 @@
+<script th:inline="javascript">
+$("#if_showupbt").click(function(e){
+	e.preventDefault();
+	var pid=$("#if_showpid").val();
+	url="/injectedfluid1/updatefluid1";
+	$.ajax({
+		url:url,
+		data:{pid:pid},
+		success:function(res){
+			$("#loadtable").html(res);
+          	$("#exampleModal").show();
+		}
+	});
+});
+</script>
+
+<div class="tab-content">
+	<div class="tab-pane active" id="tab_1">
+<form id="if_showform">
+<input type="hidden" id="if_showpid" name="if_showpid" th:value="${pid}">
+<table id="" class=" table table-hover">
+						<tr th:each="list:${list}">
+							<th th:text="${list.param}"></th>
+							<td ><input type="number" th:name="'if_show'+${list.param}" th:value="${list.value}" class="form-control" readonly/>
+							<input type="hidden" th:value="${list.id}" th:name="wd_showid"/>
+							</td>
+						</tr>
+						
+					</table>
+
+		<center>
+					<input type="submit" id="if_showupbt" class="btn btn-primary"
+						value="UPDATE"/></center>
+						</form>
+	</div>
+</div>

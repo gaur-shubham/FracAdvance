@@ -1,0 +1,91 @@
+<script th:inline="javascript">
+
+$("#SaveBt").click(function(){
+	url="/save";
+	$.ajax({
+		url:url,
+		dataType : 'json',
+		data: $("#mainform").serialize(),
+		success:function(data){
+			console.log(data);
+			$("#loadtable").html("data");
+		    $("#exampleModal").show();
+		}
+	});
+});
+
+$(".delbt").click(function(){
+	var id=$(this).val();
+	var pid=$("#pid").val();
+	url="/delete";
+	$.ajax({
+	url:url,
+	data:{id:id,pid:pid},
+	success:function(data){
+		console.log(data);
+		$("#loadtable").html(data);
+	    $("#exampleModal").show();
+	}
+	});
+});
+</script>
+<style>
+tbody {
+    display:block;
+    max-height:300px;
+    overflow:auto;
+}
+thead, tbody tr {
+    display:table;
+    width:100%;
+    table-layout:fixed;
+}
+</style>
+
+<div class="tab-content">
+            <div class="tab-pane active" id="tab_1">
+
+ <li class="list-group-item">
+
+<form id="mainform">
+<div class="row form-group">
+    <div class="col-md-1"></div>
+    <div class="col-md-2">
+    <label >Pumping Time (Min)</label>
+    </div>
+    <div class="col-md-3">
+   <input  id="ptime" class="form-control" type="text" min=0 step="any" name="pumptime" th:value=${list[0].pumptime} placeholder="Enter Pumping Time" required>
+    <input id="pid" name="pid" type="hidden" th:value=${hiddenId}><br>
+    
+    </div>
+    </div>
+<div class="row" id="table1">
+            <div class="col-md-1"></div>
+            <div class="col-md-10">
+            <table id="example2" class="table table-hover table-bordered" >
+                            <thead  class="bg-gray">
+							<tr>
+                            		<th class="text-center">Pressure (psi)</th>
+                            		<th  class="text-center">Shut In Time (Min)</th>
+                            		<th style="width:10%"class="text-center">Delete</th>
+                            </tr>
+                            </thead>
+                             <tbody >
+                             <tr th:each="list : ${list}"  >
+                                            <td><input type="text" name="pressure" th:value="${list.pressure}" class="press form-control text-center" style="border:none"></td>
+                                            <td><input type="text" name="time" th:value="${list.time}" class="time form-control text-center" style="border:none">
+                                            <input type="hidden" id="id" name="rid" th:value="${list.id}"></td>
+                                            <td style="width:10%" class="text-center" ><button class="delbt fa fa-trash" th:value="${list.id}"></button></td>
+                               </tr>
+                             </tbody>
+                        </table>
+            </div>
+            </div>
+            <center>
+            <input type="submit" id="SaveBt" value="Save" class="btn btn-primary" style="width:auto;"></input>
+            </center>
+            
+</form>
+</li>
+</div>
+</div>

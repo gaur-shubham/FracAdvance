@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="layout/layout">
+<head>
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+
+<script th:inline="javascript" th:src="@{js/projectDetail.js}"></script>
+<meta charset="ISO-8859-1">
+<title>FracAdvanced</title>
+<style>
+::-webkit-scrollbar {
+	width: 8px;
+	height: 8px;
+}
+
+::-webkit-scrollbar-track {
+	background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+	background: #888;
+}
+
+::-webkit-scrollbar-thumb:hover {
+	background: #555;
+}
+
+.cart {
+	background-color: white;
+	margin-top: 1%;
+	margin-left: 0%;
+	animation: mymove 10s infinite;
+}
+
+@
+keyframes mymove {
+	from {left: 0px;
+}
+
+to {
+	left: 300px;
+}
+
+}
+#sidebar {
+	display: none;
+}
+
+.cart:hover #sidebar {
+	margin-left: 1%;
+	display: block;
+	border-radius: 8px;
+}
+
+.thead {
+	color: white;
+}
+
+html * {
+	font-family: 'Calibri';
+}
+
+.onetmenu {
+	font-size: 14px;
+	font-weight: 600;
+	margin-left: 5%;
+	position: relative;
+	text-align: left;
+	width: 250px;
+	transition: all 0.35s linear;
+	padding-left: 20px;
+	background: none;
+	opacity: 0.85;
+	color: black;
+	height: 45px;
+	border-radius: 8px;
+	border: none;
+	box-shadow: 0.5px 0.5px 17px 0px #04040478;
+}
+
+.onetmenu:hover {
+	letter-spacing: 0.02em;
+	box-shadow: 0.5px 0.5px 17px 0px #D35400;
+}
+
+.onetmenu::after {
+	position: absolute;
+	content: '';
+	top: 0;
+	left: 0;
+	width: 0;
+	height: 100%;
+	background-image: linear-gradient(to right, rgba(243, 156, 18, 1),
+		rgba(219, 161, 5, 0.85));
+	border-radius: 8px;
+	transform-origin: left;
+	transition: width 0.35s ease;
+	z-index: -1;
+}
+
+.onetmenu:hover::after {
+	width: 100%;
+	border-radius: 8px;
+}
+
+.menu-down {
+	margin-bottom: 20px;
+}
+
+hr.style-six {
+	position: relative;
+	padding: 0;
+	border: none;
+	height: 1px;
+	background-image: -webkit-linear-gradient(left, rgba(0, 0, 0, 0),
+		rgba(243, 156, 18, 1), rgba(0, 0, 0, 0));
+	background-image: -moz-linear-gradient(left, rgba(0, 0, 0, 0),
+		rgba(243, 156, 18, 1), rgba(0, 0, 0, 0));
+	background-image: -ms-linear-gradient(left, rgba(0, 0, 0, 0),
+		rgba(243, 156, 18, 1), rgba(0, 0, 0, 0));
+	background-image: -o-linear-gradient(left, rgba(0, 0, 0, 0),
+		rgba(243, 156, 18, 1), rgba(0, 0, 0, 0));
+	color: #333;
+	text-align: center;
+}
+
+hr.style-six:after {
+	content: " ";
+	display: inline-block;
+	font-size: 1.5em;
+	padding: 10px 22px;
+	background: #fff url(image/cartoon_1.png) no-repeat scroll center;
+	height: 50px;
+}
+
+.img-logo {
+	position: absolute;
+	top: 62px;
+	left: 47.5%;
+	width: 50px;
+	height: 30px;
+	opacity: 0.9;
+}
+</style>
+</head>
+<body>
+	<div layout:fragment="content">
+		<!-- #IMPORTANT. Refer to this layout in every page you want to use the theme -->
+		<div class="content-wrapper">
+
+
+			<!-- --------------------------------------STARTS HERE-------------------------------------------- -->
+
+			<section class="content" style="background-color: white;">
+
+				<div class="row">
+					<div class="col-lg-2">
+						<div class="pull-left">
+							<form th:action="@{/projdetailPrevbt}">
+								<button id="prevbt" type="submit" class="btn btn-lg bg-primary"
+									style="width: auto; border-radius: 4px;">
+									<i class="fa fa-angle-left"></i>&nbsp;Previous
+								</button>
+							</form>
+						</div>
+					</div>
+
+					<div class="col-md-3">
+						<div class="form-group">
+
+							<input type="hidden" name="pro_Id" id="proId"
+								th:value=${ProjectDetail.getId()}> Project name: <input
+								type="text" class="form-control" id="subCategory"
+								th:value="${ProjectDetail.getProjectName()}" readonly>
+						</div>
+					</div>
+
+
+					<div class="col-md-3">
+
+						<div class="form-group">
+							Well Name: <input type="text" class="form-control"
+								id="subCategory" th:value="${ProjectDetail.getWellName()}"
+								readonly>
+						</div>
+
+					</div>
+
+					<div class="col-md-3">
+
+						<div class="form-group">
+							Creation Date: <input th:type="datetime" class="form-control"
+								id="subCategory" th:value="${ProjectDetail.getDateCreated()}"
+								readonly>
+						</div>
+
+					</div>
+
+					<div class="col-md-1"></div>
+				</div>
+				<!-- ****************EVERY MODAL LOADS HERE******************* -->
+				<div class="modal fade" id="exampleModal" tabindex="-1"
+					role="dialog" aria-labelledby="exampleModalLabel"
+					aria-hidden="true">
+					<div style="width: 1000px;" class="modal-dialog" role="document">
+						<div class="modal-content" style="border-radius: 20px;">
+							<div class="modal-pop-header" style="padding: 20px;">
+								<button style="border-radius: 20px;" type="button" class="close"
+									data-dismiss="modal" aria-label="Close">
+									<span style="font-size: 20px;" aria-hidden="true">&times;</span>
+								</button>
+							</div>
+							<div class="modal-body" id="loadtable" style="padding: 20px;">
+							</div>
+						</div>
+					</div>
+				</div>
+
+
+				<div class="box-body">
+					<div class="nav-tabs-custom box-solid">
+						<div class="tab-content text-center">
+
+							<div class="tab-pane active" id="tab_1">
+								<!-- Personal info Li -->
+								<li class="list-group-item"><strong><h3
+											class="header-list text-uppercase">
+											Input Data
+											<hr class="style-six" />
+											<img src="dist/img/petrolium-logo.png" class="img-logo"
+												alt="User Image">
+										</h3></strong><br>
+
+									<div class="row">
+										<div class="col-md-12 menu-down">
+											<button id="mf" title="your-tooltip-here" class="onetmenu"
+												data-toggle="modal">
+												<i class="fa fa-table" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;&nbsp;Mini
+												Frac
+											</button>
+											<button id="rl" title="your-tooltip-here" class="onetmenu"
+												style="margin-bottom: 10px;">
+												<i class="fa fa-table" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;&nbsp;Reservoir
+												Lithology
+											</button>
+											<button id="wd" title="your-tooltip-here" class="onetmenu"
+												style="margin-bottom: 10px;" data-toggle="modal">
+												<i class="fa fa-table" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;&nbsp;Well
+												Data
+											</button>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-md-12 menu-down">
+											<button id="sa" title="your-tooltip-here" class="onetmenu"
+												style="margin-bottom: 10px;" data-toggle="modal">
+												<i class="fa fa-table" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;&nbsp;Stress
+												Analysis
+											</button>
+											<button id="rfp" title="your-tooltip-here" class="onetmenu"
+												data-toggle="modal">
+												<i class="fa fa-table" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;&nbsp;Reservoir
+												Fluid Properties
+											</button>
+											<button id="ip" title="your-tooltip-here" class="onetmenu"
+												style="margin-bottom: 10px;" data-toggle="modal">
+												<i class="fa fa-table" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;&nbsp;Injection
+												Plan
+											</button>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-md-12 menu-down">
+											<button id="fl" title="your-tooltip-here" class="onetmenu"
+												style="margin-bottom: 10px;" data-toggle="modal">
+												<i class="fa fa-table" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;&nbsp;Fluid
+												Library
+											</button>
+											<button id="pp" title="your-tooltip-here" class="onetmenu"
+												style="margin-bottom: 10px;" data-toggle="modal">
+												<i class="fa fa-table" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;&nbsp;Proppant
+												Properties
+											</button>
+											<button id="wf" title="your-tooltip-here" class="onetmenu"
+												data-toggle="modal">
+												<i class="fa fa-table" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;&nbsp;Well
+												Forcast
+											</button>
+										</div>
+									</div>
+									<div class="row" id="showrunsim" th:if="${doneSim==false}">
+										<div class="col-lg-12">
+											<h2 class="content-center ">
+												Click Button to Run Simulation
+												<hr class="style-six">
+												<img src="dist/img/petrolium-logo.png" class="img-logo"
+													alt="User Image">
+											</h2><br>
+											<div id="myProgress" class="progress"
+												style="width: 90%; margin-left: 6.25%;">
+												<div id="myBar"
+													class="progress-bar progress-bar-warning progress-bar-striped"
+													role="progressbar" aria-valuenow="0" aria-valuemin="0"
+													aria-valuemax="100" style="width: 0%"></div>
+											</div>
+											<br>
+											<form th:action="@{/}" id="" name="demoform">
+												<input type="button" id="run1"
+													class="btn btn-warning btn-lg" value="Run Simulator" style="height: 60px;"/> <input
+													type="hidden" name="pro_Id"
+													th:value="${ProjectDetail.getId()}">
+											</form>
+										</div>
+										<div id="show"></div>
+									</div>
+
+
+									<div class="row" id="showrunsim" th:if="${doneSim==true}">
+										<div class="row">
+											<div class="col-lg-12">
+												<div id="myProgress" class="progress"
+													style="width: 90%; margin-left: 6.25%;">
+													<div id="myBar"
+														class="progress-bar progress-bar-warning progress-bar-striped"
+														role="progressbar" aria-valuenow="0" aria-valuemin="0"
+														aria-valuemax="100" style="width: 0%"></div>
+												</div>
+												<br>
+											</div>
+										</div>
+										<div class="row" id="showrunsim">
+											<div class="col-md-3"></div>
+											<div class="col-md-3">
+												<form th:action="@{/}" id="demoform" name="demoform">
+													<input id="run1" type="button"
+														class="btn btn-warning btn-lg" value="Run Simulator"
+														 style="height: 60px;" /> <input type="hidden" name="pro_Id"
+														th:value="${ProjectDetail.getId()}">
+												</form>
+											</div>
+											<div class="col-md-3" id="show1" th:if="${doneSim==true}">
+												<form th:action="@{/graphs}" th:method="post">
+													<input type="submit" id="graph"
+														class="btn btn-primary btn-lg" value="Graphs"
+														style="height: 60px;" /> <input name="p_Id" type="hidden"
+														th:value="${ProjectDetail.getId()}">
+												</form>
+											</div>
+										</div>
+									</div></li>
+							</div>
+						</div>
+					</div>
+			</section>
+
+			<!------------------------------------------ ENDS HERE --------------------------------------------- -->
+		</div>
+	</div>
+</body>
+</html>

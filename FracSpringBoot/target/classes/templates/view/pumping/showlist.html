@@ -1,0 +1,64 @@
+<script>
+	$("#pe_showupbt").click(function(event) {
+		event.preventDefault();
+		url = "/pumping/showupdate";
+		$.ajax({
+			url : url,
+			data : {
+				pid : $("#pe_showpid").val(),
+				type: $(".pumptype").val()
+			},
+			success : function(res) {
+				$("#loadtable").html(res);
+				$("#exampleModal").show();
+			}
+		});
+
+	});
+</script>
+
+<div class="tab-content">
+	<div class="tab-pane active" id="tab_1">
+		<form id="pe_showform" class="form-horizontal" role="form">
+			<input type="hidden" id="pe_showpid" name="pe_showpid"
+				th:value="${pid}" />
+
+			<div class="row">
+				<div class="col-md-4">
+
+					<label for="injectType">Injection Type:</label><br>
+
+					<span
+						class="button-checkbox" th:if="${list[0].value}=='ct'">
+						
+						<button type="button" class="pumptypebt btn  btn-success" >CT</button>
+						<input type="checkbox" class="pumptype" name="resfluid" id=""
+						value="ct" hidden />
+
+					</span> <span class="button-checkbox" th:if="${list[0].value}=='bullhead'">
+						<button type="button" class="pumptypebt btn btn-success">Bullhead</button>
+						<input type="checkbox" class="pumptype" name="resfluid" id=""
+						value="bullhead" hidden />
+
+					</span>
+
+				</div>
+			</div>
+			<br>
+			<table id="" class=" table table-hover">
+
+				<tr th:each="map : ${map1}">
+					<th th:text="${map.key}"></th>
+					<td><input type="text" th:name="'pe_show'+${map.key}"
+						class="pe_showinput form-control" th:value="${map.value}" readonly />
+					</td>
+				</tr>
+				<tr></tr>
+			</table>
+			<center>
+				<input type="submit" id="pe_showupbt" class="btn btn-primary"
+					value="Update" />
+			</center>
+		</form>
+	</div>
+</div>

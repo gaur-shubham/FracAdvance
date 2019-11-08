@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+<style>
+input[type=text],input[type=password] {
+	padding: 12px 20px;
+	background-color:transparent;
+    border:1px solid #ccc;
+    border-radius: 60px;
+}
+
+input[type=submit] {
+	width: 40%;
+	/* position:absolute; */
+	float:right;
+	background-color: #4CAF50;
+	color: white;
+	padding: 14px 0px;
+	margin: 8px 0;
+	border: none;
+	border-radius: 60px;
+	cursor: pointer;
+}
+
+input[type=submit]:hover {
+	background-color: #45a049;
+}
+
+body, html {
+	height: 100%;
+	margin: 0;
+	font-family: 'Calibri';
+	letter-spacing: 2px;
+}
+
+div {
+	border-radius: 5px;
+	padding: 20px;
+}
+
+body {
+	background-image: url('dist/img/vishal.gif');
+	background-repeat: no-repeat;
+	background-size: auto;
+	background-position: center;
+	background-size: cover;
+}
+::placeholder {
+  color: red;
+}
+</style>
+<body>
+
+
+	<div class="bg row" >
+
+		<div class="col-md-4"></div>
+		<div class="col-md-3" style="color: white;margin-left:2%;">
+			<h1>
+				Login <small>Frac Advance<img
+					src="dist/img/petrolium-logo.png" class="img-circle"
+					alt="User Image" style="height: 40px; width: 40px">
+				</small>
+			</h1>
+			<form th:action="@{/login1}" method="POST">
+				Username<input type="text" class="form-control" id="username"
+					name="username" placeholder="Enter Username" ></input> <br> 
+					Password<input type="password"
+					class="form-control" id="password" name="password" placeholder="Enter Password" /> <br> <input
+					type="submit" value="Sign In" class="btn btn-success" />
+			</form>
+			<a th:href="@{/signupController}">
+				<div style="color: green">
+						Create Account
+				</div>
+			</a>
+			<div th:if="${fail}">
+			<label  style="font-weight:normal;color:red;">Incorrect Username Or Password.</label>
+			</div>
+	</div></div>
+</body>
+</html>
+     

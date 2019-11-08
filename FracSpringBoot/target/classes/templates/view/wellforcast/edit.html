@@ -1,0 +1,74 @@
+<script>
+$("#wf_impsavebt").click(function(event){
+	event.preventDefault();
+	var i=0;
+	$('input[name="wf_input"]').each(function(){
+		if($(this).val()==''){
+			$(this).attr("placeholder", "Required");
+			$(this).css({'border':'1px solid #d9534f'});
+			i++;
+		}else{
+			$(this).css({'border':'none'});
+		}
+	});
+	if(i==0){
+	url="wellforcast/saveforcast";
+	$.ajax({
+		url:url,
+		data:$("#wf_impform").serialize(),
+		success:function(res){
+			$("#loadtable").html(res);
+          	$("#exampleModal").show();
+		},
+	});
+	}else{
+		$("#alertText").show();
+	}
+});
+</script>
+<style>
+input[type=text]:focus{
+  outline: 1px solid orange;
+}
+
+</style>
+<section class="content">
+<div class="tab-content">
+	<div class="tab-pane active" id="tab_1">
+	<li class="list-group-item">
+		<div class="row">
+			<div class="col-md-1"></div>
+			<div class="col-md-10">
+				<form id="wf_impform">
+					<input type="hidden" id="wf_imppid" name="imppid" th:value="${pid}">
+					<table id="wf_table" class=" table table-hover table-bordered">
+					<tr>
+					<th style="width: 50%">Well Type</th>
+					<td> 
+					<select id="pp_impselect" class="form-control"
+													style="width: 250px;" name="wf_input">
+													<option th:value="${type}"selected hidden
+															th:if="${type}!=null">[[${type}]]</option>
+														<option value="Oil Well">Oil Well</option>
+														<option value="Gas Well">Gas Well</option>
+														
+												</select>
+					</td>
+					</tr>
+						<tr th:each="list:${list}">
+							<th th:if="${listStat.index}!=0" style="width:50%" th:text="${list.param}"></th>
+							<td th:if="${listStat.index}!=0" ><input type="text" th:value="${list.value}" class="form-control" th:name="wf_input" style="border:none;"></td>
+						</tr>
+					</table>
+					<center>
+					<label style="color:#d9534f" id="alertText" hidden>Fill Empty Fields.</label><br>
+						<input type="submit" id="wf_impsavebt" class="btn btn-primary"
+							value="Save" style="width:10%;"/>
+					</center>
+				</form>
+			</div>
+		</div>
+</li>
+	</div>
+</div>
+</section>

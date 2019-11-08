@@ -1,0 +1,160 @@
+<style>
+.output {
+	background-color: white;
+	border-top-left-radius: 30px;
+	border-top-right-radius: 30px;
+	border-bottom-left-radius: 30px;
+	border-bottom-right-radius: 30px;
+	box-shadow: 0px 0px 10px -1px black;
+}
+
+.outputhead {
+	letter-spacing: 0.01em;
+	position: relative;
+	text-align: center;
+	background: none;
+	color: white;
+	opacity: 0.95;
+	background: #1c5682e6;
+	padding: 2px;
+	border-top-left-radius: 20px;
+	border-top-right-radius: 20px;
+	border-bottom-left-radius: 20px;
+	border-bottom-right-radius: 20px;
+	border: none;
+	transition: all 0.35s linear;
+	outline: none;
+}
+
+.outputhead:hover {
+	letter-spacing: 0.02em;
+	color: white;
+}
+
+.outputhead::after {
+	position: absolute;
+	content: '';
+	top: 0;
+	left: 0;
+	width: 0;
+	height: 100%;
+	background-image: linear-gradient(to right, #262727e6, #000000e6);
+	border-radius: 50px;
+	transform-origin: left;
+	transition: width 0.35s ease;
+	z-index: -1;
+}
+
+.outputhead:hover::after {
+	width: 100%;
+	border-radius: 50px;
+}
+
+.outputhead h4 {
+	font-size: 16px;
+}
+
+.outputbody {
+	height: 230px;
+	font-size: 15px;
+	padding: 20px;
+}
+
+.btn {
+	margin-bottom: 5px;
+}
+
+#chartdiv {
+	width: 100%;
+	height: 500px;
+}
+</style>
+<script>
+$(".button-checkbox").click(function(){
+	var widget = $(this),
+	button=widget.find('button'),
+	pid=$("#pe_imppid").val(),
+	checkbox = widget.find('input:checkbox');
+	url="pumping/settype";
+	if(!checkbox.is(":checked")){
+		$("input.pumptype").prop("checked",false);
+		$("button.pumptypebt").removeClass("btn-primary").addClass("btn-success");
+		checkbox.prop("checked",true);
+		button.removeClass("btn-success").addClass("btn-primary");
+		$.ajax({
+			url:url,
+			data:{pid:pid,type:checkbox.val()},
+			success:function(res){
+			$("#loadtable").html(res);
+          	$("#exampleModal").show();
+          	$("#pe_impsavebt").prop('type','submit');
+			}
+		});
+	}
+	else{
+		checkbox.prop("checked",false);
+		button.removeClass("btn-primary").addClass("btn-success");
+	}
+});
+
+$("#pe_impsavebt").click(function(e){
+	e.preventDefault();
+		var url;
+		if($("#pe_imptype").val()=="ct"){
+			url="/pumping/savepump1";
+		}else if($("#pe_imptype").val()=="bullhead"){
+			url="pumping/savepump2";
+		}
+		$.ajax({
+			url:url,
+			data:$("#pe_impform").serialize(),
+			success:function(res){
+				$("#loadtable").html(res);
+	          	$("#exampleModal").show();
+			}
+			
+		});
+});
+</script>
+
+<div class="tab-content">
+	<div class="tab-pane active" id="tab_1">
+		<form id="pe_impform" class="form-horizontal" role="form">
+			<input type="hidden" id="pe_imppid" name="pe_imppid" th:value="${pid}" />
+			<input type="hidden" id="pe_imptype" name="pe_imptype"
+				th:value="${type}" />
+			<div class="row">
+				<div class="col-md-12">
+
+					<label for="injectType">Injection Type:</label><br> <span
+						class="button-checkbox">
+
+						<button type="button" class="pumptypebt btn  btn-success">CT</button>
+						<input type="checkbox" class="pumptype" name="resfluid" id=""
+						value="ct" hidden />
+
+					</span> <span class="button-checkbox">
+						<button type="button" class="pumptypebt btn btn-success">Bullhead</button>
+						<input type="checkbox" class="pumptype" name="resfluid" id=""
+						value="bullhead" hidden />
+					</span>
+
+				</div>
+			</div>
+			<br>
+			<table id="" class=" table table-hover">
+
+				<tr th:each="list:${list}">
+					<th th:text="${list}"></th>
+					<td><input type="text" th:name="'pe_imp'+${list}"
+						class="pe_impinput form-control" placeholder="Enter Value" /></td>
+				</tr>
+				<tr></tr>
+			</table>
+			<center>
+				<input type="hidden" id="pe_impsavebt" class="btn btn-primary"
+					value="SAVE" />
+			</center>
+		</form>
+	</div>
+</div>

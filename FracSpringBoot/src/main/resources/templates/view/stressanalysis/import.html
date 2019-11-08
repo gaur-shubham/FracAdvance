@@ -1,0 +1,155 @@
+<script th:inline="javascript">
+    $( "#enterbutton" ).click(function() {
+        $( "#fill" ).slideToggle( "slow" );
+        $( "#form" ).slideToggle( "slow" );
+        });
+    $( "#importbutton" ).click(function() {
+        $( "#fill" ).slideToggle( "slow" );
+        $( "#form" ).slideToggle( "slow" );
+        });
+    
+    $("#sa_impaddfieldbt").click(function(){
+    	url="stressanalysis/savestressfield";
+    	$.ajax({
+    		url:url,
+    		data:$("#sa_impmainform").serialize(),
+    		success:function(res){
+    			console.log(res);
+    			$("#loadtable").html(res);
+	          	$("#exampleModal").show();
+	          	$("#fill").show();
+	          	$("#form").hide();
+    		}
+    		
+    	});
+    });
+    
+    $(".sa_impremfieldbt").click(function(){
+    	var id =$(this).closest('td').find('input[name=sa_imphiddenid]').val();
+    	var pid=$("#sa_imppid").val();
+    	url="stressanalysis/delstressfield";
+    	$.ajax({
+    		url:url,
+    		data:{pid:pid,id:id},
+    		success:function(res){
+    			$("#loadtable").html(res);
+	          	$("#exampleModal").show();
+	          	$("#fill").show();
+	          	$("#form").hide();
+    		}
+    	});
+    });
+    
+    $("#sa_impsavebt").click(function(){
+    	url="stressanalysis/saveanalysis";
+    	$.ajax({
+    		url:url,
+    		data:$("#sa_impmainform").serialize(),
+    		success:function(res){
+    			$("#loadtable").html(res);
+	          	$("#exampleModal").show();
+    		},
+    	});
+    });
+    
+    $("#sa_impdatabt").click(function(event){
+    	event.preventDefault();
+    	var formData=new FormData($("#fileUploadForm")[0]),
+    	url="stressanalysis/uploadfile";
+    	if($("#file2").val()){
+    		$.ajax({
+    			 url: url,
+    			 type:'POST',
+    			  enctype: 'multipart/form-data',
+    			  data:formData,
+    			  processData: false, // tell jQuery not to process the data
+    			  contentType: false, // tell jQuery not to set contentType
+    			  cache: false,
+    			success:function(res){
+    				$("#loadtable").html(res);
+    			    $("#exampleModal").show();
+    			}
+    		});
+    	}else{
+    		alert("Select File");
+    		return false;
+    	}
+    });
+    </script>
+    
+        <div class="row" id="form">
+            <div class="col-lg-4 col-xs-6">
+                <form th:action="@{/}" enctype="multipart/form-data" id="fileUploadForm" method="POST" name="demoform">
+                <input type="hidden" id="" name="pid" th:value="${pid}">
+                    <div class="form-group ">
+                        Select Excel(xlsx) to import
+                        <input name="sa_impfile" id="file2" type="file">
+                    </div>
+                    <div class="form-group ">
+                        <input type="submit"  value="Import" class="btn btn-primary"  id="sa_impdatabt" style="width:25%"/>
+                    </div>
+                </form>
+            </div> 
+            <div class="col-lg-8 col-xs-6">
+                <h3>Note:</h3>
+                <ul>
+                    User can input reservoir lithology (Perm/Poro over depth (MD), TVD, formation pressure ) in anyone of three ways :
+
+                    <li>  Import well log ( Porosity log in .las/txt) file</li>
+                    <li>  Import excel file (Perm/Poro over depth, excel format provided)</li>
+                    <li>  Enter manually (Perm/Poro, TVD and formation pressure)</li>
+
+                </ul>
+            </div>
+		&nbsp;&nbsp;&nbsp;&nbsp;<input type="button" class="btn btn-primary" value="Enter Manually" id="enterbutton" style="width:12%">
+        </div>
+        
+       
+        <div id="fill" hidden>
+        <input type="button" class="btn btn-primary" value="Import Well Log" id="importbutton" style="width:12.5%">
+            <li class="list-group-item">
+                <strong><h4 class="text-center">STRESS ANALYSIS</h4></strong><br>
+               
+                <div class="row">
+                    <div class="col-md-12">
+<form id="sa_impmainform">
+<input type="hidden" id="sa_imppid" name="sa_imppid" th:value="${pid}">
+                        <table id="example2" class="table table-hover table-bordered" >
+                            <thead  class="bg-gray">
+							<tr>
+                            <th style="width:16.5%;text-align: center;">Poisson's ratio</th>
+                                    <th style="text-align: center;">Density(lb/ft3)</th>
+                                    <th style="text-align: center;">Depth(ft)</th>
+                                    <th style="text-align: center;">Pore Pressure(Mpa)</th>
+
+                                    <th style="width:5%;text-align: center;"></th>
+                            
+                            </tr>
+                            </thead>
+                            <tbody>
+                            		<tr th:each="list:${list}">
+                                    <td><input  type="number" class="form-control" th:value="${list.ratio}" id="ratio" readonly></td>
+                                    <td><input  type="number"class="form-control" th:value="${list.density}" id="density" readonly></td>
+                                    <td><input  type="number"class="form-control" th:value="${list.depth}"id="depth" readonly></td>
+                                    <td><input  type="number"class="form-control"  th:value="${list.pore}" id="pore" readonly></td>
+                                    <td><input class="sa_impremfieldbt btn btn-danger" style="width:100%;" type="button"  value="X" >
+                                    <input  type="hidden" class="form-control" name="sa_imphiddenid" th:value="${list.id}" id="pore">
+                                    </td>
+                                    </tr>
+                            	
+                                    <tr>
+                                    <td><input  type="number" name="sa_impinput" class="form-control" id="ratio" autofocus></td>
+                                    <td><input  type="number" name="sa_impinput" class="form-control" id="density"></td>
+                                    <td><input  type="number" name="sa_impinput" class="form-control" id="depth"></td>
+                                    <td><input  type="number" name="sa_impinput" class="form-control" id="pore"></td>
+
+                                    <td><input id="sa_impaddfieldbt" class="btn btn-primary" style="width:100%;" type="button" value="+" ></td>
+                                    </tr>
+                            </tbody>
+                        </table>
+                        
+                </form>
+                        <center>
+                        <input id="sa_impsavebt" class="btn btn-primary" type="submit" value="SAVE" style="width:10%"/></center>
+                    </div>
+                </div>

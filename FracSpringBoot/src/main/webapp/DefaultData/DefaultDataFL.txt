@@ -1,0 +1,10 @@
+/Linear Gel
+Viscosity(CP)=100
+Specific Gravity=1.1
+Fluid Density(ppg)=8.8
+Temprature(F)=233
+/Surface Crosslink
+viscosity(CP)=150
+Specific Gravity=1.3
+Fluid Density(ppg)=9.42
+Temprature(F)=233

@@ -1,0 +1,95 @@
+<script th:inline="javascript">
+$("#if_updsavebt").click(function(e){
+	e.preventDefault();
+	if($("#updrate").val()&&$("#updcoeff").val()&&$("#updloss").val()&&$("#updskin").val()&&$("#updpi").val()&&$("#updmargin").val()&&$("#updstress").val()){
+		url="/injectedfluid/updatesavefluid";
+		$.ajax({
+			url:url,
+			data:$("#if_updateform").serialize(),
+		success:function(res){
+			$("#loadtable").html(res);
+          	$("#exampleModal").show();
+		}
+		});
+	}else{
+		alert("FILL EMPTY FIELDS");
+		return false;
+	}
+});
+</script>
+
+<div class="tab-content">
+	<div class="tab-pane active" id="tab_1">
+	<tr th:each="list:${list}">
+		<form id="if_updateform">
+		<div class="row">
+		<div class="col-lg-12">
+			
+				<input type="hidden" id="if_updpid" name="updpid" th:value="${pid}">
+				<div class="col-md-10">
+
+					<table id="" class="table table-hover">
+						<tr>
+							<th>Injection Rate(bbl/min)</th>
+							<td><input type="number" id="updrate" th:value="${list.rate}" name="updrate" class="form-control" required/>
+							<input type="hidden" name="updid" th:value="${list.id}"/>
+ 							</td>
+						</tr>
+						<tr>
+							<th>Leak off coefficient (ft/sec^1/2)</th>
+							<td><input type="number" id="updcoeff" th:value="${list.coeff}" name="updcoeff" class="form-control" required/></td>
+						</tr>
+						<tr>
+							<th>Spurt loss (gal/ft2)</th>
+							<td><input type="number" id="updloss" th:value="${list.loss}" name="updloss" class="form-control" required/></td>
+						</tr>
+					</table>
+
+				</div>
+				
+				<div class="col-md-10">
+		<center><strong><h4 class="text-center">Pre-frac skin and PI</h4></strong><br></center>
+					<table id="" class="table table-hover">
+						<tr>
+							<th>Skin</th>
+							<td><input type="number" id="updskin" th:value="${list.skin}" name="updskin" class="form-control" required/></td>
+						</tr>
+						<tr>
+							<th>PI (bbl/day-psi)</th>
+							<td><input type="number" id="updpi" th:value="${list.pi}" name="updpi" class="form-control" required/></td>
+						</tr>
+
+					</table>
+
+				</div>
+
+
+				<div class="col-md-12">
+					
+				</div>
+				<div class="col-md-10">
+		<center><strong><h4 class="text-center">Others input
+							parameters</h4></strong><br></center>
+					<table id="" class="table table-hover">
+						<tr>
+							<th>Safety margin (200-500 psi)</th>
+							<td><input type="number" id="updmargin" th:value="${list.margin}" name="updmargin" class="form-control" required/></td>
+						</tr>
+						<tr>
+							<th>Tectonic stress (psi)</th>
+							<td><input type="number" id="updstress" th:value="${list.stress}" name="updstress" class="form-control" required/></td>
+						</tr>
+
+					</table>
+					
+						
+				</div>
+			
+</div>
+		</div>
+		<center>
+					<input type="submit" id="if_updsavebt" class="btn btn-primary"
+						value="SAVE"/></center>
+						</form></tr>
+	</div>
+</div>

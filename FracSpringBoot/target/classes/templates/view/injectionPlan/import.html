@@ -1,0 +1,285 @@
+<script th:inline="javascript">
+
+$( "#enterbutton" ).click(function() {
+    $( "#fill" ).slideToggle( "slow" );
+    $( "#form" ).slideToggle( "slow" );
+    });
+$( "#importbutton" ).click(function() {
+    $( "#fill" ).slideToggle( "slow" );
+    $( "#form" ).slideToggle( "slow" );
+    });
+
+	$(".ip_impaddfield")
+			.click(
+					function(event) {
+						event.preventDefault();
+						url = "/injectionPlan/saveinjection";
+						if ($("#ip_impftype").val() && $("#ip_impstype").val()
+								&& $("#ip_imprate").val()
+								&& $("#ip_impcvol").val()
+								&& $("#ip_impbegprop").val()
+								&& $("#ip_impendprop").val()) {
+							$.ajax({
+								url : url,
+								data : $("#ip_impmainform").serialize(),
+								success : function(res) {
+									$("#loadtable").html(res);
+									$("#exampleModal").show();
+								}
+							});
+						} else {
+							alert("Fill Empty Fields");
+							return false;
+						}
+					});
+
+	$("#ip_impsaveBt").click(function() {
+		url = "/injectionPlan/showlist";
+		if ($("#ip_impftype").val() && $("#ip_impstype").val()
+				&& $("#ip_imprate").val()
+				&& $("#ip_impcvol").val()
+				&& $("#ip_impbegprop").val()
+				&& $("#ip_impendprop").val()) {
+		$.ajax({
+			url : url,
+			data : $("#ip_impmainform").serialize(),
+			success : function(res) {
+				$("#loadtable").html(res);
+				$("#exampleModal").show();
+			}
+		});
+		}else{
+			alert("Fill Empty Fields");
+			return false;
+		}
+	});
+	
+	$(".ip_impdelfield").click(function() {
+		var id = $(this).closest('td').find('input[name=ip_impid]').val();
+		console.log(id);
+		var pid = $("#ip_imppid").val();
+		url = "/injectionPlan/deleteinjection";
+		$.ajax({
+			url : url,
+			data : {
+				pid : pid,
+				id : id
+			},
+			success : function(res) {
+				$("#loadtable").html(res);
+				$("#exampleModal").show();
+			}
+		});
+	});
+	
+	$("#ip_impdatabt").click(function(event){
+		event.preventDefault();
+		var formData=new FormData($("#fileUploadForm")[0]),
+		url="injectionPlan/uploadfile";
+		if($("#file2").val()){
+			$.ajax({
+				url: url,
+   			 type:'POST',
+   			  enctype: 'multipart/form-data',
+   			  data:formData,
+   			  processData: false, // tell jQuery not to process the data
+   			  contentType: false, // tell jQuery not to set contentType
+   			  cache: false,
+   			  success:function(res){
+   				$("#loadtable").html(res);
+				$("#exampleModal").show();
+   			  }
+			});
+		}else{
+			alert("Select A File.");
+			return false;
+		}
+	});
+</script>
+
+<div class="tab-content">
+
+
+ <div class="row" id="form" hidden>
+            <div class="col-lg-4 col-xs-6">
+                <form th:action="@{/}" enctype="multipart/form-data" id="fileUploadForm" method="POST" name="demoform">
+                <input type="hidden" id="" name="pid" th:value="${pid}">
+                    <div class="form-group ">
+                        Select  Excel(xlsx) to import
+                        <input name="ip_impfile" id="file2" type="file">
+                    </div>
+                    <div class="form-group ">
+                        <input type="submit"  value="Import" class="btn btn-primary"  id="ip_impdatabt" style="width:25%"/>
+                    </div>
+                </form>
+            </div> 
+            <div class="col-lg-8 col-xs-6">
+                <h3>Note:</h3>
+                <ul>
+                    User can input Injection Plan (Fluid Type,Rate, Clean Volume) in anyone of three ways :
+
+                    <li>  Import well log ( Porosity log in .las/txt) file</li>
+                    <li>  Import excel file (Perm/Poro over depth, excel format provided)</li>
+                    <li>  Enter manually (Perm/Poro, TVD and formation pressure)</li>
+
+                </ul>
+            </div>
+		&nbsp;&nbsp;&nbsp;&nbsp;<input type="button" class="btn btn-primary" value="Enter Manually" id="enterbutton" style="width:12%">
+        </div>
+        
+        
+
+
+
+
+	<div class="tab-pane active" id="fill" >
+	
+<input type="button" class="btn btn-primary" value="Import File" id="importbutton" style="width:12.5%">
+<br>
+ <li class="list-group-item">
+		<div class="row">
+			<div class="col-md-1"></div>
+			<div class="col-md-10" style="overflow-x: auto; overflow-y: hidden;">
+				<form id="ip_impmainform">
+					<table class="table table-hover table-bordered a">
+						<tr>
+							<th nowrap="nowrap">&nbsp;&nbsp;&nbsp;Step&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							<th nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Fluid
+								Type&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+							<th nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Stage
+								Type&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+							<th nowrap="nowrap">Rate(BPM)</th>
+							<th nowrap="nowrap">Clean Vol.(BBL)</th>
+							<th nowrap="nowrap">Slurry Vol.(BBL)</th>
+							<th nowrap="nowrap">Cumulative Slurry Vol.(BBL)</th>
+							<th nowrap="nowrap">Begin Proppant Conc.(PPG)</th>
+							<th nowrap="nowrap">End Proppant Conc.(PPG)</th>
+							<th nowrap="nowrap">Stage Prop(LBS)</th>
+							<th nowrap="nowrap">Cumulative Prop(LBS)</th>
+							<th nowrap="nowrap">Step Time</th>
+							<th nowrap="nowrap">Elapsed Time</th>
+							<th></th>
+						</tr>
+
+						<tr th:each="list:${list}" th:if="${list}!=null">
+							<td><input type="text" min="0" max="" class="form-control"
+								name="" id="ip_impstep" th:value="${list.step}" required
+								style="border: none;" readonly /> <input id="ip_imppid"
+								th:name="ip_imppid" type="hidden" th:value=${pid}></td>
+							<td><input type="text" min="0" max="" name="" id=""
+								th:value="${list.fluidtype}" class="form-control"
+								style="border: none;" readonly /></td>
+							<td><input type="text" min="0" max="" class="form-control"
+								th:value="${list.stagetype}" name="" id="" style="border: none;"
+								readonly /></td>
+							
+							<td><input   type="text" min="0" max="" class="form-control"
+								th:value="${list.rate}" style="border: none;" readonly /></td>
+								
+								
+							<td><input type="text" min="0" max="" class="form-control"
+								th:value="${list.cleanvol}" name="" id="" required
+								style="border: none;" readonly /></td>
+							<td><input type="text" min="0" max="" class="form-control"
+								th:value="${list.slurryvol}" name="" id="" style="border: none;"
+								readonly /></td>
+							<td><input type="text" min="0" max="" class="form-control"
+								th:value="${list.cumslurry}" name="" id="" style="border: none;"
+								readonly /></td>
+							<td><input type="text" min="0" max="" class="form-control"
+								th:value="${list.begprop}" name="" id="" required
+								style="border: none;" readonly /></td>
+							<td><input type="text" min="0" max="" class="form-control"
+								th:value="${list.endprop}" name="" id="" required
+								style="border: none;" readonly /></td>
+							<td><input type="text" min="0" max="" class="form-control"
+								th:value="${list.stageprop}" name="" id="" style="border: none;"
+								readonly /></td>
+							<td><input type="text" min="0" max="" class="form-control"
+								th:value="${list.cumprop}" name="" id="" style="border: none;"
+								readonly /></td>
+							<td><input type="text" min="0" max="" class="form-control"
+								th:value="${list.steptime}" name="" id="" style="border: none;"
+								readonly /></td>
+							<td><input type="text" min="0" max="" class="form-control"
+								th:value="${list.cumStepTime}" name="" id="" style="border: none;"
+								readonly /></td>
+							<td><input class="ip_impdelfield btn btn-danger"
+								type="button" value="Remove" style="width: 105%;" />
+								<input type="text" class="form-control"
+								th:value="${list.id}" name="ip_impid" id="ip_impid" style="border: none;"
+								readonly /></td>
+						</tr>
+						<tr>
+							<td><input type="number" min="0" max="" class="form-control inputclass"
+								name="ip_impinput" id="ip_impstep" required
+								style="border: none;" autofocus /> <input id="ip_imppid"
+								th:name="ip_imppid" type="hidden" th:value=${pid}></td>
+							<td><select name="ip_impinput" id="ip_impftype"
+								class="form-control" style="border: none;">
+									<option value="Acid">Acid</option>
+									<option value="Slick Water">Slick Water</option>
+									<option value="Fresh Water">Fresh Water</option>
+									<option value="Linear Gel">Linear Gel</option>
+									<option value="Cross Link">Cross Link</option>
+							</select></td>
+							<td><select class="form-control " name="ip_impinput"
+								id="ip_impstype" style="border: none;">
+									<option value="HCL 12-15%">HCL 12-15%</option>
+									<option value="HCL 17-28%">HCL 17-28%</option>
+									<option value="Pad">Pad</option>
+									<option value="Flush">Flush</option>
+									<option value="Pre Flush">Pre Flush</option>
+									<option value="Shut Down">Shut Down</option>
+									<option value="Ball Drop">Ball Drop</option>
+									<option value="100 Mesh">100 Mesh</option>
+									<option value="40/70 Mesh">40/70 Mesh</option>
+									<option value="30/50 Mesh">30/50 Mesh</option>
+									<option value="20/40 Mesh">20/40 Mesh</option>
+									<option value="16/30 Mesh">16/30 Mesh</option>
+									<option value="12/18 Mesh">12/18 Mesh</option>
+							</select></td>
+							<td><input type="number" min="0" max="" class="form-control inputclass"
+								name="ip_impinput" id="ip_imprate" required
+								style="border: none;" /></td>
+							<td><input type="number" min="0" max="" class="form-control inputclass"
+								name="ip_impinput" id="ip_impcvol" required
+								style="border: none;" /></td>
+							<td title="Values Will Be Calculated"><input type="number"
+								min="0" max="" class="form-control " name="" id="ip_impsvol"
+								style="border: none;" readonly /></td>
+							<td title="Values Will Be Calculated"><input type="number"
+								min="0" max="" class="form-control" name="" id="ip_impcsvol"
+								style="border: none;" readonly /></td>
+							<td><input type="number" min="0" max="" class="form-control inputclass"
+								name="ip_impinput" id="ip_impbegprop" required  
+								style="border: none;" /></td>
+							<td><input type="number" min="0" max="" class="form-control inputclass"
+								name="ip_impinput" id="ip_impendprop" required
+								style="border: none;" /></td>   
+							<td title="Values Will Be Calculated"><input type="number"
+								min="0" max="" class="form-control a" name="" id="stageprop"
+								style="border: none;" readonly /></td>
+							<td title="Values Will Be Calculated"><input type="number"
+								min="0" max="" class="form-control" name="" id="ip_impcprop"
+								style="border: none;" readonly /></td>
+							<td title="Values Will Be Calculated"><input type="number"
+								min="0" max="" class="form-control" name="" id="steptime"
+								style="border: none;" readonly /></td>
+							<td title="Values Will Be Calculated"><input type="number"
+								min="0" max="" class="form-control" name="" id="cumsteptime"
+								style="border: none;" readonly /></td>	
+							<td><input class="ip_impaddfield btn btn-primary"
+								type="button" value="Add Field" style="width: 105%;" /></td>
+						</tr>
+					</table>
+</form>
+</div>
+</div></li>
+                <br>
+                <center>
+            <input type="button" id="ip_impsaveBt" value="Save"
+				class="btn btn-primary" style="width:10%"></input>
+            </center>
+            </div>
+        </div>

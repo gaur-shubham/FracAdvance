@@ -1,0 +1,114 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+    <head>
+        <title>StimOpti || User Login</title>
+        <meta charset="UTF-8">
+            <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+            <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!--===============================================================================================-->	
+               
+<link rel="icon" type="image/png" href="${resource(dir: 'css/login/images', file: 'titleicon.png') }"/>
+                <link rel="stylesheet" type="text/css" href="${resource(dir: 'css/login/vendor/bootstrap/css', file: 'bootstrap.min.css') }">
+        <!--===============================================================================================-->
+                    <link rel="stylesheet" type="text/css" href="${resource(dir: 'css/login/fonts/font-awesome-4.7.0/css', file: 'font-awesome.min.css') }">
+            <!--===============================================================================================-->
+                        <link rel="stylesheet" type="text/css" href="${resource(dir: 'css/login/vendor/animate', file: 'animate.css') }">
+                <!--===============================================================================================-->	
+                            <link rel="stylesheet" type="text/css" href="${resource(dir: 'css/login/vendor/css-hamburgers', file: 'hamburgers.min.css') }">
+                    <!--===============================================================================================-->
+                                <link rel="stylesheet" type="text/css" href="${resource(dir: 'css/login/vendor/select2', file: 'select2.min.css') }">
+                        <!--===============================================================================================-->
+                                    <link rel="stylesheet" type="text/css" href="${resource(dir: 'css/login/css', file: 'util.css') }">
+                                        <link rel="stylesheet" type="text/css" href="${resource(dir: 'css/login/css', file: 'main.css') }">
+
+
+<!-- / Homepage Specific -->
+                                            <style type="text/css">
+                                                #myVideo {
+                                                position: fixed;
+                                                right: 0;
+                                                bottom: 0;
+                                                min-width: 100%; 
+                                                min-height: 100%;
+                                                }
+                                            </style>
+                                            </head>
+                                            <body>
+                                                <video autoplay muted loop id="myVideo">
+                                                    <source src="${resource(dir: 'css/login/particle', file: 'particle.mp4') }" type="video/mp4">
+                                                </video>
+                                                <div class="limiter">
+                                                    <div class="container-login100">
+
+                                                        <div class="wrap-login100">
+                                                            <img id="head" src="${resource(dir: 'css/login/images', file: 'Petroleum.png') }" height="130" width="200">
+                                                                <div class="login100-pic js-tilt" data-tilt>
+                                                                    <img src="${resource(dir: 'css/login/images', file: 'img-01.png') }" alt="IMG">
+                                                                </div>
+                                                                <form id="login-form" action='${postUrl}' method="post" class="login100-form validate-form">
+                                                                    <span class="login100-form-title">
+                                                                        User Login
+                                                                    </span>
+                                                                    <g:if test="${params.login_error=="1"}">
+                                                                        <div class="alert alert-danger col-xs-offset-1 col-xs-10">
+                                                                            Invalid Username or Password
+                                                                        </div>
+                                                                    </g:if>
+
+                                                                    <div class="wrap-input100 validate-input" data-validate = "Valid username is required">
+                                                                        <input type="text" id="username" name="j_username" class="input100" placeholder="Username">
+                                                                            <span class="focus-input100"></span>
+                                                                            <span class="symbol-input100">
+                                                                                <i class="fa fa-user" aria-hidden="true"></i>
+                                                                            </span>
+                                                                    </div>
+
+                                                                    <div class="wrap-input100 validate-input" data-validate = "Password is required">
+                                                                        <input type="password" id="password" name="j_password" placeholder="Password" class="input100">
+                                                                            <span class="focus-input100"></span>
+                                                                            <span class="symbol-input100">
+                                                                                <i class="fa fa-lock" aria-hidden="true"></i>
+                                                                            </span>
+                                                                    </div>
+
+                                                                    <div class="container-login100-form-btn">
+                                                                        <button class="login100-form-btn">
+                                                                            Login
+                                                                        </button>
+                                                                    </div>
+
+                                                                    <div class="text-center p-t-12">
+                                                                        <span class="txt1">
+                                                                            Forgot
+                                                                        </span>
+                                                                        <a class="txt2" href="#">
+                                                                            Username / Password?
+                                                                        </a>
+                                                                    </div>
+                                                                </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+<!--===============================================================================================-->	
+                                                <script src="${resource(dir: 'css/login/vendor/jquery', file: 'jquery-3.2.1.min.js') }"></script>
+                                        <!--===============================================================================================-->
+                                                <script src="${resource(dir: 'css/login/vendor/bootstrap/js', file: 'popper.js') }"></script>
+                                                <script src="${resource(dir: 'css/login/vendor/bootstrap/js', file: 'bootstrap.min.js') }"></script>
+                                        <!--===============================================================================================-->
+                                                <script src="${resource(dir: 'css/login/vendor/select2', file: 'select2.min.js') }"></script>
+                                        <!--===============================================================================================-->
+                                                <script src="${resource(dir: 'css/login/vendor/tilt', file: 'tilt.jquery.min.js') }"></script>
+                                                <script >
+                                                    $('.js-tilt').tilt({
+                                                    scale: 1.1
+                                                    })
+                                                </script>
+
+<!--===============================================================================================-->
+                                                <script src="${resource(dir: 'css/login/js', file: 'main.js') }"></script>
+
+                                            </body>
+                                            </html>

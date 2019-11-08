@@ -1,0 +1,69 @@
+<script>
+$("#rl_showEditbt").click(function(){
+	url="reservoirLithology/saveupdate";
+	$.ajax({
+		url:url,
+		data:$("#rl_mainform").serialize(),
+		success:function(res){
+			$("#loadtable").html(res);
+			$("#exampleModal").show();
+		}
+	});
+});
+</script>
+<section class="content">
+<li class="list-group-item">
+
+<div class="row">
+<div class="col-md-1"></div>
+<div class="col-md-10" style="overflow-x: auto; overflow-y: hidden;">
+<form id="rl_mainform">
+<input type="hidden" id="rl_editpid" th:name="pid" th:value="${pid}">
+<table id="example2" class="table table-hover table-bordered" >
+                            <thead><tr>
+								<th style="text-align:center;">Stage</th>
+								<th style="text-align: center;width:39%;">&nbsp;&nbsp;&nbsp;TVD<br>(ft)&nbsp;&nbsp;&nbsp;</th>
+								<th nowrap style="text-align: center;">&nbsp;&nbsp;&nbsp;MD<br>(ft)&nbsp;&nbsp;&nbsp;</th>
+								<th nowrap style="text-align: center;">Layer
+									Thickness<br>(ft)</th>
+								<th nowrap style="text-align: center;">Rock
+									Type</th>
+								<th nowrap style="text-align: center;">Permiability<br>(md)</th>
+								<th nowrap style="text-align: center;">Porosity</th>
+								<th nowrap style="text-align: center;">Leakoff
+									Coefficient<br>(ft/min^5)</th>
+								<th nowrap style="	text-align: center;">Youngs
+									Modulus</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="list:${list}">
+								<th style="text-align:center;" th:text="${list.fracstage}"></th>
+								<td title="TVD(ft)"><input type="number" min="0" max=""
+									class="form-control" id="tvd" name="rl_input" th:value="${list.tvd}" style="border:none;"></td>
+								<td title="MD(ft)"><input type="number" min="0" max=""
+									class="form-control" id="tvd" name="rl_input" th:value="${list.md}" style="border:none;"></td>
+								<td title="Layer Thickness(ft)"><input type="number" min="0" max=""
+									class="form-control" id="tvd" name="rl_input" th:value="${list.layer}" style="border:none;"></td>
+								<td title="Rock	Type"><input type="number" min="0" max=""
+									class="form-control" id="tvd" name="rl_input" th:value="${list.rock}" style="border:none;"></td>
+								<td title="Permiability(md)"><input type="number" min="0" max=""
+									class="form-control" id="tvd" name="rl_input" th:value="${list.perm}" style="border:none;"></td>
+								<td title="Porosity"><input type="number" min="0" max=""
+									class="form-control" id="tvd" name="rl_input" th:value="${list.poro}" style="border:none;"></td>
+								<td title="Leakoff Coefficient(ft/min^5)"><input type="number" min="0" max=""
+									class="form-control" id="tvd" name="rl_input" th:value="${list.leakoff}" style="border:none;"></td>
+								<td title="Youngs Modulus"><input type="number" min="0" max=""
+									class="form-control" id="tvd" name="rl_input" th:value="${list.youngs}" style="border:none;"></td>
+							</tr>
+							</tbody>
+                        </table>
+                       </form>
+</div>
+</div>
+<br><center>
+	<input id="rl_showEditbt" class="btn btn-primary" type="submit"
+		value="Edit" style="width:10%"/>
+</center>
+</li>
+</section>

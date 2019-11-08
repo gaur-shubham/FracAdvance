@@ -1,0 +1,296 @@
+    <script>
+
+	$('input[type=radio][name=aq]').change(function(){
+		var value = 	$(this).val();
+		if(value=="Open Hole"){				
+			$("#s3").hide();
+			$("#s4").hide();
+			$("#s5").hide();	
+			$("#s6").hide();
+			$("#s7").hide();
+			$("#s8").hide();	
+			$("#s9").hide();
+			$("#s10").hide();
+			$("#s11").hide();	
+			$("#s12").hide();
+			$("#s13").hide();
+			$("#s14").hide();	
+			$("#s15").hide();
+			$("#s16").hide();
+			}
+		    else if(value=="Cased Hole")
+				{
+		    	$("#s3").show();
+		    	$("#s4").show();
+				$("#s5").show();	
+				$("#s6").show();
+				$("#s7").hide();
+				$("#s8").hide();	
+				$("#s9").hide();
+				$("#s10").hide();
+				$("#s11").hide();	
+				$("#s12").hide();
+				$("#s13").hide();
+				$("#s14").hide();	
+				$("#s15").hide();
+				$("#s16").hide();}
+			else if(value=="Slotted Liner")
+			{$("#s3").show();
+		    $("#s4").show();
+			$("#s5").show();	
+			$("#s6").show();
+			$("#s7").show();
+			$("#s8").show();	
+			$("#s9").show();
+			$("#s10").show();
+			$("#s11").show();	
+			$("#s12").show();
+			$("#s13").show();
+			$("#s14").show();
+			$("#s15").hide();
+			$("#s15").hide();
+			$("#s16").hide();
+    }
+			else if(value=="Limited Entry")
+			{
+			$("#s3").show();
+			$("#s4").show();
+			$("#s5").show();	
+			$("#s6").show();
+			$("#s7").hide();
+			$("#s8").hide();	
+			$("#s9").hide();
+			$("#s10").hide();
+			$("#s11").hide();	
+			$("#s12").hide();
+			$("#s13").hide();
+			$("#s14").hide();
+			$("#s15").show();
+			$("#s16").hide();}
+			else
+				
+				{$("#s3").show();
+				$("#s4").show();
+				$("#s5").show();	
+				$("#s6").show();
+				$("#s7").hide();
+				$("#s8").hide();	
+				$("#s9").hide();
+				$("#s10").hide();
+				$("#s11").hide();	
+				$("#s12").hide();
+				$("#s13").hide();
+				$("#s14").hide();
+				$("#s15").hide();
+				$("#s16").show();}
+				
+		});
+	
+	$('input[type=radio][name=zx]').change(function(){
+		var value = 	$(this).val();
+		if(value=="Vertical"){			
+			$("#t5").hide();
+			$("#t6").hide();	
+			$("#t7").hide();}
+		else if(value=="Horizontal")
+				{$("#t5").show();
+				 $("#t6").show();
+				 $("#t7").hide();}
+			else{$("#t5").hide();
+			     $("#t6").hide();
+			     $("#t7").show();
+				}});
+	
+		
+	 $("#welldataTable1").click(function (e) {
+		 e.preventDefault();
+    var formData = $("#fileUploadForm111").serialize();
+	var pid = $("#pid0").val();	
+	var wellType = $('input:radio[name="zx"]:checked').val();
+	var completionType = $('input:radio[name="aq"]:checked').val();
+	
+	
+		        $.ajax({
+		            url: '/updateWellData',		            
+		            data: formData+"&pid="+pid+"&wellType="+wellType+"&completionType="+completionType,
+		            
+		                success:function(res){
+		            	
+		    			$("#loadtable").html(res);
+		    		    $("#exampleModal").show();
+		    		} 		        
+		        });
+		    });
+
+</script>   
+
+ <div class="tab-content">
+            <div class="tab-pane active" id="tab_1">
+                <strong><h4 class="text-center"style="font-weight: bold;">WELL COMPLETION DATA</h4></strong><br>
+                <div class="row">
+                    <div class="col-md-12">
+  <div class="row">
+  <p style="font-weight: bold;">Select Well Type</p>
+    <div class="col-md-6">
+     
+        
+        <div class="row" >
+ <button  type="button"class="btn-danger" >Vertical<input type="radio" name="zx" checked="checked" value="Vertical">
+                                </button>                    
+<button typ
+e="button" class="btn-success" >Horizontal<input type="radio" name="zx" checked="checked" value="Horizontal">
+                                </button>
+<button type="button" class="btn-primary" >Slanted <input type="radio" name="zx" checked="checked" value="Slanted">
+                                </button>
+      
+      
+       </div>   
+     
+    </div> 
+	</div>
+    
+    
+    
+    
+      
+    <div class="col-md-10">
+      
+<p style="font-weight: bold;">select Completion Type</p>
+<div class="col-md-10" >
+ <button type="button" class="btn-success" >Open Hole<input type="radio" name="aq" checked="checked" value="Open Hole">
+                                </button>
+ <button type="button" class="btn-danger" >Cased Hole<input type="radio" name="aq" checked="checked" value="Cased Hole">
+                                </button>  
+  <button type="button" class="btn-success" >Slotted Liner<input type="radio" name="aq" checked="checked" value="Slotted Liner">
+                                </button>                                                            
+  <button type="button" class="btn-danger" >Limited Entry<input type="radio" name="aq" checked="checked" value="Limited Entry">
+                                </button>                                                            
+  <button type="button" class="btn-success" >Sliding sleeve<input type="radio" name="aq" checked="checked" value="Sliding sleeve">
+                                </button>                                                            
+       </div>   
+     
+    </div>
+  </div>
+  
+
+<form class="form-horizontal" role="form" id="fileUploadForm111">
+ <!-- th:if="${teacher.gender == 'F'}"> -->
+<div class="row">
+<div class="col-md-6">
+<table id="" class="table table-hover" >
+                                               
+                          <tr id="t2">
+                          <th>Well Bore Radius(inch)</th>
+                          <td><input  name="name1"  class="form-control" th:value=${list[0].value} /></td>
+                          </tr>
+                           <tr id="t3">
+                          <th>Drainage Radius(ft)</th>
+                          <td><input  name="name1"   class="form-control" th:value=${list[1].value} /></td>
+                          </tr>
+                            <tr id="t4"> 
+                          <th>Well Inclination</th>
+                          <td> <input name="name1" type="text"  class="form-control" th:value=${list[2].value} /> </td>
+                          </tr>
+                          <tr id="t5"> 
+                          <th>Length Of Horizontal Reach Of Well</th>
+                          <td> <input name="name1" type="text" class="form-control" th:value=${list[3].value} /> </td>
+                          </tr>
+                          <tr id="t6"> 
+                          <th>Distance Of Bottom Horizontal Well</th>
+                          <td> <input name="name1" type="text" class="form-control"  th:value=${list[4].value} /> </td>
+                          </tr>
+                          <tr id="t7"> 
+                          <th>KH/KV Ratio</th>
+                          <td> <input name="name1" type="text" class="form-control" th:value=${list[5].value} /> </td>
+                          </tr>
+                        </table>
+</div>
+<div class="col-md-6">
+<table id="" class="table table-hover" >
+                          <tr id="s1"> 
+                          <th>Production Tubing Length(ft)</th>
+                          <td><input name="name1" type="text" class="form-control"  th:value=${list[6].value}/></td>
+                          </tr>
+                          <tr id="s2"> 
+                          <th>Production Tubing Inner Diameter(ft)</th>
+                          <td><input name="name1" type="text" class="form-control" th:value=${list[7].value}  /></td>
+                          </tr>
+                          <tr id="s3"> 
+                          <th>Perforation length (ft)</th>
+                          <td><input name="name1" type="text" class="form-control" th:value=${list[8].value} /></td>
+                          </tr>
+                           <tr id="s4">  
+                          <th>Perforation Diameter (inch)</th>
+                          <td><input name="name1" type="text" class="form-control" th:value=${list[9].value} /></td>
+                          </tr>
+                          <tr id="s5"> 
+                          <th>Shoots Per Foot</th>
+                          <td> <input  name="name1" type="text" class="form-control" th:value=${list[10].value} /> </td>
+                          </tr>
+                          <tr id="s6"> 
+                          <th>Casing Inner Diameter</th>
+                          <td><input  name="name1" type="text" class="form-control"  th:value=${list[3].value}/></td>
+                          </tr>
+                          <tr id="s7">                          
+                           <th>Slot Type:</th>
+                <td>
+                    <select>
+                         <option th:value="${open}"> closed</option>
+                         <option value="${open}"/> open </option>
+                  </select>
+ 
+                </td>
+                          <!-- <th>Slot Type</th>
+                          <td><input name="name1" type="text" class="form-control" th:value=${list.get(2)}/></td>
+                        -->   </tr>
+                          <tr id="s8">  
+                          <th>Width of single slot</th>
+                          <td><input name="name1" type="text" class="form-control" th:value=${list[3].value} /></td>
+                          </tr>
+                           <tr id="s9"> 
+                          <th>liner Inner Diameter</th>
+                          <td><input name="name1" type="text" class="form-control" th:value=${list[3].value} /></td>
+                          </tr>
+                          <tr id="s10">  
+                          <th>length of single slot</th>
+                          <td><input name="name1" type="text" class="form-control"  th:value=${list[3].value} /></td>
+                          </tr>                      
+                          <tr id="s11"> 
+                          <th>Number of slot per slot</th>
+                          <td><input name="name1" type="text" class="form-control" th:value=${list[3].value} /></td>
+                          </tr>
+                          <tr id="s12">  
+                          <th>Number of slot around</th>
+                          <td><input name="name1" type="text" class="form-control" th:value=${list[3].value} /></td>
+                          </tr>
+                          
+                          <tr id="s13">  
+                          <th>Terbulance Facter</th>
+                          <td><input name="name1" type="text" class="form-control" th:value=${list[3].value} /></td>
+                          </tr>
+                          
+                          <tr id="s14"> 
+                          <th>Open area of single slot</th>
+                          <td><input name="name1" type="text" class="form-control" th:value=${list[3].value} /></td>
+                          </tr>
+                        
+                         <tr id="s15"> 
+                          <th>Limited Entry</th>
+                          <td><input name="name1" type="text" class="form-control" th:value=${list[3].value} /></td>
+                          </tr>
+                           <tr id="s16"> 
+                          <th>Sliding Sllev type</th>
+                          <td><input name="name1" type="text"  class="form-control" th:value=${list[3].value} /></td>
+                          </tr>
+</table>
+	<input class="123btn btn-primary" type="submit" value="Save" style="margin-left:50%;" id="welldataTable1"/>                       
+</div>
+</div>
+</form>
+<input type="hidden"  th:value="${pid}"name="pid" id="pid0">
+                </div>
+
+            </div>
+
+        </div>
+    

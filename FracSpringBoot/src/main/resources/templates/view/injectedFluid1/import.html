@@ -1,0 +1,45 @@
+<script th:inline="javascript">
+	$("#if_impsavebt").click(function(e) {
+		e.preventDefault();
+		url = "/injectedfluid1/savefluid1";
+		$.ajax({
+			url : url,
+			data : $("#if_impform").serialize(),
+			success : function(res) {
+				$("#loadtable").html(res);
+				$("#exampleModal").show();
+			}
+		});
+	});
+</script>
+
+<div class="tab-content">
+	<div class="tab-pane active" id="tab_1">
+	<li class="list-group-item">
+		<div class="row">
+			<div class="col-md-1"></div>
+			<div class="col-md-10">
+			
+				<form id="if_impform">
+					<input type="hidden" id="if_imppid" name="imppid" th:value="${pid}">
+					<table id="" class=" table table-hover">
+						<tr th:each="list:${list}">
+							<th th:text="${list.param}"></th>
+							<td><input type="number" th:name="'if_imp'+${list.param}"
+								th:value="${list.value}" style="border: none;"
+								class="form-control" /> <input type="hidden"
+								th:value="${list.id}" th:name="if_impid" /></td>
+						</tr>
+
+					</table>
+
+					<center>
+						<input type="submit" id="if_impsavebt" class="btn btn-primary"
+							value="SAVE" />
+					</center>
+				</form>
+			</div>
+		</div>
+</li>
+	</div>
+</div>

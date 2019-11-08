@@ -1,0 +1,63 @@
+<script type="text/javascript">
+$("#sa_showEditbt").click(function(){
+	url="stressanalysis/showupdate";
+	$.ajax({
+		url:url,
+		data:{pid:$("#sa_showpid").val()},
+		success:function(res){
+			$("#loadtable").html(res);
+          	$("#exampleModal").show();
+		}
+	});
+});
+</script>
+
+
+
+<style>
+tbody {
+    display:block;
+    max-height:360px;
+    overflow:auto;
+}
+thead, tbody tr {
+    display:table;
+    width:100%;
+    table-layout:fixed;
+}
+</style>
+
+
+<section class="content">
+<li class="list-group-item">
+<input type="hidden" id="sa_showpid" th:value="${pid}">
+<div class="row">
+<div class="col-md-1"></div>
+<div class="col-md-10">
+<table id="example2" class="table table-hover table-bordered">
+	<thead class="bg-gray">
+		<tr>
+			<th style="text-align: center;">Poisson's ratio</th>
+			<th style="text-align: center;">Density(lb/ft3)</th>
+			<th style="text-align: center;">Depth(ft)</th>
+			<th style="text-align: center;">Pore Pressure(Mpa)</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr th:each="list:${list}">
+			<td th:text="${list.ratio}" style="text-align:center"></td>
+			<td th:text="${list.density}" style="text-align:center"></td>
+			<td th:text="${list.depth}" style="text-align:center"></td>
+			<td th:text="${list.pore}" style="text-align:center"></td>
+		</tr>
+	</tbody>
+</table>
+
+</div>
+<center>
+	<input id="sa_showEditbt" class="btn btn-primary" type="submit"
+		value="Edit" style="width:10%"/>
+</center>
+</div>
+
+</section>

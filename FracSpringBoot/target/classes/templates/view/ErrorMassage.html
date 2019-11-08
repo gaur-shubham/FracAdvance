@@ -1,0 +1,66 @@
+<style>
+html * {
+	font-family: 'Calibri';
+}
+</style>
+<div class="col-lg-15 col-xs-15">
+                      <script type="text/javascript">
+                      var avc="[[${ReservoirFluid}]]";                   
+                      if(avc=="ReservoirFluid"){
+                    	$("#rfp").css('background','red');
+                    	$("#rfp").css('color','#E5EF82');
+                    	     			}
+                      else{ $("#rfp").css('background','none');
+                      $("#rfp").css('color','black');}
+                      
+                     
+                      var avc2="[[${FluidLibrary}]]"; 
+                      if(avc2=="FluidLibrary"){
+                      	$("#fl").css('background','red');
+                      	$("#fl").css('color','#E5EF82');
+                       	}
+                      else{ $("#fl").css('background','none');
+                      $("#fl").css('color','black');}
+                      
+                      
+                 
+                      var avc1="[[${InjectionPlan}]]";
+                      if(avc1=="InjectionPlan")
+                      {
+                    	  $("#ip").css('background','red');
+                    	  $("#ip").css('color','#E5EF82');
+                      }   
+                      else{ $("#ip").css('background','none');
+                      $("#ip").css('color','black');}
+                      
+                      var avc1="[[${PoppantProperties}]]";
+                      if(avc1=="PoppantProperties")
+                      {
+                    	  $("#pp").css('background','red');
+                    	  $("#pp").css('color','#E5EF82');
+                      }   
+                      else{ $("#pp").css('background','none');
+                      $("#pp").css('color','black');}
+                         
+                      </script>
+                      <input type="button" class="btn btn-danger" value="Missing Values" id="ufluidpropertyid0">
+  
+ <form class="form-horizontal" role="form" id="ufileUploadForm230" >
+<div class="col-md-12" id="utablediv0" >
+<input id="pid" name="pid" type="hidden" th:value=${pid}>
+<table id="uexample20" class="table table-hover table-hover ">                      
+                            <tbody th:if="${ErrorList.empty}"  >                            
+                             </tbody>                            
+                             <tbody >   
+                      <tr th:each="ErrorList:${ErrorList}" th:if="${ErrorList}!=null">
+							<td><input type="text" min="0" max="" class="form-control"
+								name="" id="ip_impstep" th:value="${ErrorList}" required
+								style="border: none;" readonly /> </td>
+						          </tbody>
+							    
+						          
+                </table>	
+</div> 
+            </form> 
+                                                            
+                    </div>

@@ -1,0 +1,95 @@
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<title>Header</title>
+</head>
+
+<body>
+
+		<aside class="main-sidebar" th:fragment="sidenavigation">
+			<!-- sidebar: style can be found in sidebar.less -->
+			<section class="sidebar">
+				<!-- Sidebar user panel -->
+				<div class="user-panel">
+					<div class="pull-left image">
+						<img src="dist/img/avatar5.png" class="img-circle"
+							alt="User Image">
+					</div>
+					<div class="pull-left info">
+						<p>Vishal</p>
+
+					</div>
+				</div>
+				<!-- search form -->
+			<!-- 	<form action="#" method="get" class="sidebar-form">
+					<div class="input-group">
+						<input type="text" name="q" class="form-control"
+							placeholder="Search..."> <span class="input-group-btn">
+							<button type="submit" name="search" id="search-btn"
+								class="btn btn-flat">
+								<i class="fa fa-search"></i>
+							</button>
+						</span>
+					</div>
+				</form> -->
+				<!-- /.search form -->
+				<!-- sidebar menu: : style can be found in sidebar.less -->
+				<ul class="sidebar-menu">
+					<li class="header">MAIN NAVIGATION</li>
+					<li class="active treeview"><a href="#"> <i
+							class="fa fa-dashboard"></i> <span>Dashboard</span> <i
+							class="fa fa-angle-left pull-right"></i>
+					</a>
+						<ul class="treeview-menu">
+							<li class="active"><a th:href="@{/create}"><i
+									class="fa fa-circle-o"></i> Create Project</a></li>
+							<li><a th:href="@{/}"><i class="fa fa-circle-o"></i>
+									All Projects</a></li>
+						</ul></li>
+
+
+					<li class=" treeview"><a href="#"> <i
+							class="fa fa-dashboard"></i> <span>Manuals</span> <i
+							class="fa fa-angle-left pull-right"></i>
+					</a>
+						<ul class="treeview-menu">
+							<li class="active"><a th:href="@{/userManualController}"><i
+									class="fa fa-circle-o"></i> User Manuals</a></li></ul>
+							<!-- <li><a href="index2.html"><i class="fa fa-circle-o"></i>
+									Technical Manuals</a></li>
+							<li><a href="index2.html"><i class="fa fa-circle-o"></i>
+									Tutorials</a></li>
+						</ul></li> -->
+
+					<li class=" treeview"><a href="#"> <i
+							class="fa fa-envelope-o"></i> <span>Input Formats</span> <i
+							class="fa fa-angle-left pull-right"></i>
+					</a>
+						<ul class="treeview-menu">
+							<!-- <li class="active"><a href="index.html"><i
+									class="fa fa-circle-o"></i> Input File Format</a></li>
+						 -->	<li><a th:href="@{/wellLogformatController}"><i class="fa fa-circle-o"></i>
+									Well Log Format</a></li>
+						</ul></li>
+					<li><a th:href="@{/caseStudyController}"> <i class="fa fa-flag-o"></i> <span>Case
+								Study</span> <small class="label pull-right bg-red">2</small>
+					</a></li>
+					
+					<li><a th:href="@{/helpController}"> <i class="fa fa-search"></i> <span>Help</span>
+					</a></li>
+				<li><a href="javascript: document.logoutForm.submit()"> <i
+						class="fa fa-gears"></i> <span>Logout</span>
+						<form th:action="@{/ap-logout}" method="POST" name="logoutForm"
+							th:hidden="true">
+							<input type="submit" value="Logout"
+								class="form-control btn-danger">
+						</form>
+				</a></li>
+
+				</ul>
+			</section>
+			<!-- /.sidebar -->
+		</aside>
+</body>
+
+</html>

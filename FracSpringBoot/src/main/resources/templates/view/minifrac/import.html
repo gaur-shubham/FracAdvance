@@ -1,0 +1,157 @@
+<script th:inline="javascript">
+$('#importData').click(function(event){
+	event.preventDefault();
+	var formData = new FormData($("#fileUploadForm")[0]);
+	if($("#file1").val() && $("#ptime").val()){
+	$.ajax({
+		  url: "upload",
+		  type: 'POST',
+		  enctype: 'multipart/form-data',
+		  data: formData,
+		  processData: false, // tell jQuery not to process the data
+		  contentType: false, // tell jQuery not to set contentType
+		  cache: false,
+		  success: function(res){
+		    $("#loadtable").html(res);
+		    $("#exampleModal").show();
+		    
+		  },
+		  error: function(res) {
+		    console.log('ERR: ' + res);
+		  }
+		});
+	}else{
+		alert("Empty Field");
+		return false;
+	}
+});
+
+$("#entermanbt").click(function(){
+	 $( "#fill" ).slideToggle( "slow" );
+     $( "#form" ).slideToggle( "slow" );
+     var val = $(this).val();
+     if(val=="Enter Manually"){
+    	 $(this).val("Import Well Log");
+     }
+     else{
+    	 $(this).val("Enter Manually");
+     }	
+});
+$("#mf_impaddfield").click(function(){
+	
+	var url="addfield";
+	if($("#mf_imppress").val()&&$("#mf_imppumptime").val()&&$("#mf_impshuttime").val()){
+	$.ajax({
+		url:url,
+		data:$("#maniform").serialize(),
+		success:function(res){
+			$("#loadtable").html(res);
+		    $("#exampleModal").show();
+		    $("#mf_imppumptime").attr('readonly', true);
+		 	$("#fill").show();
+          	$("#form").hide();
+		}
+	});
+	}else{
+		alert("EMPTY");
+	}
+});
+</script>
+
+
+
+
+<form th:action="@{/}" enctype="multipart/form-data" id="fileUploadForm"
+	method="post">
+	<div class="row" id="form">
+		<div class="col-lg-4 col-xs-6">
+
+			Select Mini Frac File (txt/xlxs) to import <input id="file1"
+				name="files" type="file" required /><br>
+
+			<div class="col-md-6">
+				<label>Final Pumping Time(Min)</label>
+			</div>
+			<div class="col-md-6">
+				<input id="ptime" class="form-control" type="number" min=0
+					step="any" name="pumptime" placeholder="Enter Value" required /> <input
+					id="pid" name="pid" type="hidden" th:value=${hiddenId}><br>
+			</div>
+			<input type="submit" id="importData" value="Import"
+				class="btn btn-primary" style="width: auto; margin-left: 5%;"></input>
+		</div>
+		<div class="col-lg-8 col-xs-6">
+			<h3>Note:</h3>
+			<ul>
+				User can input reservoir lithology (Perm/Poro over depth (MD), TVD,
+				formation pressure ) in anyone of three ways :
+
+				<li>Import well log ( Porosity log in .las/txt) file</li>
+				<li>Import excel file (Perm/Poro over depth, excel format
+					provided)</li>
+				<li>Enter manually (Perm/Poro, TVD and formation pressure)</li>
+
+			</ul>
+		</div>
+		<div class="row">
+			<div class="col-md-12"></div>
+		</div>
+	</div>
+</form>
+
+<!----------------------------------------------------------- ENTER MANUALLY -->
+
+<input type="button" class="btn btn-primary" value="Enter Manually"
+	id="entermanbt" style="width: auto; margin-left: 0%;">
+<div class="tab-pane active" id="fill" style="display: none;">
+	<li class="list-group-item">
+		<form id="maniform">
+			<div class="row">
+				<div class="col-md-2"></div>
+				<div class="col-md-6">
+					<label >Pumping Time (Min)&nbsp;&nbsp; <input type="number"
+						id="mf_imppumptime" name="mf_impinput" class="form-control"
+						style="width: auto; display: inline-block;" required th:value="${pumptime}"/>
+						<!-- <input type="number"
+						 class="form-control" th:if="${pumptime}!=null" readonly/> --></label>
+				</div>
+			</div>
+			<br>
+			<div class="row">
+				<div class="col-md-1"></div>
+				<div class="col-md-10">
+
+					<table class="table table-bordered">
+						<tr>
+							<th style="text-align: center">Pressure (psi)</th>
+							<th style="text-align: center">Shut In Time (Min)</th>
+							<th style="text-align: center"></th>
+						</tr>
+						<!--------------------------------------------------- Show INPUT ROW -->
+						<tr th:each="list:${list}">
+						<td th:text="${list.pressure}"></td>
+						<td th:text="${list.time}"></td>
+						<td></td>
+						</tr>
+						<!--------------------------------------------------------- INPUT ROW -->
+						<tr>
+							<td><input id="pid" name="pid" type="hidden"
+								th:value=${hiddenId}> <input type="number" min="0"
+								max="" class="form-control" name="mf_impinput" id="mf_imppress"
+								required style="border:;" /></td>
+							<td><input type="number" min="0" max="" class="form-control"
+								name="mf_impinput" id="mf_impshuttime" required style="border:;" /></td>
+							<td><input id="mf_impaddfield" class="btn btn-primary"
+								type="button" value="Add Field"
+								style="width: auto; margin-left: 20%;" /></td>
+						</tr>
+					</table>
+
+				</div>
+			</div>
+		</form>
+	</li>
+</div>
+<!----------------------------------------------------------- ENDS HERE -->
+
+

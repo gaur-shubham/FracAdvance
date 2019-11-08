@@ -1,0 +1,174 @@
+<script th:inline="javascript">
+	$("#fType").change(function(event) {
+		event.preventDefault();
+		var var1 = $("#fType").val();
+		var var2 = $("#pid").val();
+		var radioValue = $("input[name='aq']:checked").val();
+		$.ajax({
+			url : '/reservoirFluid1/showRFSecondController',
+			data : {
+				fluidT : var1,
+				pid : var2,
+				radioValue : radioValue
+			},
+			success : function(res) {
+				$("#loadtable").html(res);
+				$("#exampleModal").show();
+			}
+		});
+	});
+
+	$('input[type=radio][name=aq]').click(function() {
+		var value = $(this).val();
+		var var2 = $("#pid").val();
+		var var1 = $("#fType").val();
+		$.ajax({
+			url : '/reservoirFluid1/updateRadioWellTypeController',
+			data : {
+				welltypeaq : value,
+				pid : var2,
+				fluidT : var1
+			},
+			success : function(res) {
+				$("#loadtable").html(res);
+				$("#exampleModal").show();
+			}
+		});
+
+	});
+
+	$("#0").click(
+			function() {
+				var value = $(this).val();
+				var var2 = $("#pid").val();
+				var var1 = $("#fType").val();
+				$.ajax({
+					url : '/reservoirFluid1/updateRadioWellTypeController',
+					data : {
+						welltypeaq : value,
+						pid : var2,
+						fluidT : var1
+					},
+					success : function(res) {
+						$("#loadtable").html(res);
+						$("#exampleModal").show();
+						$("#radiodiv")
+								.find(':radio[name=aq][value="Oil Well"]')
+								.prop('checked', true);
+					}
+				});
+
+			});
+	$("#1").click(
+			function() {
+				var value = $(this).val();
+				var var2 = $("#pid").val();
+				var var1 = $("#fType").val();
+				$.ajax({
+					url : '/reservoirFluid1/updateRadioWellTypeController',
+					data : {
+						welltypeaq : value,
+						pid : var2,
+						fluidT : var1
+					},
+					success : function(res) {
+						$("#loadtable").html(res);
+						$("#exampleModal").show();
+						$("#radiodiv")
+								.find(':radio[name=aq][value="Gas Well"]')
+								.prop('checked', true);
+					}
+				});
+
+			});
+	$("#updateValue").click(function(event) {
+		event.preventDefault();
+		var i = 0;
+		$('input[name="value"]').each(function() {
+			if ($(this).val() == '') {
+				i = i + 1;
+				$(this).attr("placeholder", "Required");
+				$(this).css({'border':'1px solid #d9534f'});
+			}else{
+				$(this).css({'border':'none'});
+			}
+		});
+		if (i == 0) {
+			$.ajax({
+				url : '/reservoirFluid1/updateValueController',
+				data : $("#formwithallData").serialize(),
+				success : function(res) {
+					$("#loadtable").html(res);
+					$("#exampleModal").show();
+				}
+			});
+		}
+	});
+</script>
+<section class="content">
+	<div class="tab-pane active danger" id="fill">
+		<li class="list-group-item ">
+			<div class="row">
+				<div class="col-md-1"></div>
+				<div class="col-md-6">
+					<select name="ftype" id="fType" class="form-control danger">
+						<option value="Reservoir properties">Reservoir properties</option>
+						<option value="Fracture Mechanics Properties">Fracture
+							Mechanics Properties</option>
+						<option value="Optimum Fracture Design Input">Optimum
+							Fracture Design Input</option>
+					</select>
+				</div>
+			</div>
+			<br>
+			<div class="row">
+				<div class="col-md-1"></div>
+				<div class="col-md-7" id="radiodiv">
+					<Label>Select Well Type:</Label>
+					<div class="btn-group-horizontal">
+						<button type="button" class="btn-primary">
+							<label for="0">Oil Well</label><input id="0" type="radio"
+								name="aq" checked="checked" value="Oil Well">
+						</button>
+						<button type="button" class="btn-primary">
+							<label for="1">Gas Well</label><input type="radio" name="aq"
+								id="1" checked="checked" value="Gas Well">
+						</button>
+					</div>
+				</div>
+			</div> </br>
+
+			<div class="row">
+				<div class="col-md-1"></div>
+				<div class="col-md-10">
+					<form class="form-horizontal" role="form" id="formwithallData">
+						<input id="pid" name="pid" type="hidden" th:value=${pid}>
+						<table id="example2" class="table table-hover table-bordered ">
+							</thead>
+							<tbody th:if="${list.empty}" id="body">
+							<tbody>
+								<tr th:each="list : ${list}">
+									<th th:text="${list.param}"></th>
+									<td><input type="text" name="value"
+										th:value="${list.value}"
+										class="time form-control inputvalueclass"> <input
+										type="hidden" name="ftype1" th:value="${list.fluidtype}"
+										class="time form-control text-center"></td>
+								</tr>
+							</tbody>
+						</table>
+						<input type="submit" value="Update" style="margin-left: 50%;"
+							id="updateValue" />
+					</form>
+				</div>
+			</div>
+		</li>
+	</div>
+</section>
+
+
+
+
+
+
+

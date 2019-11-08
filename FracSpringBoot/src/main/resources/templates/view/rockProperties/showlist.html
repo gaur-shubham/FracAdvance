@@ -1,0 +1,77 @@
+<script>
+$("#rp_shownextbt").click(function(event){
+	event.preventDefault();
+	url="rockProperties/shownext";
+	$.ajax({
+		url:url,
+		data:$("#rp_showform").serialize(),
+		success:function(res){
+			$("#loadtable").html(res);
+          	$("#exampleModal").show();
+		}
+	});
+});
+$("#rp_showprevbt").click(function(event){
+	event.preventDefault();
+	url="rockProperties/showprev";
+		$.ajax({
+			url:url,
+			data:$("#rp_showform").serialize(),
+			success:function(res){
+				$("#loadtable").html(res);
+	          	$("#exampleModal").show();
+				
+			}
+		});
+});
+
+$("#rp_showupbt").click(function(event){
+	event.preventDefault();
+	url="rockProperties/showupdate";
+	$.ajax({
+		url:url,
+		data:{pid:$("#rp_showpid").val()},
+		success:function(res){
+			$("#loadtable").html(res);
+          	$("#exampleModal").show();
+		}
+	});
+});
+</script>
+
+<div class="tab-content">
+            <div class="tab-pane active" id="tab_1">
+            <li class="list-group-item">
+<form id="rp_showform">
+		<div class="row">
+			<div class="col-md-2"></div>
+			<div class="col-md-8">
+				<label>Stage:
+				<input class="form-control" th:name="rp_showstage" type="text" th:if="${list!=null}" th:value="${list[0].stage}" readonly/></label>
+			</div>  
+			<div class="col-md-2"></div>
+		</div>
+		<br> <input type="hidden" id="rp_showpid" name="rp_showpid" th:value="${pid}">                
+
+<div class="row">
+<div class="col-md-2"></div>
+                    <div class="col-md-8">
+                        <table id="rp_showexample2" class="table table-hover table-bordered" >
+                        
+                        <tr th:each="list:${list}" th:if="${list.param}!='Stage'">
+                        <th  th:text="${list.param}"></th>
+                        <td th:text="${list.value}" style="width:30%"></td>
+                        </tr>
+                        </table>
+                        <center><input id="rp_showprevbt" class="btn-sm btn-primary" type="submit" value="Previous Stage" style="width:"/>
+                        <input id="rp_shownextbt" class="btn-sm btn-primary" type="submit" value="Next Stage"/></center>
+                    
+                    </div>
+                    <div class="col-md-2"></div>
+                </div>
+       </form></li><br>
+       <center><input id="rp_showupbt" class="btn btn-primary" type="submit" value="Update"/>
+                        </center>  
+                     
+</div>
+</div>

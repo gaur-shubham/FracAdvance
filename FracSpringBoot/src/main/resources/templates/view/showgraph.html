@@ -1,0 +1,1172 @@
+
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="layout/layout">
+<head>
+<meta name="layout" content="main">
+<title>FracAdvance: Graphs</title>
+
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+<script src="https://www.amcharts.com/lib/3/amcharts.js"></script>
+<script src="https://www.amcharts.com/lib/3/xy.js"></script>
+<script
+	src="https://www.amcharts.com/lib/3/plugins/export/export.min.js"></script>
+<link rel="stylesheet"
+	href="https://www.amcharts.com/lib/3/plugins/export/export.css"
+	type="text/css" media="all" />
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/series-label.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+<script src="https://code.highcharts.com/modules/export-data.js"></script>
+<script src="https://code.highcharts.com/modules/offline-exporting.js"></script>
+<script type="text/javascript"
+	src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.min.js"></script>
+	
+	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<style>
+.output {
+	background-color: white;
+	border-top-left-radius: 30px;
+	border-top-right-radius: 30px;
+	border-bottom-left-radius: 30px;
+	border-bottom-right-radius: 30px;
+	box-shadow: 0px 0px 10px -1px black;
+}
+html * {
+	font-family: 'Calibri';
+}
+.outputhead {
+	letter-spacing: 0.01em;
+	position: relative;
+	text-align: center;
+	background: none;
+	color: white;
+	opacity: 0.95;
+	background: #3c8dbc;
+	padding: 2px;
+	border-top-left-radius: 20px;
+	border-top-right-radius: 20px;
+	border-bottom-left-radius: 20px;
+	border-bottom-right-radius: 20px;
+	border: none;
+	transition: all 0.35s linear;
+	outline: none;
+}
+
+.outputhead:hover {
+	letter-spacing: 0.02em;
+	color: black;
+}
+
+.outputhead::after {
+	position: absolute;
+	content: '';
+	top: 0;
+	left: 0;
+	width: 0;
+	height: 100%;
+	background-image: linear-gradient(to right, #3c8dbc, #4cafe8);
+	border-radius: 50px;
+	transform-origin: left;
+	transition: width 0.35s ease;
+	z-index: -1;
+}
+
+.outputhead:hover::after {
+	width: 100%;
+	border-radius: 50px;
+}
+
+.outputhead h4 {
+	font-size: 16px;
+}
+
+.outputbody {
+	height: 230px;
+	padding: 20px;
+	text-align: left;
+}
+
+.navinbutton {
+	margin-top: 20px;
+	background: #3c8dbc;
+	color: white;
+	padding: 10px;
+	border-radius: 20px;
+	border: none;
+	outline: none;
+	transition: all 1s linear;
+}
+
+.navinbutton:hover {
+	background-color: #193f54;
+}
+
+.onetmenu {
+	font-size: 14px;
+	font-weight: 600;
+	margin-left: 15px;
+	position: relative;
+	text-align: left;
+	width: 230px;
+	transition: all 0.35s linear;
+	padding-left: 20px;
+	background: none;
+	opacity: 0.85;
+	color: black;
+	height: 50px;
+	border-radius: 50px;
+	border: none;
+	box-shadow: 0.5px 0.5px 2px 0px grey;
+	outline: none;
+}
+
+.onetmenu:hover {
+	letter-spacing: 0.04em;
+	color: black;
+	text-shadow: 2px 2px 12px white;
+}
+
+.btn {
+	margin-bottom: 5px;
+}
+
+.navinbutton {
+	margin-top: 20px;
+	background: #3c8dbc;
+	color: white;
+	padding: 10px;
+	border-radius: 20px;
+	border: none;
+	outline: none;
+	transition: all 1s linear;
+}
+
+.navinbutton:hover {
+	background-color: #193f54;
+}
+
+#chartdiv {
+	width: 100%;
+	height: 500px;
+}
+
+label {
+	font-weight: normal;
+}
+</style>
+
+<script type="text/javascript">
+
+function minifracGraph(dataprovider){
+	
+	var chart = AmCharts.makeChart("chartdiv", {
+	  "type": "xy",
+	  "theme": "light",
+	  "marginRight": 80,
+	  "dataDateFormat": "YYYY-MM-DD",
+	  "startDuration": 1.5,
+	  "trendLines": [],
+	  "color":"white",
+      "backgroundAlpha" : 2,
+      "backgroundColor" : "#2E4563",
+	  "balloon": {
+	    "adjustBorderColor": false,
+	    "shadowAlpha": 0,
+	    "fixedPosition": true
+	  },
+	  "graphs": [{
+	    "balloonText": "<div style='margin:5px;'><b>[[x]]</b><br>y:<b>[[y]]</b><br>value:<b>[[gtd]]</b></div>",
+	    "bullet": "diamond",
+	    "maxBulletSize": 12,
+	    "lineAlpha": 0.8,
+	    "lineThickness": 2,
+	    "lineColor": "#F09E8C",
+	    "fillAlphas": 0,
+	    "title":"g Vs Derivative",
+	    "xField": "gtd",
+	    "yField": "dpdG",
+	    "valueField": "aValue"
+	  }, {
+	    "balloonText": "<div style='margin:5px;'><b>[[x]]</b><br>y:<b>[[y]]</b><br>value:<b>[[value]]</b></div>",
+	    "bullet": "round",
+	    "maxBulletSize": 12,
+	    "lineAlpha": 0.8,
+	    "lineThickness": 2,
+	    "lineColor": "#86E1A2",
+	    "fillAlphas": 0,
+	    "title":"g Vs g*Derivative",
+	    "xField": "gtd",
+	    "yField": "gdpdG",
+	    "valueField": "bValue"
+	  }],
+	  "valueAxes": [{
+	    "id": "ValueAxis-1",
+	    "axisAlpha": 0,
+	    "position": "left",
+	    "title" : "Pressure (psi)"
+	  }, {
+	    "id": "ValueAxis-2",
+	    "axisAlpha": 0,
+	    "position": "bottom",
+	    "title" :"G Function Time (Min)"
+	  }],
+	  "allLabels": [{
+		  	"text":"Mini Frac",
+			  "bold": true,
+			  "size" : 18,
+			  "align": "center"
+	  }],
+	  "titles": [],
+	  "dataProvider": dataprovider,
+	 
+	  "export": {
+	    "enabled": false
+	  },
+	  "legend": {
+	       	"color":"#2E4563",
+	       	"markerDisabledColor":"#B4B4B4",
+			  	"enabled": true,
+	        "useGraphSettings": true,
+	        "align": "left",
+	        "fontSize": 12,
+	        "autoMargins":true
+	        },
+	  "chartScrollbar": {
+	    "offset": 15,
+	    "scrollbarHeight": 5
+	  },
+
+	  "chartCursor": {
+	    "pan": true,
+	    "cursorAlpha": 0,
+	    "valueLineAlpha": 0
+	  }
+	});
+}
+
+
+
+function StressGraph(dataprovider){
+	
+	var chart = AmCharts.makeChart("chartdiv", {
+	  "type": "xy",
+	  "theme": "none",
+	  "marginRight": 80,
+	  "dataDateFormat": "YYYY-MM-DD",
+	  "startDuration": 1.5,
+	  "trendLines": [],
+	  "color":"white",
+      "backgroundAlpha" : 2,
+      "backgroundColor" : "#2E4563",
+	  "balloon": {
+	    "adjustBorderColor": false,
+	    "shadowAlpha": 0,
+	    "fixedPosition": true
+	  },
+	  "graphs": [{
+	    "balloonText": "<div style='margin:5px;'><b>[[x]]</b><br>y:<b>[[y]]</b><br>value:<b>[[gtd]]</b></div>",
+	    "bullet": "diamond",
+	    "maxBulletSize": 12,
+	    "lineAlpha": 0.8,
+	    "lineThickness": 2,
+	    "lineColor": "#F09E8C",
+	    "fillAlphas": 0,
+	    "title":"Calculated",
+	    "xField": "depth",
+	    "yField": "breakdown",
+	  }, {
+	    "balloonText": "<div style='margin:5px;'><b>[[x]]</b><br>y:<b>[[y]]</b><br>value:<b>[[value]]</b></div>",
+	    "bullet": "round",
+	    "maxBulletSize": 12,
+	    "lineAlpha": 0.8,
+	    "lineThickness": 2,
+	    "lineColor": "#86E1A2",
+	    "fillAlphas": 0,
+	    "title":"Recorded",
+	    "xField": "depth",
+	    "yField": "horizontal",
+	  }],
+	  "valueAxes": [{
+	    "id": "ValueAxis-1",
+	    "axisAlpha": 0,
+	    "reversed" : true,
+	    "position": "left",
+	    "title" :"Depth (m)"
+	  }, {
+	    "id": "ValueAxis-2",
+	    "axisAlpha": 0,
+	    "position": "top",
+	    "title" :"Pressure (Mpa)"
+	  }],
+	  "allLabels": [{
+		  	"text":"Stress Analysis",
+			  "bold": true,
+			  "size" : 18,
+			  "y":480,
+			  "align": "center"
+	  }],
+	  "titles": [],
+	  "dataProvider": dataprovider,
+	 
+	  "export": {
+	    "enabled": false
+	  },
+
+	  "chartScrollbar": {
+	    "offset": 15,
+	    "scrollbarHeight": 5
+	  },
+	  "legend": {
+	       	"color":"#2E4563",
+	       	"markerDisabledColor":"#B4B4B4",
+			  	"enabled": true,
+	        "useGraphSettings": true,
+	        "align": "left",
+	        "fontSize": 12,
+	        "autoMargins":true
+	        },
+	  "chartCursor": {
+	    "pan": true,
+	    "cursorAlpha": 0,
+	    "valueLineAlpha": 0
+	  }
+	});
+}
+
+function declinedCurveGraph(dataprovider){
+	
+	var chart = AmCharts.makeChart("chartdiv", {
+	  "type": "xy",
+	  "theme": "none",
+	  "marginRight": 80,
+	  "dataDateFormat": "YYYY-MM-DD",
+	  "startDuration": 1.5,
+	  "trendLines": [],
+	  "color":"white",
+      "backgroundAlpha" : 2,
+      "backgroundColor" : "#2E4563",
+	  "balloon": {
+	    "adjustBorderColor": false,
+	    "shadowAlpha": 0,
+	    "fixedPosition": true
+	  },
+	  "graphs": [{
+	    "balloonText": "[[rate]] : [[time]]",
+	    "bullet": "round",
+	    "bulletSize": 12,
+	    "lineAlpha": 0.8,
+	    "lineThickness": 2,
+	    "lineColor": "#F09E8C",
+	    "fillAlphas": 0,
+	    "title":"Declined Curve",
+	    "xField": "time",
+	    "yField": "rate",
+	    "valueField": "aValue"
+	  }],
+	  "valueAxes": [{
+	    "id": "ValueAxis-1",
+	    "axisAlpha": 0,
+	    "position": "left",
+	    "title" :"Q(STB/Day)"
+	  }, {
+	    "id": "ValueAxis-2",
+	    "axisAlpha": 0,
+	    "position": "bottom",
+	    	"title" :"Time(Year)"
+	  }],
+	  "allLabels": [{
+		  	"text":"Declined Curve",
+			  "size" : 18,
+			  "align": "center"
+	  }],
+	  "titles": [],
+	  "dataProvider": dataprovider,
+	  "export": {
+	    "enabled": true
+	  },
+	  "legend": {
+       	"color":"#2E4563",
+       	"markerDisabledColor":"#B4B4B4",
+		  	"enabled": true,
+        "useGraphSettings": true,
+        "align": "left",
+        "fontSize": 12,
+        "autoMargins":true
+        },
+	  "chartScrollbar": {
+	    "offset": 15,
+	    "scrollbarHeight": 5
+	  },
+	  "chartCursor": {
+	    "pan": true,
+	    "cursorAlpha": 0,
+	    "valueLineAlpha": 0
+	  }
+	});
+}
+
+function optimumFracLength(dataprovider){
+	
+	var chart = AmCharts.makeChart("chartdiv", {
+	  "type": "xy",
+	  "theme": "light",
+	  "marginRight": 80,
+	  "dataDateFormat": "YYYY-MM-DD",
+	  "startDuration": 1.5,
+	  "trendLines": [],
+	  "color":"white",
+      "backgroundAlpha" : 2,
+      "backgroundColor" : "#2E4563",
+	  "balloon": {
+	    "adjustBorderColor": false,
+	    "shadowAlpha": 0,
+	    "fixedPosition": true
+	  },
+	   "graphs": [{
+	    "balloonText": "<div style='margin:5px;'><b>[[x]]</b><br>y:<b>[[y]]</b><br>value:<b>[[gtd]]</b></div>",
+	    "bullet": "diamond",
+	    "maxBulletSize": 12,
+	    "lineAlpha": 0.8,
+	    "lineThickness": 2,
+	    "lineColor": "#F09E8C",
+	    "fillAlphas": 0,
+	    "title":"Optimum Fracture Length-2D",
+	    "xField": "x",
+	    "yField": "y",
+	    "valueField": "aValue"
+	  }],
+	  "valueAxes": [{
+	    "id": "ValueAxis-1",
+	    "axisAlpha": 0,
+	    "position":"left",
+	    "title":"Width (m)"
+	  }, {
+	    "id": "ValueAxis-2",
+	    "axisAlpha": 0,
+	    "position": "bottom",
+	    "title" :"Length (m)"
+	  }],
+	  "titles": [],
+	  "dataProvider": dataprovider,
+
+	  "export": {
+	    "enabled": false
+	  },
+	  "legend": {
+         	"color":"#2E4563",
+         	"markerDisabledColor":"#B4B4B4",
+		  	"enabled": true,
+          "useGraphSettings": true,
+          "align": "left",
+          "fontSize": 12,
+          "autoMargins":true
+          },
+	  "chartScrollbar": {
+	    "offset": 15,
+	    "scrollbarHeight": 5
+	  },
+
+	  "chartCursor": {
+	    "pan": true,
+	    "cursorAlpha": 0,
+	    "valueLineAlpha": 0
+	  }
+	});
+}
+
+function PNetGraph(dataprovider){
+	var chart = AmCharts.makeChart("chartdiv", {
+		  "type": "xy",
+		  "theme": "light",
+		  "marginLeft": 180,
+     "color":"white",
+     "backgroundAlpha" : 2,
+     "backgroundColor" : "#2E4563",
+     
+		  "dataDateFormat": "YYYY-MM-DD",
+		  "startDuration": 2,
+		  "trendLines": [],
+		  "balloon": {
+		    "adjustBorderColor": true,
+		    "shadowAlpha": 100,
+		    "fixedPosition": true
+		  },
+		  "graphs": [{
+		    "balloonText": "<div style='margin:5px;'><b>[[x]]</b><br>y:<b>[[y]]</b><br>value:<b>[[value]]</b></div>",
+		    "bullet": "round",
+		    "bulletSize": 12,
+		    "lineAlpha": 4,
+		    "lineThickness": 2,
+		    "lineColor": "#F09E8C",
+		    "fillAlphas": 0,
+		    "title":"Net Pressure",
+		    "xField": "time",
+		    "yField": "pnet"
+		   
+		  }],
+		    "valueAxes": [{
+		    	  "id": "ValueAxis-1",
+				    "axisAlpha": 0,
+				    "position":"left",
+				    "title":"Net Pressure(psi)",
+		    "axisAlpha": 1,
+		  }, {
+		    "id": "ValueAxis",
+		    "axisAlpha": 1,
+		    "baseValue": 0,
+		    "position": "bottom",
+		    "title":"Time(Min)"
+		  }],
+		  "allLabels": [],
+		  "titles": [],
+		  "dataProvider": dataprovider,
+		  "export": {
+		    "enabled": false
+		  },
+
+		  "chartScrollbar": {
+		    "offset": 15,
+		    "scrollbarHeight": 5
+		  },
+		  "legend": {
+	           	"color":"#2E4563",
+	           	"markerDisabledColor":"#B4B4B4",
+			  	"enabled": true,
+	            "useGraphSettings": true,
+	            "align": "left",
+	            "fontSize": 12,
+	            "autoMargins":true
+	            },
+		  "chartCursor": {
+			  "bulletsEnabled" : "true",
+			  "bulletSize" : 3 ,
+		    "pan": true,
+		    "cursorAlpha": 2,
+		    "valueLineAlpha": 0
+		  }
+		});
+	
+	
+}
+function HalfLenGraph(dataprovider){
+	var chart = AmCharts.makeChart("chartdiv", {
+		  "type": "xy",
+		  "theme": "light",
+		  "marginLeft": 180,
+       "color":"white",
+       "backgroundAlpha" : 2,
+       "backgroundColor" : "#2E4563",
+		  "dataDateFormat": "YYYY-MM-DD",
+		  "startDuration": 2,
+		  "trendLines": [],
+		  "balloon": {
+		    "adjustBorderColor": true,
+		    "shadowAlpha": 100,
+		    "fixedPosition": true
+		  },
+		  "graphs": [{
+		    "balloonText": "<div style='margin:5px;'><b>[[x]]</b><br>y:<b>[[y]]</b><br>value:<b>[[value]]</b></div>",
+		    "bullet": "round",
+		    "bulletSize": 12,
+		    "lineAlpha": 4,
+		    "lineThickness": 2,
+		    "lineColor": "#F09E8C",
+		    "fillAlphas": 0,
+		    "title":"Half Length",
+		    "xField": "time",
+		    "yField": "lt",
+		   
+		  }],
+		    "valueAxes": [{
+		    	  "id": "ValueAxis-1",
+				    "axisAlpha": 0,
+				    "position":"left",
+				    "title":"Half Length(feet)",
+		    "axisAlpha": 1,
+		  }, {
+		    "id": "ValueAxis",
+		    "axisAlpha": 1,
+		    "baseValue": 0,
+		    "position": "bottom",
+		    "title":"Time(Min)"
+		  }],
+		  "allLabels": [],
+		  "titles": [],
+		  "dataProvider": dataprovider,
+		  "export": {
+		    "enabled": false
+		  },
+
+		  "chartScrollbar": {
+		    "offset": 15,
+		    "scrollbarHeight": 5
+		  },
+		  "legend": {
+	           	"color":"#2E4563",
+	           	"markerDisabledColor":"#B4B4B4",
+			  	"enabled": true,
+	            "useGraphSettings": true,
+	            "align": "left",
+	            "fontSize": 12,
+	            "autoMargins":true
+	            },
+		  "chartCursor": {
+			  "bulletsEnabled" : "true",
+			  "bulletSize" : 3 ,
+		    "pan": true,
+		    "cursorAlpha": 2,
+		    "valueLineAlpha": 0
+		  }
+		});
+	
+}
+function conductivityGraph(dataprovider){
+	var chart = AmCharts.makeChart("chartdiv", {
+		  "type": "xy",
+		  "theme": "light",
+		  "marginLeft": 180,
+         "color":"white",
+         "backgroundAlpha" : 2,
+         "backgroundColor" : "#2E4563",
+         
+		  "dataDateFormat": "YYYY-MM-DD",
+		  "startDuration": 2,
+		  "trendLines": [],
+		  "balloon": {
+		    "adjustBorderColor": true,
+		    "shadowAlpha": 100,
+		    "fixedPosition": true
+		  },
+		  "graphs": [{
+		    "balloonText": "<div style='margin:5px;'><b>[[x]]</b><br>y:<b>[[y]]</b><br>value:<b>[[value]]</b></div>",
+		    "bullet": "round",
+		    "bulletSize": 12,
+		    "lineAlpha": 4,
+		    "lineThickness": 2,
+		    "lineColor": "#F09E8C",
+		    "fillAlphas": 0,
+		    "title":"Conductivity",
+		    "xField": "w",
+		    "yField": "conductivity",
+		   
+		  }],
+		    "valueAxes": [{
+		    	  "id": "ValueAxis-1",
+				    "axisAlpha": 0,
+				    "position":"left",
+				    "title":"Conductivity (md-ft)",
+		    "axisAlpha": 1,
+		  }, {
+		    "id": "ValueAxis",
+		    "axisAlpha": 1,
+		    "baseValue": 0,
+		    "position": "bottom",
+		    "title":"Time(Min)"
+		  }],
+		  "allLabels": [],
+		  "titles": [],
+		  "dataProvider": dataprovider,
+		  "export": {
+		    "enabled": false
+		  },
+
+		  "chartScrollbar": {
+		    "offset": 15,
+		    "scrollbarHeight": 5
+		  },
+		  "legend": {
+	           	"color":"#2E4563",
+	           	"markerDisabledColor":"#B4B4B4",
+			  	"enabled": true,
+	            "useGraphSettings": true,
+	            "align": "left",
+	            "fontSize": 12,
+	            "autoMargins":true
+	            },
+		  "chartCursor": {
+			  "bulletsEnabled" : "true",
+			  "bulletSize" : 3 ,
+		    "pan": true,
+		    "cursorAlpha": 2,
+		    "valueLineAlpha": 0
+		  }
+		});
+}
+function widthGraph(dataprovider){
+	var chart = AmCharts.makeChart("chartdiv", {
+		  "type": "xy",
+		  "theme": "light",
+		  "marginLeft": 180,
+       "color":"white",
+       "backgroundAlpha" : 2,
+       "backgroundColor" : "#2E4563",
+       
+		  "dataDateFormat": "YYYY-MM-DD",
+		  "startDuration": 2,
+		  "trendLines": [],
+		  "balloon": {
+		    "adjustBorderColor": true,
+		    "shadowAlpha": 100,
+		    "fixedPosition": true
+		  },
+		  "graphs": [{
+		    "balloonText": "<div style='margin:5px;'><b>[[x]]</b><br>y:<b>[[y]]</b><br>value:<b>[[value]]</b></div>",
+		    "bullet": "round",
+		    "bulletSize": 12,
+		    "lineAlpha": 4,
+		    "lineThickness": 2,
+		    "title":"width",
+		    "lineColor": "#F09E8C",
+		    "fillAlphas": 0,
+		    "xField": "time",
+		    "yField": "w",
+		   
+		  }],
+		    "valueAxes": [{
+		    	  "id": "ValueAxis-1",
+				    "axisAlpha": 0,
+				    "position":"left",
+				    "title":"Width(m)",
+		    "axisAlpha": 1,
+		  }, {
+		    "id": "ValueAxis",
+		    "axisAlpha": 1,
+		    "baseValue": 0,
+		    "position": "bottom",
+		    "title":"Time(Min)"
+		  }],
+		  "allLabels": [],
+		  "titles": [],
+		  "dataProvider": dataprovider,
+		  "legend": {
+	           	"color":"#2E4563",
+	           	"markerDisabledColor":"#B4B4B4",
+			  	"enabled": true,
+	            "useGraphSettings": true,
+	            "align": "left",
+	            "fontSize": 12,
+	            "autoMargins":true
+	            },
+		  "chartScrollbar": {
+		    "offset": 15,
+		    "scrollbarHeight": 5
+		  },
+		  "export": {
+			    "enabled": false
+			  },
+
+		  "chartCursor": {
+	            "pan": true,
+	            "valueLineEnabled": true,
+	            "valueLineBalloonEnabled": true,
+	            "cursorAlpha":1,
+	            "cursorColor":"black",
+	            "limitToGraph":"g1",
+	            "valueLineAlpha":0.2,
+	            "valueZoomable":true
+	            },
+		  
+		});
+}
+/* **************************************************************************************** */
+
+$(document).ready(function(){
+	
+	$("#showgraph1").click(function(){
+	var pid = $("#proId").val();
+	var x=[];
+	url = "/showMiniGraph/"+pid;
+	$(".button-checkbox").each(function(){
+		var widget=$(this),
+		checkbox=widget.find('input:checkbox');
+		if(checkbox.is(":checked")){
+		x.push(checkbox.val());
+		}
+	});
+	
+	$.ajax({
+		url: url,
+		type: "GET",
+		data:{x:x},
+		success: function(data){
+			$("#loadtable").empty();
+			$("#loadtable").html("<div id='chartdiv'></div>");
+			var len=x.length;
+				if(len == 1 && x[len-1]=="gVsder"){
+					showgraph(data);}
+				else if(len == 1 && x[len-1]=="gVsgder")
+				{
+					showgraph1(data);
+				}
+				else{
+					showgraph2(data);} 
+					len--;
+        	jQuery("#exampleModal").modal('show');
+        	
+		},
+		error: function(data){
+			alert("Select Fields");
+			}
+	});
+	});
+	
+	
+$("#finalreport").click(function(){
+	var pid = $("#proId").val();
+	url="/generatereport";
+	$.ajax({
+		url:url,
+		data:{pid:pid},
+		success:function(res){
+			$("#loadtable").html(res);
+			jQuery("#exampleModal").modal('show');
+		}
+	});
+});
+
+
+	$("#1000").click(function(){
+	    $("#1001").slideToggle();
+	    $('#ar2').toggleClass('fa-caret-down fa-caret-right');
+	    
+	    $(".button-checkbox").click(function(){
+	    	var widget = $(this),
+	    	checkbox = widget.find('input:checkbox');
+	    	if(!checkbox.is(":checked")){
+	    		$(this.id).prop("checked",true);
+	    	}
+	    	else{
+	    		$(this.id).prop("checked",false);
+	    	}
+	    });
+	});
+	
+                    /* ----------------------------------------------------ACTION SHOW GRAPH- JQUERY ---------------------------------------	 */
+	$("#_action_show_graph").click(function(){
+	var chart=$('input[name="graphradio"]:checked').val();
+	var pid = $("#proId").val();
+	if(chart=="width"){
+		url = "/showGraphController/"+pid;				 
+		$.ajax({
+			url: url,
+			type: "GET",			
+			success: function(data){
+				$("#loadtable").empty();
+				$("#loadtable").html("<div id='chartdiv'></div>");
+				widthGraph(data);
+				jQuery("#exampleModal").modal('show');	        	
+			},
+			error: function(data){
+				jQuery("#exampleModal").html("abc");	
+				console.log(data);
+				}
+		});
+	}else if(chart=="halflength"){
+		url = "/showGraphController/"+pid;				 
+		$.ajax({
+			url: url,
+			type: "GET",			
+			success: function(data){
+				$("#loadtable").empty();
+				$("#loadtable").html("<div id='chartdiv'></div>");
+				HalfLenGraph(data);
+				jQuery("#exampleModal").modal('show');	        	
+			},
+			error: function(data){
+				jQuery("#exampleModal").html("abc");	
+				}
+		});
+	}else if(chart=="conductivity"){
+		url = "/showGraphController/"+pid;				 
+		$.ajax({
+			url: url,
+			type: "GET",			
+			success: function(data){
+				$("#loadtable").empty();
+				$("#loadtable").html("<div id='chartdiv'></div>");
+				conductivityGraph(data);
+				jQuery("#exampleModal").modal('show');	        	
+			},
+			error: function(data){
+				jQuery("#exampleModal").html("abc");	
+				
+				}
+		});
+	}else if(chart=="netpressure"){
+		url = "/showGraphController/"+pid;				 
+		$.ajax({
+			url: url,
+			type: "GET",			
+			success: function(data){
+				$("#loadtable").empty();
+				$("#loadtable").html("<div id='chartdiv'></div>");
+				PNetGraph(data);
+				jQuery("#exampleModal").modal('show');	        	
+			},
+			error: function(data){
+				jQuery("#exampleModal").html("abc");	
+				}
+		});
+	}else if(chart=="optfraclen"){
+		url = "/showmainfrac/"+pid;
+		$.ajax({
+			url: url,
+			type: "GET",
+			success: function(data){
+				$("#loadtable").empty();
+				$("#loadtable").html("<div id='chartdiv'></div>");
+				optimumFracLength(data);
+	        	jQuery("#exampleModal").modal('show');
+			},
+			error: function(data){
+				alert("Select Fields");
+				}
+		});
+	}else if(chart=="declined"){
+		url = "/showdeclinedcurve/"+pid;
+		$.ajax({
+			url: url,
+			type: "GET",
+			success: function(data){
+				$("#loadtable").empty();
+				$("#loadtable").html("<div id='chartdiv'></div>");
+				declinedCurveGraph(data);
+	        	jQuery("#exampleModal").modal('show');
+			},
+			error: function(data){
+				alert("Select Fields");
+				}
+		});
+	}else if(chart=="stress"){
+		url = "/showStressGraph/"+pid;
+		$.ajax({
+			url: url,
+			type: "GET",
+			success: function(data){
+				$("#loadtable").empty();
+				$("#loadtable").html("<div id='chartdiv'></div>");
+				StressGraph(data);
+	        	jQuery("#exampleModal").modal('show');
+			},
+		});
+	}
+	else if(chart=="minifrac"){
+		url = "/showMiniGraph/"+pid;
+		$.ajax({
+			url: url,
+			type: "GET",
+			success: function(data){
+				$("#loadtable").empty();
+				$("#loadtable").html("<div id='chartdiv'></div>");
+				minifracGraph(data);
+	        	jQuery("#exampleModal").modal('show');
+			},
+		});
+	}else{
+		alert("Select Graph");
+	}
+	});
+	
+	
+	$("#1002").click(function(){
+		$("#1003").slideToggle();
+	    $('#ar1').toggleClass('fa-caret-down fa-caret-right');
+	});
+	$("#1004").click(function(){
+		$("#1005").slideToggle();
+	    $('#ar3').toggleClass('fa-caret-down fa-caret-right');
+	});
+	$("#1006").click(function(){
+		$("#1007").slideToggle();
+	    $('#ar4').toggleClass('fa-caret-down fa-caret-right');
+	});
+	$("#1008").click(function(){
+		$("#1009").slideToggle();
+	    $('#ar5').toggleClass('fa-caret-down fa-caret-right');
+	});
+	$("#1010").click(function(){
+		$("#1011").slideToggle();
+	    $('#ar6').toggleClass('fa-caret-down fa-caret-right');
+	});
+	$("#10021").click(function(){
+		$("#10031").slideToggle();
+	    $('#ar2').toggleClass('fa-caret-down fa-caret-right');
+	});
+	
+	$("#100214").click(function(){
+		$("#100314").slideToggle();
+	    $('#ar2').toggleClass('fa-caret-down fa-caret-right');
+	});
+	
+	$("#1002145").click(function(){
+		$("#1003145").slideToggle();
+	    $('#ar2').toggleClass('fa-caret-down fa-caret-right');
+	    
+	});
+	
+	$("#10021456").click(function(){
+		$("#10031456").slideToggle();
+	    $('#ar2').toggleClass('fa-caret-down fa-caret-right');
+	    
+	});
+	
+}); 
+    </script>
+</head>
+
+
+<body>
+	<div layout:fragment="content">
+		<!-- #IMPORTANT. Refer to this layout in every page you want to use the theme -->
+		<div class="content-wrapper">
+			<section class="content-header" style="background-color: white;">
+				<h1>
+					Projects <span id="show">Output</span> <small>Charts</small>
+				</h1>
+				<ol class="breadcrumb">
+					<li><a href="#"><i class="fa fa-dashboard"></i> Project</a></li>
+					<li class="active">Output</li>
+				</ol>
+			</section>
+			<section class="content" style="background-color: white;">
+				<div class="row">
+					<div class="col-md-6">
+						<div class="pull-left">
+							<a th:href="@{'/graphPrevbt/'+ ${ProjectDetail.getId()}}" class="list">
+								<button class="btn btn-md bg-primary"
+									style="width: auto; height: auto;">
+									&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-angle-left"></i> Back&nbsp;&nbsp;&nbsp;&nbsp;
+								</button>
+							</a>
+						</div>
+					</div>
+				</div>
+				<div class="box-body">
+					<div class="nav-tabs-custom box-solid">
+						<div class="tab-content text-center">
+							<div class="tab-pane active" id="tab_1">
+								<input type="hidden" id="proId"
+									th:value=${ProjectDetail.getId()}>
+								<div class="modal fade" id="exampleModal" tabindex="-1"
+									role="dialog" aria-labelledby="exampleModalLabel"
+									aria-hidden="true">
+									<div style="width: 1100px;" class="modal-dialog"
+										role="document">
+										<div class="modal-content" style="border-radius: 20px;">
+											<div class="modal-pop-header" style="padding: 20px;">
+												<button style="border-radius: 20px;" type="button"
+													class="close" data-dismiss="modal" aria-label="Close">
+													<span style="font-size: 20px;" aria-hidden="true">&times;</span>
+												</button>
+											</div>
+											<div class="modal-body" id="loadtable" style="padding: 20px;">
+												<div id="chartdiv"></div>
+											</div>
+										</div>
+									</div>
+								</div>
+
+
+								<!--***************************************************************************************** -->
+								<!--***************************************************************************************** -->
+
+								<div class="row">
+									<div class="col-md-8"></div>
+									
+
+
+								</div>
+								<br>
+								<div class="row">
+									<div class="col-md-4">
+										<div class="output">
+											<div class="outputhead" id="1008" style="cursor: pointer;">
+												<h4>
+													<i id="ar5" style="position: absolute; left: 20px;"
+														class="fa fa-caret-right"></i>~~~~~Title To be
+													Updated~~~~~<i style="position: absolute; right: 20px;"
+														class="fa fa-line-chart" aria-hidden="true"></i>
+												</h4>
+											</div>
+											<div class="outputbody" id="1009">
+												<span class="button-checkbox"> <input type="radio"
+													name="graphradio" id="mf" value="minifrac" class="" /><label
+													for="mf">&nbsp;&nbsp; Mini Frac</label>
+												</span> <br> <span class="button-checkbox"> <input
+													type="radio" name="graphradio" id="sa" value="stress"
+													class="" /><label for="sa">&nbsp;&nbsp; Stress
+														Analysis</label>
+												</span> <br> <span class="button-checkbox"> <input
+													type="radio" name="graphradio" id="ofl" value="optfraclen"
+													class="" /><label for="ofl">&nbsp;&nbsp; Optimum
+														Fracture Length</label>
+												</span> <br> <span class="button-checkbox"> <input
+													type="radio" name="graphradio" id="dc" value="declined"
+													class="" /><label for="dc">&nbsp;&nbsp; Declined
+														Curve</label>
+												</span>
+											</div>
+										</div>
+									</div>
+									<div class="col-md-4">
+										<div class="output">
+											<div class="outputhead" id="1010" style="cursor: pointer;">
+												<h4>
+													<i id="ar6" style="position: absolute; left: 20px;"
+														class="fa fa-caret-right"></i>Output Graphs<i
+														style="position: absolute; right: 20px;"
+														class="fa fa-line-chart" aria-hidden="true"></i>
+												</h4>
+											</div>
+											<div class="outputbody" id="1011" >
+												<span class="button-checkbox"> <input type="radio"
+													name="graphradio" id="widthradio" value="width" class="" /><label
+													for="widthradio">&nbsp;&nbsp; Width</label>
+												</span> <br> <span class="button-checkbox"> <input
+													type="radio" name="graphradio" id="halflengthradio"
+													value="halflength" class="" /><label for="halflengthradio">&nbsp;&nbsp;
+														HalfLength</label>
+												</span> <br> <span class="button-checkbox"> <input
+													type="radio" name="graphradio" id="conducradio"
+													value="conductivity" class="" /><label for="conducradio">&nbsp;&nbsp;
+														Conductivity</label>
+												</span> <br> <span class="button-checkbox"> <input
+													type="radio" name="graphradio" id="pnetradio"
+													value="netpressure" class="" /><label for="pnetradio">&nbsp;&nbsp;
+														Net Pressure</label>
+												</span>
+											</div>
+										</div>
+									</div>
+									<div class="col-md-4">
+										<button id="finalreport" title="your-tooltip-here"
+											class="onetmenu" style="margin-bottom: 10px;"
+											data-toggle="modal">
+											<i class="fa fa-table" aria-hidden="true"></i><label>&nbsp;&nbsp;&nbsp;&nbsp;Report</label>
+										</button>
+									</div>
+								</div>
+								<br> <br>
+								<center>
+									<intput class="navinbutton btn btn-md btn-primary"
+										id="_action_show_graph"
+										style="width:auto;border-radius: 25px;">Show Graph </intput>
+								</center>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+		</div>
+	</div>
+
+</body>
+</html>

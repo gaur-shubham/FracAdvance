@@ -1,0 +1,62 @@
+<script>
+$("#wf_impeditbt").click(function(event){
+	event.preventDefault();
+	url="wellforcast/editforcast";
+	$.ajax({
+		url:url,
+		data:$("#wf_impform").serialize(),
+		success:function(res){
+			$("#loadtable").html(res);
+          	$("#exampleModal").show();
+		},
+	});
+});
+
+$("#wf_curveanalysis").click(function(){
+	url="wellforcast/showcurveanalysis";
+	$.ajax({
+		url:url,
+		data:{pid:$("#wf_imppid").val()},
+		success:function(res){
+			$("#loadtable").html(res);
+          	$("#exampleModal").show();
+		}
+	});
+});
+</script>
+<section class="content">
+<li class="list-group-item">
+<div class="tab-content">
+	<div class="tab-pane active" id="tab_1" style="overflow-y: auto;overflow-x:hidden;;height:460px;">
+	
+		<div class="row" >
+		<div class="col-md-7"></div>
+		<div class="col-md-4">
+		<input type="button" class="btn btn-default" id="wf_curveanalysis" value="Declined Curve Analysis"/>
+		</div>
+		<div class="col-md-1"></div>
+		</div><br>
+		<div class="row">
+			<div class="col-md-1"></div>
+			<div class="col-md-10">
+				<form id="wf_impform">
+					<input type="hidden" id="wf_imppid" name="imppid" th:value="${pid}">
+					<table id="" class=" table table-hover table-bordered">
+						<tr th:each="list:${list}">
+							<th style="width:50%" th:text="${list.param}"></th>
+							<td th:text="${list.value}"></td>
+						</tr>
+					</table>
+					
+				</form>
+				
+			</div>
+		</div>
+	</div><br>
+	<center>
+						<input type="submit" id="wf_impeditbt" class="btn btn-primary"
+							value="Edit" style="width:10%;"/>
+					</center>
+</div>
+</li>
+</section>

@@ -1,0 +1,69 @@
+<script th:inline="javascript">
+$("#updateBt").click(function(){
+	var pid=$("#pid").val();
+	$.ajax({
+		url:"/update",
+		data:{pid:pid},
+		success:function(res){
+			$("#loadtable").html(res);
+		    $("#exampleModal").show();
+		}
+	});
+});
+</script>
+<style>
+tbody {
+    display:block;
+    max-height:300px;
+    overflow:auto;
+}
+thead, tbody tr {
+    display:table;
+    width:100%;
+    table-layout:fixed;
+}
+</style>
+<div class="tab-content">
+            <div class="tab-pane active" id="tab_1">
+ <li class="list-group-item">
+<div class="row form-group">
+    <div class="col-md-1"></div>
+    <div class="col-md-2">
+    <label >Pumping Time (Min)</label>
+    </div>
+    <div class="col-md-3">
+   <input  id="ptime" class="form-control"  min=0 step="any" name="pumptime" th:value=${list[0].pumptime} placeholder="Enter Pumping Time" readonly>
+    <input id="pid" name="pid" type="hidden" th:value=${hiddenId}><br>
+    
+    </div>
+    </div>
+<div class="row" id="table1" >
+		
+          
+            <div class="col-md-1" ></div>
+            <div class="col-md-10" >
+            <table id="example2" class="table table-hover table-bordered ">
+                            <thead  class="bg-gray">
+							<tr>
+                            		<th style="width:40%" class="text-center">Pressure (psi)</th>
+                            		<th style="width:40%" class="text-center">Shut In Time (Min)</th>
+                            		 
+                            </tr>
+                            </thead>
+                             <tbody >
+                             <tr th:each="list : ${list}"  >
+                            
+                                            <td th:text="${list.pressure}" style="text-align:center"></td>
+                                            <td th:text="${list.time}" style="text-align:center"></td>
+                                            
+                               </tr>
+                             </tbody>
+                        </table>
+                        
+            </div>
+            </div>
+               <center>
+            <input type="submit" id="updateBt" value="Edit" class="btn btn-primary" style="width:auto;"></input>
+            </center></li>
+</div>
+</div>

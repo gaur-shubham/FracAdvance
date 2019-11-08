@@ -1,0 +1,147 @@
+<script>
+
+$("#wf_prevbt").click(function(){
+	url="wellforcast/showforcast";
+	$.ajax({
+		url:url,
+		data:{pid:$("#wf_pid").val()},
+		success:function(res){
+			$("#loadtable").html(res);
+          	$("#exampleModal").show();
+		}
+	});
+});
+
+$("#wf_select").change(function(){
+	url="wellforcast/showcurveinput";
+	$.ajax({
+		url:url,
+		data:{type:$(this).val(),pid:$("#wf_pid").val()},
+		success:function(res){
+			$("#loadtable").html(res);
+          	$("#exampleModal").show();
+		}
+	});
+});
+
+$("#wf_addfield").click(function(){
+	if($(".input").val()){
+		url="wellforcast/savefield";
+		$.ajax({
+			url:url,
+			data:$("#wf_maiform").serialize(),
+			success:function(res){
+				$("#loadtable").html(res);
+	          	$("#exampleModal").show();
+	          	$("#wf_inputtable2").show();
+			},
+		});
+	}else{
+		alert("PLEASE FILL EMPTY FIELDS");
+		return false;
+	}
+});
+
+$("#wf_nextbt").click(function(){
+	url="wellforcast/save1";
+	$.ajax({
+		url:url,
+		data:$("#wf_maiform").serialize(),
+		success:function(res){
+			$("#loadtable").html(res);
+          	$("#exampleModal").show();
+          	$("#wf_inputtable2").show();
+		}
+	});
+});
+</script>
+
+<section class="content">
+<li class="list-group-item">
+	<div class="tab-content" >
+		<div class="tab-pane active" id="tab_1" style="overflow-y: auto;overflow-x:hidden;;height:460px;">
+			
+			
+			
+			<div class="row">
+			<div class="col-md-4">
+							<button id="wf_prevbt" type="button" class="form-control"
+								style="width: 50%">
+								<i class="fa fa-angle-left"></i>&nbsp;&nbsp;Previous
+							</button>
+			</div>
+			<div class="col-md-8"></div>
+			</div>
+			<br>
+			<form id="wf_maiform">
+			<div class="row">
+			<div class="col-md-1"></div>
+			<div class="col-md-10">
+			<label>Select Curve:&nbsp;&nbsp;&nbsp; </label>
+			<select id="wf_select" name="wf_type" class="form-control" style="width:20%;">
+			<option th:if="${type}!=null" th:value="${type}" hidden selected>[[${type}]]</option>
+			<option value="Exponential">Exponential</option>
+			<option value="Harmonic">Harmonic</option>
+			<option value="Hyberbolic">Hyberbolic</option>
+			</select>
+			</div>
+			</div>
+			<br>
+			
+			<div class="row" id="wf_inputtable1">
+			<div class="col-md-1"></div>
+			<div class="col-md-10">
+			<input type="hidden" th:value="${pid}" id="wf_pid" name="pid"/>
+			<table class="table table-hover table-bordered">
+			<tbody>
+			<tr th:each="list:${list}">
+			<th th:text="${list.param}"></th>
+			<td><input type="number" name="wf_input1" class="form-control" th:value="${list.value}" style="border:none;"></td>
+			</tr>
+			</tbody>
+			</table>
+			</div>
+			</div>
+			<tr th:if="${list!=null}">
+			<input type="button" id="wf_nextbt" class="form-control" value="next" style="width:15%; margin-left:76%; ">
+			</tr><br>
+			<!-- *************************************Second Table************* -->
+			<div id="wf_inputtable2" hidden>
+			<div class="row" >
+			<div class="col-md-1"></div>
+			<div class="col-md-10">
+			<table class="table table-hover table-bordered">
+			<thead>
+			<th>Time (Year)</th>
+			<th>Rate At The End Of Year Q(STB/Day)</th>
+			<th>Yearly Production Rate Np(STB)</th>
+			
+			</thead>
+			<tbody>
+			<tr th:each="list:${list1}">
+			<td th:text="${list.time}"></td>
+			<td th:text="${list.Rate}"></td>
+			<td th:text="${list.yearlyprodunction}"></td>
+			</tr>
+			<tr>
+			<td><input type="text" name="wf_input2" class="input form-control" style="border:none;"></td>
+			<td title="Auto Generated"><input type="text" class="input form-control" style="border:none;"readonly></td>
+			<td title="Auto Generated"><input type="text" class="input form-control" style="border:none;"readonly></td>
+			<td><input type="button" class="form-control" value="+" id="wf_addfield"></td>
+			</tr>
+			</tbody>
+			</table>
+			</div>
+			</div>
+			<div class="row">
+			<div class="col-md-8"></div>
+			<div class="col-md-3">
+			</div>
+			<div class="col-md-1"></div>
+			</div>
+			</div>
+			</form>
+		</div>
+	</div>
+	</li>
+</section>

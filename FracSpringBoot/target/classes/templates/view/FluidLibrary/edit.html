@@ -1,0 +1,407 @@
+   <script th:inline="javascript">
+    $( "#buttonChainging" ).click(
+    		function() {
+        $( "#fill" ).slideToggle( "slow" );
+        $( "#ufill" ).slideToggle( "slow" );
+        var val = document.getElementById('buttonChainging').value;
+        if(val=="System"){
+        document.getElementById('buttonChainging').value = "User";
+        }
+        else{
+        document.getElementById('buttonChainging').value = "System";
+        }
+        }
+    		);
+    
+    
+    
+    $( "#fluidpropertyid" ).click(function() {
+        $( "#tablediv" ).slideToggle( "slow" );
+ 
+        });
+    $( "#ufluidpropertyid" ).click(function() {
+        $( "#utablediv" ).slideToggle( "slow" );
+ 
+        });
+    
+    $( "#Newtonian" ).click(function() {
+        $( "#tablediv2" ).slideToggle( "slow" );
+        $( "#tablediv3" ).hide();
+        });
+    
+    $( "#Powerlaw" ).click(function() {
+        $( "#tablediv3" ).slideToggle( "slow" );
+        $( "#tablediv2" ).hide();
+        });
+    $( "#uNewtonian" ).click(function() {
+        $( "#utablediv2" ).slideToggle( "slow" );
+        $( "#utablediv3" ).hide();
+        });
+    
+    $( "#uPowerlaw" ).click(function() {
+        $( "#utablediv3" ).slideToggle( "slow" );
+        $( "#utablediv2" ).hide();
+        });
+    $("#fType").change(function (event) {
+    	event.preventDefault();
+		 var var1= $("#fType").val();
+		 var var2= $("#pid").val();
+        $.ajax({            
+            url: '/showFLSecondController',
+            data: {fluidT:var1,pid:var2},
+            success:function(res){
+    			$("#loadtable").html(res);
+    		    $("#exampleModal").show();
+    		}
+        });
+
+    });
+    
+    $("#fltable").click(function (event) {
+    	event.preventDefault();
+		 alert("Want To Update?");
+        $.ajax({            
+            url: '/showFLThirdController',
+           // data: d1+"&pid="+var2+"&fType="+var1,		            
+           dataType : 'json',
+		   data: $("#fileUploadForm23").serialize(), 
+           success:function(res){
+    			$("#loadtable").html(res);
+    		    $("#exampleModal").show();
+    		}
+        });
+
+    });
+    
+    $("#FluidRehelogysubmit").click(function (event) {
+    	event.preventDefault();    	
+		 alert("Want To Update viscosity?");
+        $.ajax({            
+            url: '/showFLFourthController',          
+           dataType : 'json',
+		   data: $("#FluidRehelogyForm").serialize(), 
+           success:function(res){
+    			$("#loadtable").html(res);
+    		    $("#exampleModal").show();
+    		}
+        });
+
+    });
+    
+    
+    $("#uFluidRehelogysubmit").click(function (event) {
+    	event.preventDefault();    	
+		 alert("Want To Update viscosity?");
+        $.ajax({            
+            url: '/showFLseventhController',          
+           dataType : 'json',
+		   data: $("#uFluidRehelogyForm").serialize(), 
+           success:function(res){
+    			$("#loadtable").html(res);
+    		    $("#exampleModal").show();
+    		}
+        });
+
+    });
+    
+    $("#PowerLawsubmit1").click(function (event) {
+    	event.preventDefault();    	
+		 alert("Enter all the Values");
+        $.ajax({            
+            url: '/showFLFifthController',          
+           dataType : 'json',
+		   data: $("#FluidRehelogyForm2").serialize(), 
+           success:function(res){
+    			$("#loadtable").html(res);
+    		    $("#exampleModal").show();
+    		}
+        });
+
+    });
+    
+    $("#uPowerLawsubmit1").click(function (event) {
+    	event.preventDefault();    	
+		 alert("Enter all the Values");
+        $.ajax({            
+            url: '/showFLeighthController',          
+           dataType : 'json',
+		   data: $("#uFluidRehelogyForm2").serialize(), 
+           success:function(res){
+    			$("#loadtable").html(res);
+    		    $("#exampleModal").show();
+    		}
+        });
+
+    });
+    
+    $("#ufltable").click(function (event) {
+    	event.preventDefault();    	
+		 alert("Enter all the Values");
+        $.ajax({            
+            url: '/showFLSixthController',          
+           dataType : 'json',
+		   data: $("#ufileUploadForm23").serialize(), 
+           success:function(res){
+    			$("#loadtable").html(res);
+    		    $("#exampleModal").show();
+    		}
+        });
+
+    });
+    
+    </script>   
+        <section class="content">
+    <div class="tab-content" id="hide">
+    <input type="button" class="btn btn-primary" value="System" id="buttonChainging0">
+        <div class="row" id="loadtable20" style="padding: 20px; display: none;">
+        </div>
+        </div>
+        
+        <div class="tab-pane active" id="fill" >
+            <!-- Personal info Li -->    
+            <li class="list-group-item">
+                <strong><h4 class="text-center">Fluid Library System</h4></strong><br>                
+                <div class="row">
+                <div class="col-md-10">
+    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                      
+                      <input type="button" class="btn btn-primary" value="Fluid Properties" id="fluidpropertyid0">
+  
+ <form class="form-horizontal" role="form" id="fileUploadForm230" >
+ <!-- th:if="${teacher.gender == 'F'}"> -->
+<div class="row">
+<div class="col-md-8" id="tablediv0" >
+<input id="pid" name="pid" type="hidden" th:value=${pid}>
+<table id="example2" class="table table-hover table-hover ">                      
+                                                        
+                             <tbody >
+                             <tr th:each="list : ${list}"  >                           
+                                            <td><input type="text" name="parameter" th:value="${list.parameter}" class="press form-control text-center" readOnly></td>
+                                            <td><input type="text" name="value" th:value="${list.value}" class="time form-control text-center" ></td>                                          
+                                            <td><input type="hidden" name="ftype1" th:value="${list.type}" class="time form-control text-center" ></td>
+                               </tr>
+                   <tr>                                
+                             </tbody>
+                        </table>
+	<input class="123btn btn-primary" type="submit" value="Update" style="margin-left:50%;" id="fltable0" />                       
+</div>
+</div> 
+
+            </form>        
+                    </div>
+                    
+                    
+  <!-- table for    FluidRehelogy         -->
+     
+                      <div class="col-md-6">
+                      
+                      <input type="button" class="btn btn-primary" value="Fluid Rehelogy" id="FluidRehelogyid0"></br>
+  <input type="radio" name="gender" id="Newtonian0" value="Newtonian" checked>Newtonian<br>
+  <input type="radio" name="gender" id="Powerlaw0" value="Powerlaw">Powerlaw<br>
+ <form class="form-horizontal" role="form" id="FluidRehelogyForm0" >
+ <div class="row">
+<div class="col-md-8" id="tablediv20" hidden >
+<input id="pid" name="pid" type="hidden" th:value=${pid}>
+<table id="example26" class="table table-hover table-hover ">                      
+                            <tbody id="body270" >                            
+                             </tbody>                            
+                             <tbody >
+                             <tr  >      
+                                                             
+                            <td><input type="text" name="parameter" th:value="${list.get(0).parameter}" class="press form-control text-center" readOnly></td></br>
+                            <td><input type="text" name="value" th:value="${list.get(0).value}" class="time form-control text-center" ></td>         </br>                                 
+                           <td><input type="hidden" name="ftype1" th:value="${list.get(0).type}" class="time form-control text-center" ></td></br>
+                               </tr>
+                               <tr>                                
+                             </tbody>
+                        </table>
+	<input class="123btn btn-primary" type="submit" value="Update" style="margin-left:50%;" id="FluidRehelogysubmit0" />                       
+</div>
+</div> 
+</form>   
+
+<!-- div and form for Powelaw -->
+
+<form class="form-horizontal" role="form" id="FluidRehelogyForm20" >
+ <div class="row">
+<div class="col-md-12" id="tablediv30" hidden >
+<input id="pid" name="pid" type="hidden" th:value=${pid}>
+<table id="example26" class="table table-hover table-hover ">                      
+                            <tbody id="body23" >                            
+                             </tbody>                            
+                             <tbody >
+                  <tr >      <td >Enter K<input style="width:100%" type="number" name="k"  class="press form-control text-center" ></td> </br>
+                             <td>Enter N <input style="width:100%" type="number" name="neta"  class="press form-control text-center" ></td></br>
+                             <td>Enter Gama <input style="width:100%" type="number" name="gama" class="press form-control text-center" ></td></br>
+                                                 
+                                           <!--  <td><input type="text" name="parameter" th:value="${list.get(0).parameter}" class="press form-control text-center" ></td>
+                                            
+                                           <td>Viscocity <input type="text" name="value" th:value="${list.get(0).value}" class="time form-control text-center" readOnly></td>                                          
+                                           --> <td><input type="hidden" name="ftype1" th:value="${list.get(0).type}" class="time form-control text-center" ></td>
+                               </tr>
+                               <tr>                                
+                             </tbody>
+                        </table>
+	<input class="123btn btn-primary" type="submit" value="Update" style="margin-left:50%;" id="PowerLawsubmit10" />                       
+</div>
+</div> 
+</form>   
+              
+                    </div>                 
+                     <div class="col-md-6">
+          <select name="ftype" id="fType0" class="form-control">
+         <tr th:each="fluidTypeList : ${fluidTypeList}"  > 
+          <option value="" disabled selected hidden>Select Type Of Fluid</option>
+  		<option th:value="${fluidTypeList}">[[fluidTypeList]]</option>
+  		
+          </select>
+        </div>
+ </form>                   
+              
+              
+              
+              
+                </div>
+               
+        </div>
+        
+       <!-- This is for the user  -->
+        
+        
+        <div  id="ufill0" hidden>
+            <!-- Personal info Li -->    
+            <li class="list-group-item">
+                <strong><h4 class="text-center">Fluid Library User</h4></strong><br>                
+                <div class="row">
+                <div class="col-md-10">
+    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                      
+                      <input type="button" class="btn btn-primary" value="Fluid Properties" id="ufluidpropertyid0">
+  
+ <form class="form-horizontal" role="form" id="ufileUploadForm230" >
+ <!-- th:if="${teacher.gender == 'F'}"> -->
+
+<div class="col-md-8" id="utablediv0" >
+<input id="pid" name="pid" type="hidden" th:value=${pid}>
+<table id="uexample20" class="table table-hover table-hover ">                      
+                            <tbody th:if="${list.empty}" id="ubody" >                            
+                             </tbody>                            
+                             <tbody >
+                             <tr >                           
+                                            <td><input type="text" name="parameter" value="viscocity"  class="press form-control text-center" readOnly></td>
+                                           <td><input type="text" name="valuev"  class="time form-control text-center" ></td>                                          
+                     </tr >  <tr >                        <td><input type="text" name="parameter" value="property2"  class="press form-control text-center" readOnly></td>
+                                            <td><input type="text" name="valuev"  class="time form-control text-center" ></td>                                         
+                     </tr >  <tr >                        <td><input type="text" name="parameter" value="property3"  class="press form-control text-center" readOnly></td>
+                                           <td><input type="text" name="valuev"  class="time form-control text-center" ></td>                                          
+                                            
+                      </tr >  <tr >   <td><input type="text" name="ftype1" value="Fluid Name" class="time form-control text-center" readOnly ></td>
+                               <td><input type="text" name="ftypevalue" value="Enter value"  class="press form-control text-center" ></td>
+                                                   
+                             </tbody>
+                        </table>
+	<input class="123btn btn-primary" type="submit" value="Update" style="margin-left:50%;" id="ufltable0" />                       
+
+</div> 
+
+            </form>        
+                    </div>
+                    
+                    
+  <!-- table for    FluidRehelogy         -->
+     
+                      <div class="col-md-6">
+                      
+                      <input type="button" class="btn btn-primary" value="Fluid Rehelogy" id="uFluidRehelogyid0"></br>
+  <input type="radio" name="gender" id="uNewtonian0" value="Newtonian" checked>Newtonian<br>
+  <input type="radio" name="gender" id="uPowerlaw0" value="Powerlaw">Powerlaw<br>
+ <form class="form-horizontal" role="form" id="uFluidRehelogyForm0" >
+ <div class="row">
+<div class="col-md-8" id="utablediv20" hidden >
+<input id="pid" name="pid" type="hidden" th:value=${pid}>
+<table id="example26" class="table table-hover table-hover ">                      
+                            <tbody id="body24" >                            
+                             </tbody>                            
+                             <tbody >
+                             <tr  >      
+                                                             
+                            <td><input type="text" name="parameter" value="viscosity" class="press form-control text-center" readOnly></td></br>
+                            <td><input type="text" name="value"  class="time form-control text-center" ></td>         </br>                                 
+           </tr  ><tr  >    <td><input type="text" name="ftype1" value="FluidType"  class="time form-control text-center" readOnly></td></br>                      
+                           <td><input type="text" name="ftype10"  th:value="${list.get(0).type}" class="time form-control text-center" ></td></br>
+                               </tr>
+                                                               
+                             </tbody>
+                        </table>
+	<input class="123btn btn-primary" type="submit" value="Update" style="margin-left:50%;" id="uFluidRehelogysubmit0" />                       
+</div>
+</div> 
+</form>   
+
+<!-- div and form for Powelaw -->
+
+<form class="form-horizontal" role="form" id="uFluidRehelogyForm20" >
+ <div class="row">
+<div class="col-md-12" id="utablediv30" hidden >
+<input id="pid" name="pid" type="hidden" th:value=${pid}>
+<table id="uexample26" class="table table-hover table-hover ">                      
+                            <tbody id="body26" >                            
+                             </tbody>                            
+                             <tbody >
+                             <tr  >    <td><input type="text" name="ftype1" value="FluidType"  class="time form-control text-center" readOnly></td></br>                      
+                           <td><input type="text" name="ftype10"  th:value="${list.get(0).type}" class="time form-control text-center" ></td></br>
+                               </tr>
+                  <tr >      <td >Enter K<input style="width:100%" type="number" name="k"  class="press form-control text-center" ></td> </br>
+                             <td>Enter N <input style="width:100%" type="number" name="neta"  class="press form-control text-center" ></td></br>
+                             <td>Enter Gama <input style="width:100%" type="number" name="gama" class="press form-control text-center" ></td></br>
+                                                 
+                                           <!--  <td><input type="text" name="parameter" th:value="${list.get(0).parameter}" class="press form-control text-center" ></td>
+                                            
+                                           <td>Viscocity <input type="text" name="value" th:value="${list.get(0).value}" class="time form-control text-center" readOnly></td>                                          
+                                           --> <td>         </tr>
+                                       
+                                     <tbody th:if="${list!=null}" id="ubody080" >                            
+                             </tbody>                            
+                             <tbody >
+                           
+                              <td>Viscocity <input type="text" name="value" th:value="${list.get(0).value}" class="time form-control text-center" readOnly></td>                                          
+                                                                      
+                             </tbody>
+                        </table>
+	<input class="123btn btn-primary" type="submit" value="Update" style="margin-left:50%;" id="uPowerLawsubmit10" />                       
+</div>
+</div> 
+</form>   
+              
+                    </div>                 
+                     <!-- <div class="col-md-6">
+          <select name="ftype" id="ufType" class="form-control">
+          <option value="" disabled selected hidden>Select Type Of Fluid</option>
+  		<option value="fluidType1">fluidType1</option>
+  		<option value="fluidType2">fluidType2</option>
+          </select>
+        </div> -->
+ </form>                   
+              
+              
+              
+              
+                </div>
+               
+        </div>
+        
+    </section>    
+        
+        
+        
+        
+        
+        
+        
+       

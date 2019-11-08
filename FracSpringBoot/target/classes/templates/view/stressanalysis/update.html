@@ -1,0 +1,81 @@
+<script>
+$("#sa_upbt").click(function(){
+	url="stressanalysis/saveupdate"
+	$.ajax({
+		url:url,
+		data:$("#sa_impmainform").serialize(),
+		success:function(res){
+			$("#loadtable").html(res);
+          	$("#exampleModal").show();
+		}
+	});
+});
+
+$(".sa_upremfieldbt").click(function(){
+	var id =$(this).closest('td').find('input[name=sa_uphiddenid]').val();
+	var pid=$("#sa_uppid").val();
+	url="stressanalysis/delstressupfield";
+	$.ajax({
+		url:url,
+		data:{pid:pid,id:id},
+		success:function(res){
+			$("#loadtable").html(res);
+          	$("#exampleModal").show();
+		}
+	});
+});
+</script>
+<style>
+tbody {
+    display:block;
+    max-height:360px;
+    overflow:auto;
+}
+thead, tbody tr {
+    display:table;
+    width:100%;
+    table-layout:fixed;
+}
+</style>
+<section class="content">
+      <li class="list-group-item"> 
+        <div class="tab-pane active" id="fill">
+            
+                <div class="row">
+                
+                    <div class="col-md-1"></div>
+                    <div class="col-md-10">
+<form id="sa_impmainform">
+<input type="hidden" id="sa_uppid" name="sa_uppid" th:value="${pid}">
+                        <table id="sa_upexample2" class="table table-hover table-bordered" >
+                            <thead  class="bg-gray">
+							<tr>
+                            		<th style="text-align: center;">Poisson's ratio</th>
+                                    <th style="text-align: center;">Density(lb/ft3)</th>
+                                    <th style="text-align: center;">Depth(ft)</th>
+                                    <th style="text-align: center;">Pore Pressure(Mpa)</th>
+                                    <th style="width:10%;text-align: center;"></th>
+                            
+                            </tr>
+                            </thead>
+                            <tbody>
+                            		<tr th:each="list:${list}">
+                                    <td><input  type="number" class="form-control" th:name="sa_upinput" th:value="${list.ratio}" id="ratio" style="border:none"></td>
+                                    <td><input  type="number"class="form-control" th:name="sa_upinput" th:value="${list.density}" id="density" style="border:none"></td>
+                                    <td><input  type="number"class="form-control" th:name="sa_upinput" th:value="${list.depth}"id="depth" style="border:none"></td>
+                                    <td><input  type="number"class="form-control" th:name="sa_upinput" th:value="${list.pore}" id="pore" style="border:none"></td>
+                                    <td style="width:10%;"><input class="sa_upremfieldbt btn btn-danger" style="width:100%;" type="button"  value="X" >
+                                    <input  type="hidden" class="form-control" th:name="sa_uphiddenid" th:value="${list.id}">
+                                    </td>
+                                    </tr>
+                                    
+                            </tbody>
+                        </table>
+                        
+                </form>
+                        <center>
+                        <input id="sa_upbt" class="btn btn-primary" type="submit" value="Update" style="width:10%"/></center>
+                    </div>
+                </div>
+        </div>
+</section>

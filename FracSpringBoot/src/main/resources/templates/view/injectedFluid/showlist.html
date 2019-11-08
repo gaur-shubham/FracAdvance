@@ -1,0 +1,87 @@
+<script th:inline="javascript">
+
+$("#if_showupdatebt").click(function(){
+	var pid=$("#if_showpid").val();
+	url="/injectedfluid/updatefluid";
+	$.ajax({
+		url:url,
+		data:{pid:pid},
+		success:function(res){
+			$("#loadtable").html(res);
+          	$("#exampleModal").show();
+		}
+	});
+});
+</script>
+
+<div class="tab-content">
+	<div class="tab-pane active" id="tab_1">
+		
+
+
+		<div class="row">
+		<div class="col-lg-12">
+		<tr th:each="list:${list}">
+				<input type="hidden" id="if_showpid" name="showpid" th:value="${pid}">
+				<div class="col-md-10">
+
+					<table id="" class="table table-hover">
+						<tr>
+							<th>Injection Rate(bbl/min)</th>
+							<td><input type="number" name="showrate" th:value="${list.rate}" class="form-control" readonly /></td>
+						</tr>
+						<tr>
+							<th>Leak off coefficient (ft/sec^1/2)</th>
+							<td><input type="number" name="showcoeff" th:value="${list.coeff}" class="form-control" readonly/></td>
+						</tr>
+						<tr id="">
+							<th>Spurt loss (gal/ft2)</th>
+							<td><input type="number" name="showloss" th:value="${list.loss}" class="form-control" readonly/></td>
+						</tr>
+					</table>
+
+				</div>
+				
+				<div class="col-md-10">
+						<center><strong><h4 class="text-center">Pre-frac skin and PI</h4></strong><br></center>
+					<table id="" class="table table-hover">
+						<tr>
+							<th>Skin</th>
+							<td><input type="number" name="showskin" th:value="${list.skin}" class="form-control" readonly /></td>
+						</tr>
+						<tr>
+							<th>PI (bbl/day-psi)</th>
+							<td><input type="number" name="showpi" th:value="${list.pi}" class="form-control" readonly/></td>
+						</tr>
+
+					</table>
+
+				</div>
+
+
+				
+				<div class="col-md-10">
+			<center><strong><h4 class="text-center">Others input
+							parameters</h4></strong><br></center>
+					<table id="" class="table table-hover">
+						<tr>
+							<th>Safety margin (200-500 psi)</th>
+							<td><input type="number" name="showmargin" th:value="${list.margin}" class="form-control" readonly/></td>
+						</tr>
+						<tr>
+							<th>Tectonic stress (psi)</th>
+							<td><input type="number" name="showstress" th:value="${list.stress}" class="form-control" readonly/></td>
+						</tr>
+
+					</table>
+					
+						
+				</div>
+			</tr>
+</div>
+		</div>
+		<center>
+					<input type="button" id="if_showupdatebt" class="btn btn-primary"
+						value="UPDATE"/></center>
+	</div>
+</div>

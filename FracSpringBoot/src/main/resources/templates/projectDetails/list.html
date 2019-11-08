@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="layout/layout">
+
+<head>
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+<meta name="layout" content="main">
+<title>FracAdvance: Projects</title>
+<style>
+#delete {
+	background: none;
+	border: none;
+	outline: none;
+	transition: all 0.2s linear;
+	font-size: 18px;
+}
+html * {
+	font-family: 'Calibri';
+}
+#delete:hover {
+	font-size: 18.5px;
+	color: red;
+}
+</style>
+</head>
+<body class="hold-transition skin-black sidebar-mini">
+	<div layout:fragment="content">
+		<!-- #IMPORTANT. Refer to this layout in every page you want to use the theme -->
+		<div class="content-wrapper">
+			<section class="content-header">
+				<h1>
+					Project <small>All Projects</small>
+				</h1>
+				<ol class="breadcrumb">
+					<li><a href="#"><i class="fa fa-dashboard"></i>Projects</a></li>
+					<li class="active">All</li>
+				</ol>
+			</section>
+
+			<section class="content">
+
+				<div class="row">
+
+					<!-- right col (We are only adding the ID to make the widgets sortable)-->
+					<section class="col-lg-12 ">
+
+						<div class="box box-info">
+							<div class="box-header">
+
+								<h3 class="box-title">All Projects</h3>
+							</div>
+							<!-- /.box-header -->
+							<div class="box-body">
+								<table id="example2" class="table table-hover">
+									<thead>
+										<tr>
+											<td>Project Name</td>
+											<td>Field Name</td>
+											<td>Company Name</td>
+											<td>User Name</td>
+											<td>Date Created</td>
+											<td style="width: 1%;"></td>
+										</tr>
+									</thead>
+									<tbody>
+										<tr th:if="${list.empty}">
+											<td colspan="5">No Data Available</td>
+										</tr>
+										<tr th:each="list : ${list}">
+											<td><a th:href="@{'/showlist/'+${list.Id}}"
+												th:value="${list.Id}" th:text="${list.projectName}"></a></td>
+											<td th:text="${list.wellName}"></td>
+											<td th:text="${list.companyName}"></td>
+											<td th:text="${list.user}"></td>
+											<td th:text="${list.dateCreated}"></td>
+											<td class="text-left" style="width: 1%;">
+												<button id="delete">
+													<a th:href="@{'/deleteproject/'+${list.Id}}"
+														class="fa fa-fw fa-trash"></a>
+												</button>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+								<ul>
+									<div class="pagination pagination-sm">
+										<li></li>
+									</div>
+								</ul>
+							</div>
+							<!-- /.box-body -->
+						</div>
+						<!-- /.box -->
+
+					</section>
+					<!-- right col -->
+				</div>
+				<!-- /.row (main row) -->
+			</section>
+
+		</div>
+	</div>
+</body>
+</html>

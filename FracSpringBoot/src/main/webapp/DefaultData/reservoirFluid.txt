@@ -1,0 +1,40 @@
+/Reservoir properties
+Initial Reservoir Pressure(psi)=null
+Bottomhole Pressure(psi)=null
+Reservoir Temperature(F)=null
+Reservoir Porosity=null
+Reservoir Permeability(md)=null
+Gas Saturation Factor=null
+Oil Saturation Factor=null
+Gas Specific Gravity=null
+Specific Gravity of Gas mixture=null
+Oil Specifc Gravity=null
+Oil Viscosity=null
+Gas Viscosity=null
+Oil Formation Facor(BBL/STB)=null
+Gas compressiblity factor (Z)=null
+Gas constant(psia.ft3/lbmoleR)=null
+Skin Factor=null
+Well Bore Radius(feet)=null
+Effective Radius(feet)=123456
+Drinage Area(Acres)=null
+/Fracture Mechanics Properties
+Average_Fracture_width=null
+Young's Modulus(psi)=null
+Shear Modulus(psi)=14577937500
+Poisons Ratio=0.2
+Tensile Strength(psi)=null
+Tensile Stress(psi)=null
+Biot Constant=null
+Pay Height(feet)=30.48
+Fracture Gross Height(feet)=91.46
+Leak off Coefficient(ft/min^0.5)=null0000984
+Spurt Loss Coefficient=null
+/Optimum Fracture Design Input
+Max Proppant Conc(IB/FT2)=null
+Fracture Height(Feet)=null
+Fracture Width(inch) =null
+Volume of Injection(Gal)=null
+Areal Proppant Conc(IB/FT2)=null
+Maxx Proppant(PPG)=null
+Gel Damage(%)=null

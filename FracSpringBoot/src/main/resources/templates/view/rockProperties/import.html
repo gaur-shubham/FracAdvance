@@ -1,0 +1,76 @@
+<script>
+$("#rp_impnextbt").click(function(event){
+	event.preventDefault();
+	url="rockProperties/savenext";
+	if($(".pe_impinput").val()){
+	$.ajax({
+		url:url,
+		data:$("#rp_impform").serialize(),
+		success:function(res){
+			$("#loadtable").html(res);
+          	$("#exampleModal").show();
+		}
+	});
+}else{
+	alert("Empty Field");
+	return false;
+}
+});
+
+$("#rp_impsavebt").click(function(event){
+	event.preventDefault();
+	url="rockProperties/saverock";
+	if($(".pe_impinput").val()){
+		$.ajax({
+			url:url,
+			data:$("#rp_impform").serialize(),
+			success:function(res){
+				$("#loadtable").html(res);
+	          	$("#exampleModal").show();
+			}
+		});
+	}else{
+		alert("Empty Field");
+		return false;
+	}
+});
+</script>
+
+<div class="tab-content">
+
+            <div class="tab-pane active" id="tab_1">
+            <li class="list-group-item">
+<form id="rp_impform">
+		<div class="row">
+			<div class="col-md-2"></div>
+			<div class="col-md-8">
+			
+				<label>Select Stage:
+				<input class="form-control" th:name="rp_impstage" type="text" th:value="${stage}" /></label>
+			</div>
+			<div class="col-md-2"></div>
+		</div>
+		<br> <input type="hidden" id="rp_imppid" name="rp_imppid" th:value="${pid}">                
+
+<div class="row">
+<div class="col-md-2"></div>
+                    <div class="col-md-8">
+                        <table id="rp_impexample2" class="table table-hover table-bordered" >
+                        <tr th:each="list:${list}" th:if="${list.param}!='Stage'">
+                        <th  th:text="${list.param}"></th>
+                        <td><input type="text" th:name="'rp_imp'+${list.param}"
+						class="pe_impinput form-control"  placeholder="Enter Value" /></td>
+                        </tr>
+                        </table>
+                        <center><input id="rp_impnextbt" class="fa btn btn-primary " type="submit" value="Next Stage"/>
+                        </center>
+                    </div>
+                    <div class="col-md-2"></div>
+                </div>
+       </form>  
+       </li> <br>
+       <center>
+       <input id="rp_impsavebt" class="fa btn btn-primary" type="submit" value="Save"/>
+       </center>      
+</div>
+</div>
