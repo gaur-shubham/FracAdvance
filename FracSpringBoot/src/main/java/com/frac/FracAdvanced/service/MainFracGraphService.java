@@ -1,8 +1,11 @@
 package com.frac.FracAdvanced.service;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
+import org.apache.commons.collections4.map.LinkedMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -46,5 +49,26 @@ public class MainFracGraphService {
 	public List<MainFracGraphModel> showmainfrac(Integer pid){
 		ProjectDetails detail = detailRepo.findById(pid).orElse(null);
 		return fracGraphRepo.findBydetails(detail);
+	}
+	
+	public Map<String, List<MainFracGraphModel>> test(Integer pid) {
+		ProjectDetails detail = detailRepo.findById(pid).orElse(null);
+		Map<String, List<MainFracGraphModel>> map = new LinkedMap<>();
+		List<MainFracGraphModel> list = fracGraphRepo.findBydetails(detail);
+		List<MainFracGraphModel> temp = new ArrayList<>();
+		String t = list.get(0).getY();
+		Integer j = 1;
+		for (Integer i = 0; i < list.size(); i++) {
+			temp.add(list.get(i));
+			if (list.get(i).getY().equalsIgnoreCase("-" + t)) {
+				map.put(j.toString(), temp);
+				j++;
+				if (i < list.size() - 1) {
+					t = list.get(i + 1).getY();
+					temp = new ArrayList<>();
+				}
+			}
+		}
+		return map;
 	}
 }

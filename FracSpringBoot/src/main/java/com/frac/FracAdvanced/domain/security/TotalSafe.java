@@ -8,6 +8,8 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
+
 @EnableWebSecurity
 public class TotalSafe extends WebSecurityConfigurerAdapter {
 	@Autowired
@@ -34,22 +36,28 @@ public class TotalSafe extends WebSecurityConfigurerAdapter {
 	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.authorizeRequests()
-		.antMatchers("/").hasAnyRole("USER","ADMIN")	
-		.antMatchers("/graphs").hasAnyRole("ADMIN")
-		//.antMatchers("/").permitAll()
-		.and().formLogin()
-		.loginPage("/login")
-		.loginProcessingUrl("/login1")
-		.usernameParameter("username")
-		.passwordParameter("password")
-		.defaultSuccessUrl("/")
-		.failureUrl("/loginFail")
-		.and()
+		http
+		.csrf().disable()
+		.authorizeRequests()
+			.antMatchers("/").hasAnyRole("USER","ADMIN")	
+			.antMatchers("/graphs").hasAnyRole("ADMIN")
+			//.antMatchers("/").permitAll()
+			.and()
+		.formLogin()
+			.loginPage("/login")
+			.loginProcessingUrl("/login1")
+			/*.usernameParameter("username")
+			.passwordParameter("password")*/
+			.defaultSuccessUrl("/")
+			.failureUrl("/loginFail")
+			.and()
 		.logout()
-		.logoutUrl("/ap-logout")
-		.logoutSuccessUrl("/login")
-		.and()
+			.invalidateHttpSession(true)
+			.logoutUrl("/ap-logout")
+			.logoutSuccessUrl("/login")
+			.permitAll()
+			.deleteCookies("JSESSIONID")
+			.and()
 		.exceptionHandling()
 		.accessDeniedPage("/accessNotAllowed")
 		;

@@ -79,7 +79,7 @@ html * {
 	opacity: 0.85;
 	color: black;
 	height: 45px;
-	border-radius: 8px;
+	border-radius: 5px;
 	border: none;
 	box-shadow: 0.5px 0.5px 17px 0px #04040478;
 }
@@ -147,17 +147,24 @@ hr.style-six:after {
 	height: 30px;
 	opacity: 0.9;
 }
+
+#run1, #graph {
+	height: auto;
+	width: 55%;
+	padding: 10px;
+	font-size: 120%;
+}
 </style>
 </head>
 <body>
 	<div layout:fragment="content">
 		<!-- #IMPORTANT. Refer to this layout in every page you want to use the theme -->
-		<div class="content-wrapper">
+		<div class="content-wrapper" style="background-color: white;">
 
 
 			<!-- --------------------------------------STARTS HERE-------------------------------------------- -->
 
-			<section class="content" style="background-color: white;">
+			<section class="content">
 
 				<div class="row">
 					<div class="col-lg-2">
@@ -295,27 +302,35 @@ hr.style-six:after {
 										</div>
 									</div>
 									<div class="row" id="showrunsim" th:if="${doneSim==false}">
-										<div class="col-lg-12">
-											<h2 class="content-center ">
-												Click Button to Run Simulation
-												<hr class="style-six">
-												<img src="dist/img/petrolium-logo.png" class="img-logo"
-													alt="User Image">
-											</h2><br>
-											<div id="myProgress" class="progress"
-												style="width: 90%; margin-left: 6.25%;">
-												<div id="myBar"
-													class="progress-bar progress-bar-warning progress-bar-striped"
-													role="progressbar" aria-valuenow="0" aria-valuemin="0"
-													aria-valuemax="100" style="width: 0%"></div>
+
+										<div class="row">
+											<div class="col-lg-12">
+												<h2 class="content-center ">
+													Click Button to Run Simulation
+													<hr class="style-six">
+													<img src="dist/img/petrolium-logo.png" class="img-logo"
+														alt="User Image">
+												</h2>
+												<br>
+												<div id="myProgress" class="progress"
+													style="width: 90%; margin-left: 6.25%;">
+													<div id="myBar"
+														class="progress-bar progress-bar-warning progress-bar-striped"
+														role="progressbar" aria-valuenow="0" aria-valuemin="0"
+														aria-valuemax="100" style="width: 0%"></div>
+												</div>
 											</div>
 											<br>
-											<form th:action="@{/}" id="" name="demoform">
-												<input type="button" id="run1"
-													class="btn btn-warning btn-lg" value="Run Simulator" style="height: 60px;"/> <input
-													type="hidden" name="pro_Id"
-													th:value="${ProjectDetail.getId()}">
-											</form>
+											<div class="row">
+												<div class="col-lg-4"></div>
+												<div class="col-lg-4">
+													<form th:action="@{/}" id="" name="demoform">
+														<input type="button" id="run1" class="btn btn-warning"
+															value="Run Simulator" /> <input type="hidden"
+															name="pro_Id" th:value="${ProjectDetail.getId()}" />
+													</form>
+												</div>
+											</div>
 										</div>
 										<div id="show"></div>
 									</div>
@@ -334,23 +349,27 @@ hr.style-six:after {
 												<br>
 											</div>
 										</div>
-										<div class="row" id="showrunsim">
+										<div class="row">
 											<div class="col-md-3"></div>
-											<div class="col-md-3">
-												<form th:action="@{/}" id="demoform" name="demoform">
-													<input id="run1" type="button"
-														class="btn btn-warning btn-lg" value="Run Simulator"
-														 style="height: 60px;" /> <input type="hidden" name="pro_Id"
-														th:value="${ProjectDetail.getId()}">
-												</form>
+											<div class="col-md-6">
+												<div class="col-md-6">
+													<form th:action="@{/}" id="demoform" name="demoform">
+														<input id="run1" type="button" class="btn btn-warning"
+															value="Run Simulator" /> <input
+															type="hidden" name="pro_Id"
+															th:value="${ProjectDetail.getId()}" />
+													</form>
+												</div>
+												<div class="col-md-6">
+													<form th:action="@{/graphs}" th:method="post">
+														<input type="submit" id="graph" class="btn btn-primary"
+															value="Graphs" /> <input name="p_Id"
+															type="hidden" th:value="${ProjectDetail.getId()}" />
+													</form>
+												</div>
 											</div>
 											<div class="col-md-3" id="show1" th:if="${doneSim==true}">
-												<form th:action="@{/graphs}" th:method="post">
-													<input type="submit" id="graph"
-														class="btn btn-primary btn-lg" value="Graphs"
-														style="height: 60px;" /> <input name="p_Id" type="hidden"
-														th:value="${ProjectDetail.getId()}">
-												</form>
+
 											</div>
 										</div>
 									</div></li>

@@ -14,6 +14,6 @@ public class AcidType {
 	public String show() {
 		return "view/acidtype";
 		
-		/*Change done in AcidType For Git Testing*/
+		/*Change1234567890 LOLOLOLOLOLOLSS */
 	}
 }

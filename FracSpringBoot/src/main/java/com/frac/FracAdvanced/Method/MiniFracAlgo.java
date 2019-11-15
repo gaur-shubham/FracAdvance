@@ -108,6 +108,9 @@ public void calculate(Map<String, String> inputfilemap,int pId) throws Exception
                 break;
             }
         }
+        
+                                    /***************Saving Output Into Database.*********/
+        
         String path=session.getServletContext().getRealPath("/");
         String filename="/InputFile/OutputFile.txt";
         Files.deleteIfExists(Paths.get(path + filename));

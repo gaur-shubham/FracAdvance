@@ -162,11 +162,11 @@
 } 
 
  function reportMainFracGraph(dataprovider){
-	 var a = new Array();   
+	 var a = new Array();  
 	 for (i = 0; i < dataprovider.length; i++){
-		a.push([parseFloat(dataprovider[i].x), parseFloat(dataprovider[i].y)]);
+		 a.push([parseFloat(dataprovider[i].x), parseFloat(dataprovider[i].y)]);
     }
-	
+	 
 	chart4=Highcharts.chart('mainfracdiv', {
 	    chart: {
 	        type: 'line'
@@ -195,7 +195,7 @@
 	    },
 	    series: [{
 	    	name:'dont know',
-	    	data: a
+	    	data: a,
 	    }],
 
 	    exporting: {
@@ -203,7 +203,9 @@
 	    },
 	    credits:{
 	    	enabled:false
-	    }
+	    },
+	    
+	  
 	});
 	
 } 

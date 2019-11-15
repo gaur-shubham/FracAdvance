@@ -1,59 +1,74 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="layout/layout">
-    <head>
-        <meta name="layout" content="main">
-        <title></title>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="layout/layout">
+<head>
+<meta name="layout" content="main">
+<title></title>
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 <script src="https://www.amcharts.com/lib/3/amcharts.js"></script>
 <script src="https://www.amcharts.com/lib/3/xy.js"></script>
-<script src="https://www.amcharts.com/lib/3/plugins/export/export.min.js"></script>
-<link rel="stylesheet" href="https://www.amcharts.com/lib/3/plugins/export/export.css" type="text/css" media="all" />
-   
- <style>
+<script
+	src="https://www.amcharts.com/lib/3/plugins/export/export.min.js"></script>
+<link rel="stylesheet"
+	href="https://www.amcharts.com/lib/3/plugins/export/export.css"
+	type="text/css" media="all" />
+
+<style>
 ::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+	width: 8px;
+	height: 8px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #f1f1f1;
+	background: #f1f1f1;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #888;
+	background: #888;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #555;
+	background: #555;
 }
+
 .cart {
 	background-color: white;
 	margin-top: 1%;
 	margin-left: 0%;
 	animation: mymove 10s infinite;
 }
+
 @
 keyframes mymove {
 	from {left: 0px;
 }
+
 to {
 	left: 300px;
 }
+
 }
 #sidebar {
 	display: none;
 }
+
 .cart:hover #sidebar {
 	margin-left: 1%;
 	display: block;
-	border-radius:8px;
+	border-radius: 8px;
 }
+
 #myProgress {
 	width: 100%;
 	background-color: #ddd;
 }
+
 #myBar {
 	width: 10%;
 	height: 30px;
@@ -62,33 +77,34 @@ to {
 	line-height: 30px;
 	color: white;
 }
+
 .thead {
 	color: white;
 }
+
 .onetmenu {
 	font-size: 14px;
 	font-weight: 600;
-	margin-left: 15px;
+	margin-left: 5%;
 	position: relative;
 	text-align: left;
-	width: 230px;
+	width: 250px;
 	transition: all 0.35s linear;
 	padding-left: 20px;
 	background: none;
 	opacity: 0.85;
 	color: black;
-	height: 50px;
-	border-radius: 50px;
+	height: 45px;
+	border-radius: 5px;
 	border: none;
-	box-shadow: 0.5px 0.5px 2px 0px #D35400;
-	outline: none;
+	box-shadow: 0.5px 0.5px 17px 0px #04040478;
 }
+
 .onetmenu:hover {
-	/* letter-spacing: 0.02em;
-	color: black;
-	text-shadow: 2px 2px 12px white; */
+	letter-spacing: 0.02em;
 	box-shadow: 0.5px 0.5px 17px 0px #D35400;
 }
+
 .onetmenu::after {
 	position: absolute;
 	content: '';
@@ -98,18 +114,21 @@ to {
 	height: 100%;
 	background-image: linear-gradient(to right, rgba(243, 156, 18, 1),
 		rgba(219, 161, 5, 0.85));
-	border-radius: 50px;
+	border-radius: 8px;
 	transform-origin: left;
 	transition: width 0.35s ease;
 	z-index: -1;
 }
+
 .onetmenu:hover::after {
 	width: 100%;
-	border-radius: 50px;
+	border-radius: 8px;
 }
+
 .menu-down {
 	margin-bottom: 20px;
 }
+
 hr.style-six {
 	position: relative;
 	padding: 0;
@@ -126,6 +145,7 @@ hr.style-six {
 	color: #333;
 	text-align: center;
 }
+
 hr.style-six:after {
 	content: " ";
 	display: inline-block;
@@ -134,62 +154,63 @@ hr.style-six:after {
 	background: #fff url(image/cartoon_1.png) no-repeat scroll center;
 	height: 50px;
 }
+
 .img-logo {
 	position: absolute;
-	top: 62px;
-	left: 48%;
-	width: 40px;
-	height: 25px;
+	top: 50px;
+	left: 47.8%;
+	width: 50px;
+	height: 30px;
 	opacity: 0.9;
 }
-</style>  
-   
-   
-   
-    </head>
-    
-    <body style="background-color:powderblue;">
-<div layout:fragment="content" style="backgroundColor: white"> <!-- #IMPORTANT. Refer to this layout in every page you want to use the theme -->
-      <div class="content-wrapper">
-        <section class="content-header">
-           
-            <ol class="breadcrumb">
-                <li><a href="#"><i class="fa fa-dashboard"></i> Projects</a></li>
-                <li class="active">Input Format </li>
-            </ol>
-        </section>
-        <section class="content">
-            <div class="row-md-4">
-                <div class="col-lg-12 col-xs-6">
-                    <div >
-                        <div >
-                        </div><!-- /.box-header -->
-                        
-                  <div class="row"  style=" height:700px; margin-top:15%" >
 
-<div class="col-md-3" align="center" style="color: white"  ></div>
-<div  class="col-md-8" style="color: white">
-                   
-                        
-                       <button id="pp" title="your-tooltip-here" class="onetmenu"
-						style="margin-bottom: 10px; " data-toggle="modal" ><img src="/dist/img/pdfa.png" width="20" height="20" style="float: left;">
-	<a href="/dist/fileFormats/USER MANUAL (Carbonate Acidizing).pdf" >
-    &nbsp;&nbsp;&nbsp;&nbsp;Case Study One
-    </a></button>
-											
-					<button id="pp1" title="your-tooltip-here" class="onetmenu"
-						style="margin-bottom: 10px; " data-toggle="modal" ><img src="/dist/img/pdfa.png" width="20" height="20" style="float: left;">
-	<a href="/dist/fileFormats/USER MANUAL (Carbonate Acidizing).pdf" >
-   &nbsp;&nbsp;&nbsp;&nbsp;Second Case Study
-    </a></button>							
-                        </div>    
-                            </div>
-                       
- 					</div>
-                    </div><!-- /.box-body -->
-                </div><!-- /.box -->
-            </div><!-- ./col -->
-        </div><!-- /.row -->
-</div>
+html * {
+	font-family: 'Calibri';
+}
+</style>
+
+
+
+</head>
+
+<body>
+	<div layout:fragment="content" style="backgroundColor: white">
+		<!-- #IMPORTANT. Refer to this layout in every page you want to use the theme -->
+		<div class="content-wrapper" style="background-color: white;">
+
+			<section class="content">
+				<div class="row">
+					<div class="row">
+						<div class="col-lg-12">
+							<strong><h3
+									class="header-list text-uppercase text-center">
+									case study
+									<hr class="style-six">
+									<img src="dist/img/petrolium-logo.png" class="img-logo"
+										alt="User Image">
+								</h3></strong><br>
+						</div>
+					</div>
+					<div class="col-lg-12 text-center">
+						<button id="pp" title="your-tooltip-here" class="onetmenu"
+							data-toggle="modal">
+							<img src="/dist/img/pdfa.png" width="20" height="20"
+								style="float: left;"> <a
+								href="/dist/fileFormats/USER MANUAL (Carbonate Acidizing).pdf">
+								&nbsp;&nbsp;&nbsp;&nbsp;Case Study One </a>
+						</button>
+						<button id="pp1" title="your-tooltip-here" class="onetmenu"
+							data-toggle="modal">
+							<img src="/dist/img/pdfa.png" width="20" height="20"
+								style="float: left;"> <a
+								href="/dist/fileFormats/USER MANUAL (Carbonate Acidizing).pdf">
+								&nbsp;&nbsp;&nbsp;&nbsp;Second Case Study </a>
+						</button>
+					</div>
+				</div>
+
+			</section>
+		</div>
+	</div>
 </body>
 </html>

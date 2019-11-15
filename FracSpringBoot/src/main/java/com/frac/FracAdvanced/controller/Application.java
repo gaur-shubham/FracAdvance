@@ -69,9 +69,7 @@ public class Application {
 	@RequestMapping("/accessNotAllowed")
 	public String noAccess(Model model)
 	{
-		
 		return "/view/login_logout/AccessDenied";
-
 	}
 	
 	@RequestMapping("/detail")

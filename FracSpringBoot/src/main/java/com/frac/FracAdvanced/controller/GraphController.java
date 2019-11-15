@@ -1,6 +1,7 @@
 package com.frac.FracAdvanced.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -25,7 +26,10 @@ import com.frac.FracAdvanced.service.MainFracGraphService;
 import com.frac.FracAdvanced.service.OutputStressService;
 import com.frac.FracAdvanced.service.ReportMakingService;
 import com.frac.FracAdvanced.service.WellForcastDeclinedCurverService;
-
+/**
+ * @author ShubhamGaur
+ *
+ */
 @Controller
 public class GraphController {
 	
@@ -49,6 +53,7 @@ public class GraphController {
 	@PostMapping("/graphs")
 	public String graphs(@RequestParam("p_Id") Integer pid,RedirectAttributes attributes) {
 		attributes.addFlashAttribute("ProjectDetail", detailrepo.findById(pid).orElse(null));
+		
 		return "redirect:/showgraphs";
 	}
 	@RequestMapping("/redirectgraphs/{pid}")
@@ -87,20 +92,6 @@ public class GraphController {
 		return pid.toString();
 	}
 	
-	@RequestMapping("/generatereport")
-	public String generateReport(Model model,@RequestParam("pid") Integer pid) {
-		model.addAttribute("map1", reportservice.reportProjectData(pid));
-		model.addAttribute("map2", reportservice.fracGeomOutData(pid));
-		model.addAttribute("map3", reportservice.optimumDesignOutData(pid));
-		model.addAttribute("minifrac", output.findByProId(pid));
-		model.addAttribute("stress",stressservice.showList(pid));
-		model.addAttribute("decline",curveservice.showlist3(pid));
-		model.addAttribute("mainfrac",fracGraphService.showmainfrac(pid));
-		model.addAttribute("otheroutput",ReportService.getVlaueOfReport(pid));
-		model.addAttribute("list", injectionservice.showInjectionPlan(pid));
-		return "/view/reportview";
-	}
-	
 	@RequestMapping("/showGraphController/{pid}")
 	@ResponseBody
 	public List<ReportMakingModel> showConductivityGraph(@PathVariable("pid") Integer pid){		
@@ -112,5 +103,21 @@ public class GraphController {
 	public String show(@PathVariable("pid") Integer pid,RedirectAttributes attributes) {
 		attributes.addFlashAttribute("ProjectDetail", detailrepo.findById(pid).orElse(null));
 		return "redirect:/list";
+	}
+	
+	@RequestMapping("/generatereport")
+	public String generateReport(Model model,@RequestParam("pid") Integer pid) {
+		model.addAttribute("map1", reportservice.reportProjectData(pid));
+		model.addAttribute("map2", reportservice.fracGeomOutData(pid));
+		model.addAttribute("map3", reportservice.optimumDesignOutData(pid));
+		model.addAttribute("minifrac", output.findByProId(pid));
+		model.addAttribute("stress",stressservice.showList(pid));
+		model.addAttribute("decline",curveservice.showlist3(pid));
+		model.addAttribute("mainfrac",fracGraphService.showmainfrac(pid));
+		//model.addAttribute("testing",fracGraphService.test(pid));
+		
+		model.addAttribute("otheroutput",ReportService.getVlaueOfReport(pid));
+		model.addAttribute("list", injectionservice.showInjectionPlan(pid));
+		return "/view/reportview";
 	}
 }
