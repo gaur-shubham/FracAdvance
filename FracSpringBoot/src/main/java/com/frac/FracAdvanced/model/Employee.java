@@ -61,33 +61,17 @@ public class Employee {
 		return result;
 	}
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Employee other = (Employee) obj;
-		if (designation == null) {
-			if (other.designation != null)
-				return false;
-		} else if (!designation.equals(other.designation))
-			return false;
-		if (empId == null) {
-			if (other.empId != null)
-				return false;
-		} else if (!empId.equals(other.empId))
-			return false;
-		if (name == null) {
-			if (other.name != null)
-				return false;
-		} else if (!name.equals(other.name))
-			return false;
-		if (Double.doubleToLongBits(salary) != Double.doubleToLongBits(other.salary))
-			return false;
-		return true;
-	}
+	/*
+	 * @Override public boolean equals(Object obj) { if (this == obj) return true;
+	 * if (obj == null) return false; if (getClass() != obj.getClass()) return
+	 * false; Employee other = (Employee) obj; if (designation == null) { if
+	 * (other.designation != null) return false; } else if
+	 * (!designation.equals(other.designation)) return false; if (empId == null) {
+	 * if (other.empId != null) return false; } else if (!empId.equals(other.empId))
+	 * return false; if (name == null) { if (other.name != null) return false; }
+	 * else if (!name.equals(other.name)) return false; if
+	 * (Double.doubleToLongBits(salary) != Double.doubleToLongBits(other.salary))
+	 * return false; return true; }
+	 */
 
 }
