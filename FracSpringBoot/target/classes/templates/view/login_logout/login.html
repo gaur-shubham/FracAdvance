@@ -1,48 +1,51 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 <style>
 ::placeholder {
 	letter-spacing: 2px;
 	text-align: center;
-    color: white;
+	color: white;
 }
-input[type=text],input[type=password] {
+
+input[type=text], input[type=password] {
 	padding: 12px 20px;
-	background-color:transparent;
-    border:1px solid #ccc;
-    border-radius: 60px;
+	background-color: transparent;
+	border: 1px solid #ccc;
+	border-radius: 60px;
 }
 
 input[type=submit] {
 	width: 40%;
 	/* position:absolute; */
-	float:right;
+	float: right;
 	background-color: #4CAF50;
 	color: white;
 	padding: 14px 0px;
 	margin: 8px 0;
 	border: none;
-    outline:none;
 	border-radius: 60px;
 	cursor: pointer;
 }
 
 input[type=submit]:hover {
 	background-color: #45a049;
-}
-button:active {
-outline: none;
-border: none;
+	outline: none;
 }
 
-input:focus {outline:0;}
+*:focus {
+	outline: none;
+}
+
 body, html {
 	height: 100%;
-	overflow:hidden;
+	overflow: hidden;
 	font-family: 'Calibri';
 	letter-spacing: 2px;
 }
@@ -53,46 +56,42 @@ div {
 }
 
 body {
-box-shadow:0px 0px 1000px 0px #4E89DC inset;
+	box-shadow: 0px 0px 1000px 0px #4E89DC inset;
 	/* background-image: url('dist/img/vishal.gif'); */
 	background-repeat: no-repeat;
-	
 	background-position: center;
 }
-
 </style>
 <body>
 
 
-	<div class="bg row" style="height:10%;"></div>
-	<div class="bg row" >
+	<div class="bg row" style="height: 10%;"></div>
+	<div class="bg row">
 		<div class="col-md-4"></div>
-		<div class="col-md-3" style="margin-left:2%;">
+		<div class="col-md-3" style="margin-left: 2%;">
 			<h1>
-				Login <small>Frac Advance<img
-					src="dist/img/petrolium-logo.png" class="img-circle"
-					alt="Image" style="height: 40px; width: 40px">
+				Sign In<small>FracAdvance<img
+					src="dist/img/petrolium-logo.png" class="img-circle" alt="Image"
+					style="height: 40px; width: 40px">
 				</small>
 			</h1>
 			<form th:action="@{/login1}" method="POST">
-				Username<br>
-				<input type="text" class="form-control" id="username"
-					name="username" placeholder="Enter Username" style="box-shadow:2px 2px 8px 2px grey"></input> <br> 
-					Password
-				<input type="password"
-					class="form-control" id="password" name="password" placeholder="Enter Password" style="box-shadow:2px 2px 8px 2px grey"/> <br>
-					<div th:if="${fail}">
-			<label  style="font-weight:normal;color:red;">Incorrect Username Or Password.</label>
-			</div>
-					 <input
-					type="submit" value="Sign In" class="btn btn-success" style="box-shadow:2px 2px 8px 2px grey "/><br>
+				Username<br> <input type="text" class="form-control"
+					id="username" name="username" placeholder="Enter Username"
+					style="box-shadow: 2px 2px 8px 2px grey"></input> <br>
+				Password <input type="password" class="form-control" id="password"
+					name="password" placeholder="Enter Password"
+					style="box-shadow: 2px 2px 8px 2px grey" /> <br>
+				<div th:if="${fail}">
+					<label style="font-weight: normal; color: red;">Incorrect
+						Username Or Password.</label>
+				</div>
+				<input type="submit" value="Sign In" class="btn btn-success"
+					style="box-shadow: 2px 2px 8px 2px grey" /><br>
 			</form>
-			<a th:href="@{/signupController}">
-						Create Account
-				
-			</a>
-			
-	</div></div>
+			<a th:href="@{/signupController}"> Create Account </a>
+
+		</div>
+	</div>
 </body>
 </html>
-     
