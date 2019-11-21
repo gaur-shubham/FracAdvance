@@ -28,18 +28,18 @@ $("#ip_showeditbt").click(function(event){
 				<tr>
 					<th nowrap="nowrap">&nbsp;&nbsp;&nbsp;Step&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 					
-					<th nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Fluid
-						Type&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
-					<th nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Stage
-						Type&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+					<th nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;Fluid
+						Type&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+					<th nowrap="nowrap">Stage
+						Type</th>
 					<th nowrap="nowrap">Rate(BPM)</th>
-					<th nowrap="nowrap">Clean Volume(BBL)</th>
+					<th nowrap="nowrap">Clean <br> Volume(BBL)</th>
 					<th nowrap="nowrap">Slurry Vol.(BBL)</th>
-					<th nowrap="nowrap">Cumulative Slurry Vol.(BBL)</th>
-					<th nowrap="nowrap">Begin Proppant Conc.(PPG)</th>
-					<th nowrap="nowrap">End Proppant Conc.(PPG)</th>
-					<th nowrap="nowrap">Stage Prop(LBS)</th>
-					<th nowrap="nowrap">Cumulative Prop(LBS)</th>
+					<th nowrap="nowrap">Cumulative Slurry <br>Vol.(BBL)</th>
+					<th nowrap="nowrap">Begin Proppant<br> Conc.(PPG)</th>
+					<th nowrap="nowrap">End Proppant <br> Conc.(PPG)</th>
+					<th nowrap="nowrap">Stage<br> Prop(LBS)</th>
+					<th nowrap="nowrap">Cumulative<br> Prop(LBS)</th>
 					<th nowrap="nowrap">Step Time</th>
 					<th nowrap="nowrap">Elapsed Time</th>
 				</tr>
@@ -60,7 +60,7 @@ $("#ip_showeditbt").click(function(event){
 					<td th:text="${list.stageprop}"></td>
 					<td th:text="${list.cumprop}"></td>
 					<td th:text="${list.steptime}"></td>
-					<td th:text="${list.cumStepTime}"></td>
+					<td><input type="number" th:value="${list.cumStepTime}" step="0.001" /></td>
 				</tr>
 
 			</table>
