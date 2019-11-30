@@ -38,7 +38,9 @@ public class ReservoirLithology {
 	public String rows(Model model,@RequestParam("pid") Integer pid,@RequestParam("no") Integer number) {
 		model.addAttribute("pid", pid);
 		model.addAttribute("number", lithologyservice.showRows(number).get(lithologyservice.showRows(number).size()-1));
-		model.addAttribute("list", lithologyservice.showRows(number));
+		if(number>0) {
+			model.addAttribute("list", lithologyservice.showRows(number));
+		}
 		return map+"/import";
 	}
 	

@@ -21,34 +21,31 @@ $("#ip_showeditbt").click(function(event){
     outline: none;
 }
 </style>
+
 <div class="row">
 	<div class="col-lg-12" style="overflow-x: auto; overflow-y: auto;">
 		<form id="ip_showmainform">
 			<table id="ip_showexample" class="table table-hover table-bordered">
 				<tr>
-					<th nowrap="nowrap">&nbsp;&nbsp;&nbsp;Step&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-					
-					<th nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;Fluid
-						Type&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
-					<th nowrap="nowrap">Stage
+					<th>Step</th>
+					<th>Fluid
 						Type</th>
-					<th nowrap="nowrap">Rate(BPM)</th>
-					<th nowrap="nowrap">Clean <br> Volume(BBL)</th>
-					<th nowrap="nowrap">Slurry Vol.(BBL)</th>
-					<th nowrap="nowrap">Cumulative Slurry <br>Vol.(BBL)</th>
-					<th nowrap="nowrap">Begin Proppant<br> Conc.(PPG)</th>
-					<th nowrap="nowrap">End Proppant <br> Conc.(PPG)</th>
-					<th nowrap="nowrap">Stage<br> Prop(LBS)</th>
-					<th nowrap="nowrap">Cumulative<br> Prop(LBS)</th>
-					<th nowrap="nowrap">Step Time</th>
-					<th nowrap="nowrap">Elapsed Time</th>
+					<th>Stage
+						Type</th>
+					<th>Rate<br>(BPM)</th>
+					<th>Clean Volume<br>(BBL)</th>
+					<th>Slurry Vol.<br>(BBL)</th>
+					<th>Cum Slurry Vol.<br>(BBL)</th>
+					<th>Begin Prop Conc.<br>(PPG)</th>
+					<th>End Prop  Conc.<br>(PPG)</th>
+					<th>Stage Prop<br>(LBS)</th>
+					<th>Cumulative Prop<br>(LBS)</th>
+					<th>Step Time</th>
+					<th>Elapsed Time</th>
 				</tr>
 
 				<tr th:each="list:${list}" th:if="${list}!=null">
-					<td><input type="text" min="0" max="" class="form-control"
-						th:value="${list.step}" name="" id="" style="border: none;"
-						readonly /> <input id="ip_showpid" th:name="ip_imppid"
-						type="hidden" th:value=${pid}></td>
+					<td th:text="${list.step}"></td>
 					<td th:text="${list.fluidtype}"></td>
 					<td th:text="${list.stagetype}"></td>
 					<td th:text="${list.rate}"></td>
@@ -60,9 +57,10 @@ $("#ip_showeditbt").click(function(event){
 					<td th:text="${list.stageprop}"></td>
 					<td th:text="${list.cumprop}"></td>
 					<td th:text="${list.steptime}"></td>
-					<td><input type="number" th:value="${list.cumStepTime}" step="0.001" /></td>
+					<td th:text="${list.cumStepTime}"></td>
 				</tr>
-
+			<input id="ip_showpid" th:name="ip_imppid"
+						type="text" hidden="true" th:value=${pid}>
 			</table>
 		</form>
 	</div>
