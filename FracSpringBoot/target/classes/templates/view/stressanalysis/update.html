@@ -49,12 +49,21 @@ thead, tbody tr {
 <input type="hidden" id="sa_uppid" name="sa_uppid" th:value="${pid}">
                         <table id="sa_upexample2" class="table table-hover table-bordered" >
                             <thead  class="bg-gray">
-							<tr>
-                            		<th style="text-align: center;">Poisson's ratio</th>
+							<tr th:if="${session.ProjectDetail.unitType=='Field'}">
+                            <th style="width:16.5%;text-align: center;">Poisson's ratio</th>
                                     <th style="text-align: center;">Density(lb/ft3)</th>
                                     <th style="text-align: center;">Depth(ft)</th>
+                                    <th style="text-align: center;">Pore Pressure(psi)</th>
+
+                                    <th style="width:5%;text-align: center;"></th>
+                            
+                            </tr>
+							<tr th:if="${session.ProjectDetail.unitType=='Metric'}">
+                            <th style="width:16.5%;text-align: center;">Poisson's ratio</th>
+                                    <th style="text-align: center;">Density(kg/m3)</th>
+                                    <th style="text-align: center;">Depth(m)</th>
                                     <th style="text-align: center;">Pore Pressure(Mpa)</th>
-                                    <th style="width:10%;text-align: center;"></th>
+                                    <th style="width:5%;text-align: center;"></th>
                             
                             </tr>
                             </thead>

@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+
+import com.frac.FracAdvanced.Method.TreatmentDesign;
 import com.frac.FracAdvanced.service.StressAnalysisService;
 
 /**
@@ -25,18 +27,21 @@ public class StressAnalysis {
 
 	String map="view/stressanalysis";
 		@Autowired
-		StressAnalysisService analysisservice;
+		private StressAnalysisService analysisservice;
+		@Autowired
+		private TreatmentDesign te;
 	
 		@RequestMapping("/showstress")
 		public String show(Model model,@RequestParam("pid") Integer pid) {
 			if(analysisservice.showList(pid).size()==0) {
 			model.addAttribute("pid", pid);
 			return map+"/import";
-			}else {
+			}
+				//te.newtonRaphsonMethod();
 				model.addAttribute("pid", pid);
 				model.addAttribute("list", analysisservice.showList(pid));
 				return map+"/showlist";
-			}
+			
 		}
 		
 		@RequestMapping("/savestressfield")

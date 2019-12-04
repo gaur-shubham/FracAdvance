@@ -38,24 +38,37 @@
                         </div><!-- /.box-header -->
                             <div class="box-footer right">
                             </div>
-                        <form role="form" method="post" th:action="@{/detail}" name="addSubCatagory">
-                        <div class="box-body">
-                    <div class="form-group">
-                       <label>Project name:</label>
-                      <input type="text" class="form-control" name="projectName" id="subCategory"  placeholder=" Enter Project Name" required>
-                    <div id="check" style="color: red; font-weight: bold;"></div>
-                    </div>
-                    <div class="form-group">
-                      <label>Well name:</label> 
-                      <input type="text" class="form-control" name="wellName" id="subcatDesc"   placeholder="Enter Well Name"  required>
-                    </div>
-                    <div class="form-group">
-                      <label>Company Name:</label> 
-                      <input type="text" class="form-control" name="companyName" id="subcatDesc"   placeholder="Enter Company Name" required>
-                    </div>
- 					<input type="submit" name="Create" class="btn btn-info" value="Create" id="Create" style="width:8%;margin-left:1%;margin-bottom:3%;"/>
- 					</form>
- 					</div>
+							<form role="form" method="post" th:action="@{/detail}"
+								name="addSubCatagory">
+								<div class="box-body">
+									<div class="form-group">
+										<label>Project name:</label> <input type="text"
+											class="form-control" name="projectName" id="subCategory"
+											placeholder=" Enter Project Name" required>
+										<div id="check" style="color: red; font-weight: bold;"></div>
+									</div>
+									<div class="form-group">
+										<label>Well name:</label> <input type="text"
+											class="form-control" name="wellName" id="subcatDesc"
+											placeholder="Enter Well Name" required>
+									</div>
+									<div class="form-group">
+										<label>Company Name:</label> <input type="text"
+											class="form-control" name="companyName" id="subcatDesc"
+											placeholder="Enter Company Name" required>
+									</div>
+									<div class="form-group">
+										<label>Unit Type :</label><select class="form-control"
+											name="unit" id="subcatDesc">
+											<option value="Field">Field</option>
+											<option value="Metric">Metric</option>
+										</select>
+									</div>
+									<input type="submit" class="btn btn-info"
+										value="Create" id="Create"
+										style="width: 8%; margin-left: 1%; margin-bottom: 3%;" />
+							</form>
+						</div>
                     </div>
                 </div>
             </div>

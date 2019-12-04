@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -14,6 +15,7 @@ import com.frac.FracAdvanced.Method.CreateDefaultData;
 import com.frac.FracAdvanced.model.ProjectDetails;
 import com.frac.FracAdvanced.repository.ProjectDetailRepo;
 import com.frac.FracAdvanced.service.PhasingParamService;
+import com.frac.FracAdvanced.service.UnitChangeService;
 
 /**
  * @author ShubhamGaur
@@ -23,11 +25,14 @@ import com.frac.FracAdvanced.service.PhasingParamService;
 public class Application {
 	
 	@Autowired
-	ProjectDetailRepo repo;
+	private ProjectDetailRepo repo;
 	@Autowired
-	CreateDefaultData defaultdata;
+	private CreateDefaultData defaultdata;
 	@Autowired
-	PhasingParamService phasingservice; 
+	private PhasingParamService phasingservice; 
+	@Autowired
+	private UnitChangeService unitservice;
+	
 	
 	@RequestMapping("/login")
 	public String login(Model model) {
@@ -75,10 +80,12 @@ public class Application {
 	@RequestMapping("/detail")
 	public String saveProject(Model model,@RequestParam Map<String,String> requestparams,
 			RedirectAttributes attributes)throws Exception {
+		System.out.println("map>>"+requestparams);
 		ProjectDetails detail=new ProjectDetails();
 		detail.setProjectName(requestparams.get("projectName"));
 		detail.setWellName(requestparams.get("wellName"));
 		detail.setCompanyName(requestparams.get("companyName"));
+		detail.setUnitType(requestparams.get("unit"));
 		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 		LocalDateTime now = LocalDateTime.now();
 		detail.setDateCreated(dtf.format(now).toString()+" IST");
@@ -108,5 +115,16 @@ public class Application {
 	@RequestMapping("/projdetailPrevbt")
 	public String prevButton(){
 		return "redirect:/";
+	}
+	
+	@PostMapping("/changeunit")
+	public String changeUnit(@RequestParam("pid") Integer pid,@RequestParam("unit") String unit,
+			RedirectAttributes attributes) {
+		unitservice.convertDataUnit(pid, unit);
+		ProjectDetails details=repo.findById(pid).orElse(null);
+		details.setUnitType(unit);
+		repo.save(details);
+		attributes.addFlashAttribute("ProjectDetail", details);
+		return "redirect:/list";
 	}
 }

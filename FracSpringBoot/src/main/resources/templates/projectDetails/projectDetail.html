@@ -237,6 +237,33 @@ hr.style-six:after {
 					<div class="nav-tabs-custom box-solid">
 						<div class="tab-content text-center">
 
+															<!-- Test -->
+							<li class="list-group-item">
+								<form action="/stimopti/wellData/unitConversion" method="post"
+									name="subForm" update="loadtable" id="subForm">
+									<div class="row"
+										style="background-color: #222d32; margin-bottom: 14px; box-shadow: 0px 1.2px 2.5px black; height: 50px;">
+										<table class="table">
+											<tbody>
+												<tr>
+													<td style="color: white; padding: 10px; text-align: right;"><p>Choose
+															unit (metric/field)</p></td>
+													<td
+														style="padding: 10px; margin-top: -15px; text-align: left;">
+														<select id="ver1" style="width: 200px; text-align:center" name="ABC">
+															<option th:value="${session.ProjectDetail.unitType}"
+																hidden selected>[[${session.ProjectDetail.unitType}]]</option>
+															<option value="Metric">Metric</option>
+															<option value="Field">Field</option>
+													</select>
+													</td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+								</form>
+							</li>
+							<!-- Test -->
 							<div class="tab-pane active" id="tab_1">
 								<!-- Personal info Li -->
 								<li class="list-group-item"><strong><h3

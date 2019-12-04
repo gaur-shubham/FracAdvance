@@ -35,20 +35,19 @@ public class ProjectDetails implements Serializable{
 
 	@Column(name="project_name", nullable=true, unique=false)
 	private String projectName;
-	
 	@Column(name="well_name", nullable=true, unique=false)
 	private String wellName;
-	
 	@Column(name="cmpany_name", nullable=true, unique=false)
 	private String companyName;
-	
 	@Column(name="date_Created", nullable=true, unique=false)
 	private String dateCreated;
-	
+	@Column
+	private String unitType;
 	@ManyToOne(cascade = { CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH })
 	@JoinColumn(name = "user_id")
 	private User user;
 	
+							/* One to many Mapping for deletingByProjectDetails */
 	@OneToMany(cascade= {CascadeType.ALL},
 			fetch=FetchType.LAZY,
 			mappedBy="details") 
@@ -150,6 +149,7 @@ public class ProjectDetails implements Serializable{
 			mappedBy="details") 
 	private List<PhasingParamModel> pp;
 	
+									/*************** Getters And Setters *************/
 	public User getUser() {
 		return user;
 	}
@@ -157,7 +157,13 @@ public class ProjectDetails implements Serializable{
 	public void setUser(User user) {
 		this.user = user;
 	}
+	public String getUnitType() {
+		return unitType;
+	}
 
+	public void setUnitType(String unitType) {
+		this.unitType = unitType;
+	}
 	
 	public Integer getId() {
 		return id;
@@ -199,14 +205,16 @@ public class ProjectDetails implements Serializable{
 		this.dateCreated = dateCreated;
 	}
 	
+													/* Constructors */
     public ProjectDetails() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public ProjectDetails(String projectName, String wellName, String companyName, String dateCreated) {
+	public ProjectDetails(String projectName, String wellName, String companyName, String dateCreated,String unitType) {
 		this.projectName = projectName;
 		this.wellName = wellName;
 		this.companyName = companyName;
 		this.dateCreated = dateCreated;
+		this.unitType=unitType;
 	}
 }

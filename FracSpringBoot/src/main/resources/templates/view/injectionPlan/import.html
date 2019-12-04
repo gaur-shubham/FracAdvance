@@ -100,7 +100,7 @@ $( "#importbutton" ).click(function() {
 <div class="tab-content">
 
 
- <div class="row" id="form" hidden>
+ <div class="row" id="form">
             <div class="col-lg-4 col-xs-6">
                 <form th:action="@{/}" enctype="multipart/form-data" id="fileUploadForm" method="POST" name="demoform">
                 <input type="hidden" id="" name="pid" th:value="${pid}">
@@ -117,7 +117,6 @@ $( "#importbutton" ).click(function() {
                 <h3>Note:</h3>
                 <ul>
                     User can input Injection Plan (Fluid Type,Rate, Clean Volume) in anyone of three ways :
-
                     <li>  Import well log ( Porosity log in .las/txt) file</li>
                     <li>  Import excel file (Perm/Poro over depth, excel format provided)</li>
                     <li>  Enter manually (Perm/Poro, TVD and formation pressure)</li>
@@ -126,41 +125,34 @@ $( "#importbutton" ).click(function() {
             </div>
 		&nbsp;&nbsp;&nbsp;&nbsp;<input type="button" class="btn btn-primary" value="Enter Manually" id="enterbutton" style="width:12%">
         </div>
-        
-        
 
-
-
-
-	<div class="tab-pane active" id="fill" >
+	<div class="tab-pane active" id="fill" style="display:none;">
 	
 <input type="button" class="btn btn-primary" value="Import File" id="importbutton" style="width:12.5%">
 <br>
  <li class="list-group-item">
 		<div class="row">
-			<div class="col-md-1"></div>
-			<div class="col-md-10" style="overflow-x: auto; overflow-y: hidden;">
+			<div class="col-md-12" style="overflow-x: auto; overflow-y: hidden;">
 				<form id="ip_impmainform">
 					<table class="table table-hover table-bordered a">
-						<tr>
-							<th nowrap="nowrap">&nbsp;&nbsp;&nbsp;Step&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-							<th nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Fluid
-								Type&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
-							<th nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Stage
-								Type&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
-							<th nowrap="nowrap">Rate(BPM)</th>
-							<th nowrap="nowrap">Clean Vol.(BBL)</th>
-							<th nowrap="nowrap">Slurry Vol.(BBL)</th>
-							<th nowrap="nowrap">Cumulative Slurry Vol.(BBL)</th>
-							<th nowrap="nowrap">Begin Proppant Conc.(PPG)</th>
-							<th nowrap="nowrap">End Proppant Conc.(PPG)</th>
-							<th nowrap="nowrap">Stage Prop(LBS)</th>
-							<th nowrap="nowrap">Cumulative Prop(LBS)</th>
-							<th nowrap="nowrap">Step Time</th>
-							<th nowrap="nowrap">Elapsed Time</th>
-							<th></th>
-						</tr>
-
+				<tr>
+					<th>Step</th>
+					<th>Fluid
+						Type</th>
+					<th>Stage
+						Type</th>
+					<th>Rate<br>(BPM)</th>
+					<th>Clean Vol.<br>(BBL)</th>
+					<th>Slurry Vol.<br>(BBL)</th>
+					<th>Cum Slurry Vol.<br>(BBL)</th>
+					<th>Begin Prop Conc.<br>(PPG)</th>
+					<th>End Prop  Conc.<br>(PPG)</th>
+					<th>Stage Prop<br>(LBS)</th>
+					<th>Cum Prop<br>(LBS)</th>
+					<th>Step Time</th>
+					<th>Elapsed Time</th>
+					<th></th>
+				</tr>
 						<tr th:each="list:${list}" th:if="${list}!=null">
 							<td><input type="text" min="0" max="" class="form-control"
 								name="" id="ip_impstep" th:value="${list.step}" required
@@ -216,7 +208,7 @@ $( "#importbutton" ).click(function() {
 								style="border: none;" autofocus /> <input id="ip_imppid"
 								th:name="ip_imppid" type="hidden" th:value=${pid}></td>
 							<td><select name="ip_impinput" id="ip_impftype"
-								class="form-control" style="border: none;">
+								class="form-control" style="border: none;width:auto;">
 									<option value="Acid">Acid</option>
 									<option value="Slick Water">Slick Water</option>
 									<option value="Fresh Water">Fresh Water</option>
@@ -224,7 +216,7 @@ $( "#importbutton" ).click(function() {
 									<option value="Cross Link">Cross Link</option>
 							</select></td>
 							<td><select class="form-control " name="ip_impinput"
-								id="ip_impstype" style="border: none;">
+								id="ip_impstype" style="border: none;width:auto;">
 									<option value="HCL 12-15%">HCL 12-15%</option>
 									<option value="HCL 17-28%">HCL 17-28%</option>
 									<option value="Pad">Pad</option>

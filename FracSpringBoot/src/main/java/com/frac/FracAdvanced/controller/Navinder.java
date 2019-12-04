@@ -7,6 +7,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
+
+import com.frac.FracAdvanced.Method.TreatmentDesign;
 import com.frac.FracAdvanced.model.ProjectDetails;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.frac.FracAdvanced.repository.MiniFracRepo;
@@ -22,11 +24,12 @@ import com.frac.FracAdvanced.service.ReportParamService;
 public class Navinder {
 	
 	@Autowired
-	MiniFracRepo service;
+	private MiniFracRepo service;
 	@Autowired
-	ReportParamService reportparamservice; 
+	private ReportParamService reportparamservice; 
 	@Autowired
-	ProjectDetailRepo prodetails;
+	private ProjectDetailRepo prodetails;
+
 	
 	@RequestMapping("/list")
 	public String show(@ModelAttribute("ProjectDetail") ProjectDetails details,HttpSession session,Model model){

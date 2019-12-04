@@ -1,0 +1,7 @@
+
+/*****************~Stress Analysis~**********************/
+PoissonRatio0=1
+Density0=1
+Depth0=1
+PorePressure0=1
+//

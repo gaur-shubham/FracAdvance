@@ -1,5 +1,7 @@
 <script th:inline="javascript">
-    $( "#enterbutton" ).click(function() {
+var unit=[[${session.ProjectDetail.unitType}]];
+
+	$( "#enterbutton" ).click(function() {
         $( "#fill" ).slideToggle( "slow" );
         $( "#form" ).slideToggle( "slow" );
         });
@@ -109,19 +111,25 @@
         <input type="button" class="btn btn-primary" value="Import Well Log" id="importbutton" style="width:12.5%">
             <li class="list-group-item">
                 <strong><h4 class="text-center">STRESS ANALYSIS</h4></strong><br>
-               
                 <div class="row">
                     <div class="col-md-12">
-<form id="sa_impmainform">
-<input type="hidden" id="sa_imppid" name="sa_imppid" th:value="${pid}">
+			<form id="sa_impmainform">
+			<input type="hidden" id="sa_imppid" name="sa_imppid" th:value="${pid}">
                         <table id="example2" class="table table-hover table-bordered" >
                             <thead  class="bg-gray">
-							<tr>
+							<tr th:if="${session.ProjectDetail.unitType=='Field'}">
                             <th style="width:16.5%;text-align: center;">Poisson's ratio</th>
                                     <th style="text-align: center;">Density(lb/ft3)</th>
                                     <th style="text-align: center;">Depth(ft)</th>
+                                    <th style="text-align: center;">Pore Pressure(psi)</th>
+                                    <th style="width:5%;text-align: center;"></th>
+                            
+                            </tr>
+							<tr th:if="${session.ProjectDetail.unitType=='Metric'}">
+                            <th style="width:16.5%;text-align: center;">Poisson's ratio</th>
+                                    <th style="text-align: center;">Density(kg/m3)</th>
+                                    <th style="text-align: center;">Depth(m)</th>
                                     <th style="text-align: center;">Pore Pressure(Mpa)</th>
-
                                     <th style="width:5%;text-align: center;"></th>
                             
                             </tr>

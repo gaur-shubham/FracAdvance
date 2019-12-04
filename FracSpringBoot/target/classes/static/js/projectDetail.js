@@ -1,5 +1,4 @@
-
-
+												/*Dynamic Progress Bar*/
 function geninput(pid) {
 	outputcr();
 	$("#run1").removeClass("btn-warning");
@@ -325,7 +324,20 @@ $(document).ready(function() {
 			}
 		});
 	});
-
+	
+	$("#ver1").change(function(){
+		var pid = $("#proId").val();
+		var unit=$(this).val();
+		url = "/changeunit";
+		$.ajax({
+			url : url,
+			type : "POST",
+			data : {
+				pid:pid,
+				unit:unit
+			}
+		});
+	});
 });
 
 /*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>  Document.ready() ENDS  <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<*/
